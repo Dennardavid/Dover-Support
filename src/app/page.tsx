@@ -1,13 +1,17 @@
 import { img } from "@/assets/index";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <section className="h-dvh bg-forestGreen flex flex-col gap-4 items-center justify-center">
-      <div>
-        <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true}  />
+    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
+      <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
+        <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true} />
+        <h1 className="font-semibold text-gray text-xl bg-orange w-full p-2 rounded-md">
+          Sign Up
+        </h1>
       </div>
-      <form action="" className="bg-gray p-6 w-xl rounded-2xl">
+      <form action="" className="bg-gray p-6 w-full max-w-[500px] rounded-md">
         <label
           htmlFor="name"
           className="block text-base font-medium text-gray-700 mb-2"
@@ -19,7 +23,7 @@ export default function Home() {
           name="name"
           id="name"
           placeholder="David Dennar"
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50 "
+          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
 
         <label
@@ -33,7 +37,7 @@ export default function Home() {
           name="email"
           id="email"
           placeholder="daviddennar@doverengineering.com"
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50 "
+          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
 
         <label
@@ -45,13 +49,13 @@ export default function Home() {
         <select
           name="discipline"
           id="discipline"
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50 "
+          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         >
-          <option value="">IT/IS</option>
           <option value="">Reception</option>
+          <option value="">IT/IS</option>
           <option value="">Mechanical</option>
           <option value="">Telecoms</option>
-          <option value="">Instrumentaion</option>
+          <option value="">Instrumentation</option>
           <option value="">QA/QC</option>
           <option value="">Document Control</option>
           <option value="">Technical Safety</option>
@@ -78,7 +82,7 @@ export default function Home() {
           name="password"
           id="password"
           placeholder="Password"
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50 "
+          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
 
         <label
@@ -92,9 +96,23 @@ export default function Home() {
           name="confirmpassword"
           id="confirmpassword"
           placeholder="Re-type Password"
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50 "
+          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
+        <button
+          type="submit"
+          className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
+        >
+          Sign Up
+        </button>
       </form>
+      <div>
+        <p className="text-gray text-sm sm:text-base">
+          Already have an account?{" "}
+          <Link href={""} className="text-orange underline">
+            Login
+          </Link>
+        </p>
+      </div>
     </section>
   );
 }
