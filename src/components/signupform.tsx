@@ -1,8 +1,40 @@
+"use client";
+
 import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SignUp() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    discipline: "",
+    password: "",
+  });
+ 
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      alert("Ticket submitted successfully");
+      setForm({ name: "", email: "", discipline: "", password: "" });
+    } else {
+      alert("Something went wrong");
+    }
+  };
+
   return (
     <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
       <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
@@ -11,7 +43,12 @@ export default function SignUp() {
           Sign Up
         </h1>
       </div>
-      <form action="" className="bg-gray p-6 w-full max-w-[500px] rounded-md">
+      <form
+        onSubmit={handleSubmit}
+        onChange={handleChange}
+        method="POST"
+        className="bg-gray p-6 w-full max-w-[500px] rounded-md"
+      >
         <label
           htmlFor="name"
           className="block text-base font-medium text-gray-700 mb-2"
@@ -22,6 +59,7 @@ export default function SignUp() {
           type="text"
           name="name"
           id="name"
+          required
           placeholder="David Dennar"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
@@ -36,6 +74,7 @@ export default function SignUp() {
           type="email"
           name="email"
           id="email"
+          required
           placeholder="daviddennar@doverengineering.com"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
@@ -49,26 +88,28 @@ export default function SignUp() {
         <select
           name="discipline"
           id="discipline"
+          required
+          value={form.discipline}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         >
-          <option value="">Reception</option>
-          <option value="">IT/IS</option>
-          <option value="">Mechanical</option>
-          <option value="">Telecoms</option>
-          <option value="">Instrumentation</option>
-          <option value="">QA/QC</option>
-          <option value="">Document Control</option>
-          <option value="">Technical Safety</option>
-          <option value="">Process</option>
-          <option value="">Electrical</option>
-          <option value="">Piping</option>
-          <option value="">Pipeline</option>
-          <option value="">Civil/Structural</option>
-          <option value="">HR</option>
-          <option value="">Accounts</option>
-          <option value="">Business Development</option>
-          <option value="">Logistics/Procurement</option>
-          <option value="">HSE</option>
+          <option value="">Select Discipline</option>
+          <option value="Reception">Reception</option>
+          <option value="Mechanical">Mechanical</option>
+          <option value="Telecoms">Telecoms</option>
+          <option value="Instrumentation">Instrumentation</option>
+          <option value="QA/QC">QA/QC</option>
+          <option value="Document Control">Document Control</option>
+          <option value="Technical Safety">Technical Safety</option>
+          <option value="Process">Process</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Piping">Piping</option>
+          <option value="Pipeline">Pipeline</option>
+          <option value="Civil/Structural">Civil/Structural</option>
+          <option value="HR">HR</option>
+          <option value="Accounts">Accounts</option>
+          <option value="Business Development">Business Development</option>
+          <option value="Logistics/Procurement">Logistics/Procurement</option>
+          <option value="HSE">HSE</option>
         </select>
 
         <label
@@ -81,6 +122,7 @@ export default function SignUp() {
           type="password"
           name="password"
           id="password"
+          required
           placeholder="Password"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
@@ -94,6 +136,7 @@ export default function SignUp() {
         <input
           type="password"
           name="confirmpassword"
+          required
           id="confirmpassword"
           placeholder="Re-type Password"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
