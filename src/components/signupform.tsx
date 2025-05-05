@@ -4,6 +4,7 @@ import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner"
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -28,10 +29,15 @@ export default function SignUp() {
     });
 
     if (res.ok) {
-      alert("Ticket submitted successfully");
+      toast.success("Account Created")
+
+      /* Delay the page redirect by 2secs */
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
       setForm({ name: "", email: "", discipline: "", password: "" });
     } else {
-      alert("Something went wrong");
+      toast.error("Something went wrong")
     }
   };
 
@@ -89,7 +95,6 @@ export default function SignUp() {
           name="discipline"
           id="discipline"
           required
-          value={form.discipline}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         >
           <option value="">Select Discipline</option>

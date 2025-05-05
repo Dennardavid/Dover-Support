@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/app/generated/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
 
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest) {
       { message: "User created successfully", user: newUser },
       { status: 201 }
     );
+    redirect("/");
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json(

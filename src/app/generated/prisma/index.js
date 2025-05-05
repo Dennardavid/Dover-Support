@@ -160,8 +160,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": ".env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.7.0",
@@ -170,17 +169,16 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "fromEnvVar": null,
+        "value": "postgresql://postgres:admin@localhost:5432/test"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id         String    @id @default(uuid())\n  email      String    @unique\n  name       String\n  discipline String\n  password   String\n  Tickets    Tickets[]\n}\n\nmodel Tickets {\n  id          String   @id @default(uuid())\n  title       String\n  description String\n  category    String\n  priority    String\n  status      String   @default(\"open\")\n  createAt    DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  author      User     @relation(fields: [userId], references: [id])\n  userId      String\n}\n\nenum Roles {\n  BASIC\n  ADMIN\n}\n",
-  "inlineSchemaHash": "7334bf60e436feebb98df903f5799fba9531ab5cc2d5fb6605e1e4422fec149e",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = \"postgresql://postgres:admin@localhost:5432/test\"\n}\n\nmodel User {\n  id         String    @id @default(uuid())\n  email      String    @unique\n  name       String\n  discipline String\n  password   String\n  Tickets    Tickets[]\n}\n\nmodel Tickets {\n  id          String   @id @default(uuid())\n  title       String\n  description String\n  category    String\n  priority    String\n  status      String   @default(\"open\")\n  createAt    DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  author      User     @relation(fields: [userId], references: [id])\n  userId      String\n}\n\nenum Roles {\n  BASIC\n  ADMIN\n}\n",
+  "inlineSchemaHash": "5a709c8a1f2b6f21b79ffbc30b7d343b442795d6e95da1c49e59c147eef57cfd",
   "copyEngine": true
 }
 
