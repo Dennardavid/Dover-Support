@@ -6,7 +6,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner"
 
+
 export default function SignUp() {
+   
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -22,14 +24,16 @@ export default function SignUp() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = await fetch("/api/signup", {
+    const response = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
 
-    if (res.ok) {
-      toast.success("Account Created")
+    const result = await response.json();
+
+    if (response.ok) {
+      toast.success(result.message)
 
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
@@ -37,7 +41,7 @@ export default function SignUp() {
       }, 2000);
       setForm({ name: "", email: "", discipline: "", password: "" });
     } else {
-      toast.error("Something went wrong")
+      toast.error(result.message)
     }
   };
 

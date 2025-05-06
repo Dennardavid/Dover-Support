@@ -1,6 +1,6 @@
 import { PrismaClient } from "@/app/generated/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { redirect } from "next/navigation";
+import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -16,12 +16,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
+    /* Check if User already Exists on the Database */
+    const existingUser = await prisma.user.findFirst({
+      where: { email: email },
+    });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "A user with this email already exists" },
+        { status: 409 }
+      );
+    }
+
+
+    /* Hashing password */
+    const hashedPassword = await hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: {
         name,
         email,
         discipline,
-        password,
+        password: hashedPassword,
       },
     });
 
@@ -29,11 +45,10 @@ export async function POST(request: NextRequest) {
       { message: "User created successfully", user: newUser },
       { status: 201 }
     );
-    redirect("/");
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "User Exists", error },
       { status: 500 }
     );
   }
