@@ -35,3 +35,14 @@ export const SignUpValidation = z
       });
     }
   });
+
+export const loginValidation = z.object({
+  email: z
+    .string()
+    .email()
+    .trim()
+    .refine((email) => email.endsWith("@doverengineering.com"), {
+      message: "Email must be a doverengineering.com address",
+    }),
+  password: z.string().trim().min(1, { message: "Password is required" }),
+});
