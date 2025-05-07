@@ -4,44 +4,74 @@ import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner"
-
+import { toast } from "sonner";
+import { SignUpValidation } from "@/lib/zodrules";
 
 export default function SignUp() {
-   
   const [form, setForm] = useState({
     name: "",
     email: "",
     discipline: "",
     password: "",
+    confirmPassword: "",
   });
- 
 
-  const handleChange = (e: any) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-
+  // validate with Zod
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setErrors({});
+
+    const parsed = SignUpValidation.safeParse(form);
+
+    if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      parsed.error.errors.forEach((err) => {
+        if (err.path.length > 0) {
+          fieldErrors[err.path[0]] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    /* Split the confirm password not to store on the DB */
+    const { confirmPassword, ...formToSubmit } = form;
+
+    /* API POST call to DB */
     const response = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(formToSubmit),
     });
 
     const result = await response.json();
 
+    /* Toast Handler */
     if (response.ok) {
-      toast.success(result.message)
+      toast.success(result.message);
 
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
-      setForm({ name: "", email: "", discipline: "", password: "" });
+
+      setForm({
+        name: "",
+        email: "",
+        discipline: "",
+        password: "",
+        confirmPassword: "",
+      });
     } else {
-      toast.error(result.message)
+      toast.error(result.message);
     }
   };
 
@@ -55,7 +85,6 @@ export default function SignUp() {
       </div>
       <form
         onSubmit={handleSubmit}
-        onChange={handleChange}
         method="POST"
         className="bg-gray p-6 w-full max-w-[500px] rounded-md"
       >
@@ -69,10 +98,13 @@ export default function SignUp() {
           type="text"
           name="name"
           id="name"
+          onChange={handleChange}
+          value={form.name}
           required
           placeholder="David Dennar"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
         <label
           htmlFor="email"
@@ -84,10 +116,13 @@ export default function SignUp() {
           type="email"
           name="email"
           id="email"
+          value={form.email}
+          onChange={handleChange}
           required
           placeholder="daviddennar@doverengineering.com"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
         <label
           htmlFor="discipline"
@@ -98,6 +133,8 @@ export default function SignUp() {
         <select
           name="discipline"
           id="discipline"
+          onChange={handleChange}
+          value={form.discipline}
           required
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         >
@@ -120,6 +157,9 @@ export default function SignUp() {
           <option value="Logistics/Procurement">Logistics/Procurement</option>
           <option value="HSE">HSE</option>
         </select>
+        {errors.discipline && (
+          <p className="text-red-500 text-sm">{errors.discipline}</p>
+        )}
 
         <label
           htmlFor="password"
@@ -131,25 +171,36 @@ export default function SignUp() {
           type="password"
           name="password"
           id="password"
+          onChange={handleChange}
+          value={form.password}
           required
           placeholder="Password"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
 
         <label
-          htmlFor="confirmpassword"
+          htmlFor="confirmPassword"
           className="block text-base font-medium text-gray-700 my-2"
         >
           Confirm Password
         </label>
         <input
           type="password"
-          name="confirmpassword"
+          name="confirmPassword"
+          id="confirmPassword"
+          onChange={handleChange}
+          value={form.confirmPassword}
           required
-          id="confirmpassword"
           placeholder="Re-type Password"
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
+
+        {errors.confirmPassword && (
+          <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+        )}
         <button
           type="submit"
           className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
