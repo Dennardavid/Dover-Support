@@ -1,17 +1,15 @@
 "use client";
 
+import { signIn } from "@/auth";
 import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
+import { loginAction } from "@/lib/loginaction";
 import { useState } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-  };
 
   return (
     <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
@@ -23,12 +21,9 @@ export default function Home() {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        action={loginAction}
         className="bg-gray p-6 w-full max-w-[500px] rounded-md"
       >
-        {/* {error && (
-          <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
-        )} */}
         <label
           htmlFor="email"
           className="block text-base font-medium text-gray-700 my-2"
@@ -80,3 +75,21 @@ export default function Home() {
     </section>
   );
 }
+
+/* export default async function SignIn() {
+  return (
+    <form
+      
+    >
+      <label>
+        Email
+        <input name="email" type="email" />
+      </label>
+      <label>
+        Password
+        <input name="password" type="password" />
+      </label>
+      <button type="submit">Sign In</button>
+    </form>
+  );
+} */
