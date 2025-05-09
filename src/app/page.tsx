@@ -1,8 +1,18 @@
+"use client";
+
 import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
       <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
@@ -11,7 +21,14 @@ export default function Home() {
           Login
         </h1>
       </div>
-      <form action="" className="bg-gray p-6 w-full max-w-[500px] rounded-md">
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray p-6 w-full max-w-[500px] rounded-md"
+      >
+        {/* {error && (
+          <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
+        )} */}
         <label
           htmlFor="email"
           className="block text-base font-medium text-gray-700 my-2"
@@ -23,6 +40,8 @@ export default function Home() {
           name="email"
           id="email"
           placeholder="daviddennar@doverengineering.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
 
@@ -37,6 +56,8 @@ export default function Home() {
           name="password"
           id="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
 
@@ -47,6 +68,7 @@ export default function Home() {
           Login
         </button>
       </form>
+
       <div>
         <p className="text-gray text-sm sm:text-base">
           Don't have an Account?{" "}
