@@ -1,15 +1,61 @@
 "use client";
 
-import { signIn } from "@/auth";
 import { img } from "@/assets/index";
 import Image from "next/image";
 import Link from "next/link";
-import { loginAction } from "@/lib/loginaction";
 import { useState } from "react";
+import { toast } from "sonner";
+import { signIn } from "next-auth/react";
+import { loginValidation } from "@/lib/zodrules";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const parsed = loginValidation.safeParse({ email, password });
+
+    if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      parsed.error.errors.forEach((err) => {
+        if (err.path.length > 0) {
+          fieldErrors[err.path[0]] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      try {
+        const parsedError = JSON.parse(result.error);
+        console.log(parsedError);
+        setErrors({ form: parsedError.message || "Login failed from try" });
+      } catch {
+        setErrors({ form: "Login failed from catch" });
+      }
+    } else {
+      toast.success("Logging In");
+
+      /* Delay the page redirect by 2secs */
+      setTimeout(() => {
+        window.location.href = "/users";
+      }, 2000);
+      setEmail("");
+      setPassword("");
+    }
+  };
 
   return (
     <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
@@ -21,7 +67,7 @@ export default function Home() {
       </div>
 
       <form
-        action={loginAction}
+        onSubmit={handleSubmit}
         className="bg-gray p-6 w-full max-w-[500px] rounded-md"
       >
         <label
@@ -39,6 +85,9 @@ export default function Home() {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
         />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+        )}
 
         <label
           htmlFor="password"
@@ -55,6 +104,9 @@ export default function Home() {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+        )}
 
         <button
           type="submit"
@@ -62,6 +114,9 @@ export default function Home() {
         >
           Login
         </button>
+        {errors.form && (
+          <p className="text-red-500 text-sm mt-2">{errors.form}</p>
+        )}
       </form>
 
       <div>
@@ -75,21 +130,3 @@ export default function Home() {
     </section>
   );
 }
-
-/* export default async function SignIn() {
-  return (
-    <form
-      
-    >
-      <label>
-        Email
-        <input name="email" type="email" />
-      </label>
-      <label>
-        Password
-        <input name="password" type="password" />
-      </label>
-      <button type="submit">Sign In</button>
-    </form>
-  );
-} */

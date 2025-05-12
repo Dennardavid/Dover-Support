@@ -3,7 +3,6 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { loginValidation } from "@/lib/zodrules";
-// import { redirect } from "next/dist/server/api-utils";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -11,7 +10,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         email: {},
         password: {},
-       
       },
       authorize: async (credentials) => {
         try {
@@ -27,31 +25,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           /* Validate user existence */
           if (!user || !user.password) {
-            console.log("No user");
-            return null;
+            throw new Error(JSON.stringify({ message: "User doesn't exist" }));
           }
 
           /* Compare password from DB with bcrypt */
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
-            console.log("Invalid password");
-            return null;
+            throw new Error(JSON.stringify({ message: "Incorrect Password" }));
           }
-        
+
           /* return user details */
           return {
             id: user.id,
             email: user.email,
-            discipline: user.discipline,
             name: user.name,
+            discipline: user.discipline,
           };
         } catch (error) {
-          console.log("Validation or auth error", error);
-          return null;
+          console.error("Authorize error:", error);
+
+          throw new Error(JSON.stringify({ message: "Authorization Failed" }));
         }
       },
     }),
   ],
+  pages: {
+    signIn: "/",
+  },
   session: {
     strategy: "jwt",
   },
