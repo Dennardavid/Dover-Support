@@ -11,9 +11,7 @@ export default async function Home() {
   if (!session?.user) {
     return redirect("/");
   }
-  if (session.user) {
-    return redirect("/users");
-  }
+  
   return (
     <>
       <PageHeader description="Dashboard" />

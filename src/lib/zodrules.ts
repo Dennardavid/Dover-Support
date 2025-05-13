@@ -42,7 +42,7 @@ export const loginValidation = z.object({
     .email()
     .trim()
     .refine((email) => email.endsWith("@doverengineering.com"), {
-      message: "Email must be a doverengineering.com address",
+      message: "Invalid Email",
     }),
   password: z.string().trim().min(1, { message: "Password is required" }),
 });

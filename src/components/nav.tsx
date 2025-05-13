@@ -6,7 +6,7 @@ import Link from "next/link";
 import { IoHomeOutline } from "react-icons/io5";
 import { BsClockHistory } from "react-icons/bs";
 import { GrScorecard } from "react-icons/gr";
-import { IoIosPower } from "react-icons/io";
+import LogoutButton from "./ui/logoutButton";
 import { usePathname } from "next/navigation"; // Import usePathname hook
 import clsx from "clsx";
 
@@ -52,7 +52,7 @@ export default function Navigation() {
                     {
                       " bg-amber-400": pathname === link.href,
                     }
-                  )} 
+                  )}
                 >
                   {link.Icon}
                   {link.label}
@@ -63,19 +63,7 @@ export default function Navigation() {
         </ul>
       </div>
 
-      <form
-        action="../auth/signout"
-        method="POST"
-        className="flex items-center"
-      >
-        <button
-          type="submit"
-          className="w-full text-white bg-red-500 hover:bg-red-700 rounded-xl py-2 transition flex justify-center items-center gap-2"
-        >
-          <IoIosPower color="white" fontSize={25} />
-          Logout
-        </button>
-      </form>
+      <LogoutButton />
     </nav>
   );
 }

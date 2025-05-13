@@ -7,15 +7,12 @@ const apiAuthPrefix = "/api/auth";
 
 export default auth(async (req) => {
   const { nextUrl } = req;
-  const authData = req.auth;
   const isLoggedIn = !!req.auth;
 
   const path = nextUrl.pathname;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isProtectedRoute = protectedRoutes.includes(path);
   const isAuthPageRoute = authPageRoutes.includes(path);
-
-  console.log({ authData });
 
   if (isApiAuthRoute) {
     return NextResponse.next();

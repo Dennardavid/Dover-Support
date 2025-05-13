@@ -8,14 +8,18 @@ import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 import LoginButton from "@/components/ui/loginButton";
 import { loginValidation } from "@/lib/zodrules";
+import { boolean } from "zod";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const parsed = loginValidation.safeParse({ email, password });
 
@@ -47,12 +51,13 @@ export default function Home() {
         setErrors({ form: "Login failed from catch" });
       }
     } else {
-      toast.success("Logging In");
+      toast.success("Successful");
 
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         window.location.href = "/users";
       }, 2000);
+      setLoading(false);
       setEmail("");
       setPassword("");
     }
@@ -67,10 +72,7 @@ export default function Home() {
         </h1>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray px-6 py-7 w-full max-w-[500px] rounded-md"
-      >
+      <div className="bg-gray px-6 py-7 w-full max-w-[500px] rounded-md">
         <LoginButton />
 
         <div className="flex items-center my-6">
@@ -80,55 +82,56 @@ export default function Home() {
           </span>
           <hr className="flex-grow border-t border-gray-300" />
         </div>
-        
-        <label
-          htmlFor="email"
-          className="block text-base font-medium text-gray-700 my-2"
-        >
-          Email
-        </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="daviddennar@doverengineering.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-        )}
+        <form onSubmit={handleSubmit}>
+          <label
+            htmlFor="email"
+            className="block text-base font-medium text-gray-700 my-2"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="daviddennar@doverengineering.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
 
-        <label
-          htmlFor="password"
-          className="block text-base font-medium text-gray-700 my-2"
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-        )}
+          <label
+            htmlFor="password"
+            className="block text-base font-medium text-gray-700 my-2"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+          )}
 
-        <button
-          type="submit"
-          className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
-        >
-          Login
-        </button>
-        {errors.form && (
-          <p className="text-red-500 text-sm mt-2">{errors.form}</p>
-        )}
-      </form>
+          <button
+            type="submit"
+            className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
+          >
+            {loading ? "Signing In..." : "Login"}
+          </button>
+          {errors.form && (
+            <p className="text-red-500 text-sm mt-2">{errors.form}</p>
+          )}
+        </form>
+      </div>
 
       <div>
         <p className="text-gray text-sm sm:text-base">
