@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SignUpValidation } from "@/lib/zodrules";
+import LoginButton from "@/components/ui/loginButton";
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -88,6 +89,16 @@ export default function SignUp() {
         method="POST"
         className="bg-gray p-6 w-full max-w-[500px] rounded-md"
       >
+        <LoginButton />
+
+        <div className="flex items-center my-6">
+          <hr className="flex-grow border-t border-gray-300" />
+          <span className="mx-4 text-gray-500 text-sm">
+            or sign up with email
+          </span>
+          <hr className="flex-grow border-t border-gray-300" />
+        </div>
+
         <label
           htmlFor="name"
           className="block text-base font-medium text-gray-700 mb-2"

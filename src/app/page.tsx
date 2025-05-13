@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
+import LoginButton from "@/components/ui/loginButton";
 import { loginValidation } from "@/lib/zodrules";
 
 export default function Home() {
@@ -62,14 +63,24 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
         <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true} />
         <h1 className="font-semibold text-gray text-xl bg-orange w-full p-2 rounded-md">
-          Login
+          Sign In
         </h1>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray p-6 w-full max-w-[500px] rounded-md"
+        className="bg-gray px-6 py-7 w-full max-w-[500px] rounded-md"
       >
+        <LoginButton />
+
+        <div className="flex items-center my-6">
+          <hr className="flex-grow border-t border-gray-300" />
+          <span className="mx-4 text-gray-500 text-sm">
+            or sign in with email
+          </span>
+          <hr className="flex-grow border-t border-gray-300" />
+        </div>
+        
         <label
           htmlFor="email"
           className="block text-base font-medium text-gray-700 my-2"
