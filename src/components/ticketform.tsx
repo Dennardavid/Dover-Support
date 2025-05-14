@@ -181,7 +181,7 @@ export default function TicketForm() {
           type="submit"
           className="bg-forestGreen text-white px-6 py-2 rounded-full hover:bg-orange transition"
         >
-          Create
+          Submit
         </button>
       </div>
     </form>

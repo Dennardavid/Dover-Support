@@ -18,6 +18,9 @@ export async function GET() {
           email: userEmail,
         },
       },
+      orderBy: {
+        createAt: "desc",
+      },
     });
 
     return NextResponse.json(userTickets);

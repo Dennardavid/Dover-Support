@@ -14,7 +14,7 @@ export default function PageHeader({
       </h1>
       <p className="text-forestGreen font-medium mt-3 text-xl">
         {message}
-        <span className=" text-orange">{username}</span>
+        <span className=" text-orange"> {username}</span>
       </p>
     </section>
   );

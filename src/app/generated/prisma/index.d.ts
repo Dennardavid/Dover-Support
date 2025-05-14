@@ -29,7 +29,7 @@ export type Tickets = $Result.DefaultSelection<Prisma.$TicketsPayload>
  */
 export namespace $Enums {
   export const Roles: {
-  BASIC: 'BASIC',
+  USER: 'USER',
   ADMIN: 'ADMIN'
 };
 
@@ -1023,6 +1023,7 @@ export namespace Prisma {
     name: string | null
     discipline: string | null
     password: string | null
+    role: $Enums.Roles | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1031,6 +1032,7 @@ export namespace Prisma {
     name: string | null
     discipline: string | null
     password: string | null
+    role: $Enums.Roles | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1039,6 +1041,7 @@ export namespace Prisma {
     name: number
     discipline: number
     password: number
+    role: number
     _all: number
   }
 
@@ -1049,6 +1052,7 @@ export namespace Prisma {
     name?: true
     discipline?: true
     password?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1057,6 +1061,7 @@ export namespace Prisma {
     name?: true
     discipline?: true
     password?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1065,6 +1070,7 @@ export namespace Prisma {
     name?: true
     discipline?: true
     password?: true
+    role?: true
     _all?: true
   }
 
@@ -1146,6 +1152,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role: $Enums.Roles
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1171,6 +1178,7 @@ export namespace Prisma {
     name?: boolean
     discipline?: boolean
     password?: boolean
+    role?: boolean
     Tickets?: boolean | User$TicketsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1181,6 +1189,7 @@ export namespace Prisma {
     name?: boolean
     discipline?: boolean
     password?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1189,6 +1198,7 @@ export namespace Prisma {
     name?: boolean
     discipline?: boolean
     password?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1197,9 +1207,10 @@ export namespace Prisma {
     name?: boolean
     discipline?: boolean
     password?: boolean
+    role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "discipline" | "password", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "discipline" | "password" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Tickets?: boolean | User$TicketsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1218,6 +1229,7 @@ export namespace Prisma {
       name: string
       discipline: string
       password: string
+      role: $Enums.Roles
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1647,6 +1659,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly discipline: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Roles'>
   }
     
 
@@ -3206,7 +3219,8 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     discipline: 'discipline',
-    password: 'password'
+    password: 'password',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -3263,6 +3277,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Roles'
+   */
+  export type EnumRolesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Roles'>
+    
+
+
+  /**
+   * Reference to a field of type 'Roles[]'
+   */
+  export type ListEnumRolesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Roles[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -3302,6 +3330,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     discipline?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    role?: EnumRolesFilter<"User"> | $Enums.Roles
     Tickets?: TicketsListRelationFilter
   }
 
@@ -3311,6 +3340,7 @@ export namespace Prisma {
     name?: SortOrder
     discipline?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     Tickets?: TicketsOrderByRelationAggregateInput
   }
 
@@ -3323,6 +3353,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     discipline?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    role?: EnumRolesFilter<"User"> | $Enums.Roles
     Tickets?: TicketsListRelationFilter
   }, "id" | "email">
 
@@ -3332,6 +3363,7 @@ export namespace Prisma {
     name?: SortOrder
     discipline?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -3346,6 +3378,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     discipline?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRolesWithAggregatesFilter<"User"> | $Enums.Roles
   }
 
   export type TicketsWhereInput = {
@@ -3429,6 +3462,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role?: $Enums.Roles
     Tickets?: TicketsCreateNestedManyWithoutAuthorInput
   }
 
@@ -3438,6 +3472,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role?: $Enums.Roles
     Tickets?: TicketsUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -3447,6 +3482,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
     Tickets?: TicketsUpdateManyWithoutAuthorNestedInput
   }
 
@@ -3456,6 +3492,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
     Tickets?: TicketsUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -3465,6 +3502,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role?: $Enums.Roles
   }
 
   export type UserUpdateManyMutationInput = {
@@ -3473,6 +3511,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -3481,6 +3520,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
   export type TicketsCreateInput = {
@@ -3581,6 +3621,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumRolesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Roles | EnumRolesFieldRefInput<$PrismaModel>
+    in?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolesFilter<$PrismaModel> | $Enums.Roles
+  }
+
   export type TicketsListRelationFilter = {
     every?: TicketsWhereInput
     some?: TicketsWhereInput
@@ -3597,6 +3644,7 @@ export namespace Prisma {
     name?: SortOrder
     discipline?: SortOrder
     password?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -3605,6 +3653,7 @@ export namespace Prisma {
     name?: SortOrder
     discipline?: SortOrder
     password?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -3613,6 +3662,7 @@ export namespace Prisma {
     name?: SortOrder
     discipline?: SortOrder
     password?: SortOrder
+    role?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3631,6 +3681,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumRolesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Roles | EnumRolesFieldRefInput<$PrismaModel>
+    in?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolesWithAggregatesFilter<$PrismaModel> | $Enums.Roles
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRolesFilter<$PrismaModel>
+    _max?: NestedEnumRolesFilter<$PrismaModel>
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -3717,6 +3777,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type EnumRolesFieldUpdateOperationsInput = {
+    set?: $Enums.Roles
+  }
+
   export type TicketsUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<TicketsCreateWithoutAuthorInput, TicketsUncheckedCreateWithoutAuthorInput> | TicketsCreateWithoutAuthorInput[] | TicketsUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: TicketsCreateOrConnectWithoutAuthorInput | TicketsCreateOrConnectWithoutAuthorInput[]
@@ -3777,6 +3841,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumRolesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Roles | EnumRolesFieldRefInput<$PrismaModel>
+    in?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolesFilter<$PrismaModel> | $Enums.Roles
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -3803,6 +3874,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumRolesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Roles | EnumRolesFieldRefInput<$PrismaModel>
+    in?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Roles[] | ListEnumRolesFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolesWithAggregatesFilter<$PrismaModel> | $Enums.Roles
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRolesFilter<$PrismaModel>
+    _max?: NestedEnumRolesFilter<$PrismaModel>
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -3899,6 +3980,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role?: $Enums.Roles
   }
 
   export type UserUncheckedCreateWithoutTicketsInput = {
@@ -3907,6 +3989,7 @@ export namespace Prisma {
     name: string
     discipline: string
     password: string
+    role?: $Enums.Roles
   }
 
   export type UserCreateOrConnectWithoutTicketsInput = {
@@ -3931,6 +4014,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
   export type UserUncheckedUpdateWithoutTicketsInput = {
@@ -3939,6 +4023,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     discipline?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
   export type TicketsCreateManyAuthorInput = {
