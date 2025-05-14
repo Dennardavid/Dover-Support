@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { formatDate } from "@/lib/dateFormater";
 
 const statusStyles: Record<string, string> = {
-  open: "bg-cyan-100 text-cyan-700",
-  completed: "bg-orange-100 text-orange-700",
+  open: "bg-orange-100 text-orange-700",
+  completed: "bg-cyan-100 text-cyan-700",
 };
 
 type Ticket = {

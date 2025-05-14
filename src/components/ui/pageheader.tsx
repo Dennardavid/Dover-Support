@@ -1,14 +1,21 @@
-import { BsPerson } from "react-icons/bs";
-
-export default function PageHeader({ description }: { description: string }) {
+export default function PageHeader({
+  description,
+  message,
+  username,
+}: {
+  description: string;
+  message: string;
+  username: string | null | undefined;
+}) {
   return (
-    <section className="mt-7 flex justify-between items-center">
+    <section className="mt-7 flex flex-col gap-2">
       <h1 className="text-4xl font-extrabold text-forestGreen">
         {description}
       </h1>
-      <button className="mr-5 bg-forestGreen flex items-center justify-center p-3 rounded-full hover:cursor-pointer" aria-label="profile">
-        <BsPerson color="white" fontSize={30} />
-      </button>
+      <p className="text-forestGreen font-medium mt-3 text-xl">
+        {message}
+        <span className=" text-orange">{username}</span>
+      </p>
     </section>
   );
 }

@@ -5,14 +5,16 @@ import { redirect } from "next/navigation";
 
 export default async function Tickets() {
   const session = await auth();
-    // console.log("SESSION:", session);
-  
-    if (!session?.user) {
-      return redirect("/");
-    }
+  // console.log("SESSION:", session);
+
+  const userName = session?.user?.name;
+
+  if (!session?.user) {
+    return redirect("/");
+  }
   return (
     <>
-      <PageHeader description="Create Ticket" />
+      <PageHeader description="Create Ticket" message="" username="" />
       <TicketForm />
     </>
   );
