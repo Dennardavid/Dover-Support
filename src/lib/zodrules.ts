@@ -46,3 +46,10 @@ export const loginValidation = z.object({
     }),
   password: z.string().trim().min(1, { message: "Password is required" }),
 });
+
+export const ticketValidation = z.object({
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Title is required" }),
+  category: z.string(),
+  priority: z.string(),
+});

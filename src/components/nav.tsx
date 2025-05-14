@@ -33,9 +33,9 @@ export default function Navigation() {
   return (
     <nav className="bg-forestGreen w-[20%] h-dvh flex flex-col justify-between py-5 px-4">
       <div className="mt-8">
-        <div className="flex items-center gap-5">
+        <div className="flex flex-col items-center gap-5">
           <Image src={img.Logo} alt="prado" quality={100} priority={true} />
-          <h1 className="text-white text-3xl font-bold">Support Tickets</h1>
+          <h1 className="text-white text-5xl font-extrabold">HELP DESK</h1>
         </div>
 
         <ul className="space-y-6 mt-25">
