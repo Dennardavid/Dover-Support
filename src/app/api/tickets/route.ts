@@ -1,0 +1,31 @@
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { auth } from "@/auth";
+
+export async function GET() {
+  const session = await auth();
+
+  const userEmail = session?.user?.email;
+
+  if (!userEmail) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const userTickets = await prisma.tickets.findMany({
+      where: {
+        author: {
+          email: userEmail,
+        },
+      },
+    });
+
+    return NextResponse.json(userTickets);
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch tickets" },
+      { status: 500 }
+    );
+  }
+}

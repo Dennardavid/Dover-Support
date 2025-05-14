@@ -2,7 +2,7 @@ import { auth } from "./auth";
 import { NextResponse } from "next/server";
 
 const protectedRoutes = ["/users", "/admin"];
-const authPageRoutes = ["/"];
+const authPageRoutes = ["/", "/signup"];
 const apiAuthPrefix = "/api/auth";
 
 export default auth(async (req) => {
