@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const session = await auth();
 
-   const userName = session?.user?.name;
+  const userName = session?.user?.name;
 
   if (!session?.user) {
     return redirect("/");
@@ -15,7 +15,11 @@ export default async function Home() {
 
   return (
     <>
-      <PageHeader description="Dashboard" message="Welcome" username={userName}/>
+      <PageHeader
+        description="Dashboard"
+        message="Welcome"
+        username={userName}
+      />
       <Summary />
       <TicketsHistory description="Ticket History" />
     </>
