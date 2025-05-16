@@ -4,24 +4,31 @@ import { auth } from "@/auth";
 
 export async function GET() {
   const session = await auth();
-
   const userEmail = session?.user?.email;
+  const userRole = session?.user?.role;
 
   if (!userEmail) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const userTickets = await prisma.tickets.findMany({
-      where: {
-        author: {
-          email: userEmail,
-        },
-      },
-      orderBy: {
-        createAt: "desc",
-      },
-    });
+    const userTickets =
+      userRole === "ADMIN"
+        ? await prisma.tickets.findMany({
+            orderBy: {
+              createAt: "desc",
+            },
+          })
+        : await prisma.tickets.findMany({
+            where: {
+              author: {
+                email: userEmail,
+              },
+            },
+            orderBy: {
+              createAt: "desc",
+            },
+          });
 
     return NextResponse.json(userTickets);
   } catch (error) {

@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/dateFormater";
 
 const statusStyles: Record<string, string> = {
   open: "bg-orange-100 text-orange-700",
-  completed: "bg-cyan-100 text-cyan-700",
+  closed: "bg-cyan-100 text-cyan-700",
 };
 
 type Ticket = {
@@ -54,7 +54,7 @@ export default function TicketsHistory({
 
       <div className="space-y-4">
         {tickets.length === 0 ? (
-          <p className="text-center text-slate-500">No tickets found.</p>
+          <p className="text-center text-slate-500 mt-20">No tickets found.</p>
         ) : (
           tickets.map((ticket, index) => (
             <div

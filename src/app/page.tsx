@@ -1,6 +1,7 @@
 "use client";
 
 import { img } from "@/assets/index";
+import { getSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -8,7 +9,6 @@ import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 import LoginButton from "@/components/ui/loginButton";
 import { loginValidation } from "@/lib/zodrules";
-import { boolean } from "zod";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -53,10 +53,16 @@ export default function Home() {
     } else {
       toast.success("Successful");
 
+      const session = await getSession();
+
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
-        window.location.href = "/users";
-      }, 2000);
+        if (session?.user.role === "ADMIN") {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/users";
+        }
+      }, 1000);
       setLoading(false);
       setEmail("");
       setPassword("");

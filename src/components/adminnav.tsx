@@ -6,7 +6,7 @@ import Link from "next/link";
 import { IoHomeOutline } from "react-icons/io5";
 import { GrAnalytics } from "react-icons/gr";
 import { GrScorecard } from "react-icons/gr";
-import { IoIosPower } from "react-icons/io";
+import LogoutButton from "./ui/logoutButton";
 import { usePathname } from "next/navigation"; // Import usePathname hook
 
 export default function AdminNavigation() {
@@ -32,9 +32,9 @@ export default function AdminNavigation() {
   return (
     <nav className="bg-forestGreen w-[20%] h-dvh flex flex-col justify-between py-5 px-4">
       <div className="mt-8">
-        <div className="flex items-center gap-5">
+        <div className="flex flex-col items-center gap-5">
           <Image src={img.Logo} alt="prado" quality={100} priority={true} />
-          <h1 className="text-white text-3xl font-bold">Admin Page</h1>
+          <h1 className="text-white text-5xl font-extrabold">ADMIN</h1>
         </div>
 
         <ul className="space-y-6 mt-25">
@@ -50,7 +50,7 @@ export default function AdminNavigation() {
                   href={link.href}
                   className={`text-white bg-[#016a81]/50 flex justify-center gap-4 w-full rounded-xl py-2 ${
                     isActive ? " bg-amber-400" : ""
-                  }`} // Apply active link styling
+                  }`}
                 >
                   {link.Icon}
                   {link.label}
@@ -61,19 +61,7 @@ export default function AdminNavigation() {
         </ul>
       </div>
 
-      <form
-        action="../auth/signout"
-        method="POST"
-        className="flex items-center"
-      >
-        <button
-          type="submit"
-          className="w-full text-white bg-red-500 hover:bg-red-700 rounded-xl py-2 transition flex justify-center items-center gap-2"
-        >
-          <IoIosPower color="white" fontSize={25} />
-          Logout
-        </button>
-      </form>
+      <LogoutButton />
     </nav>
   );
 }

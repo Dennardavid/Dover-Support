@@ -62,7 +62,7 @@ export default function SignUp() {
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         window.location.href = "/";
-      }, 2000);
+      }, 1000);
 
       setForm({
         name: "",

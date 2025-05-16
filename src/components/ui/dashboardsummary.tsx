@@ -31,7 +31,7 @@ export default function Summary() {
   const allCount = tickets.length;
   const inProcessCount = tickets.filter((t: any) => t.status === "open").length;
   const completedCount = tickets.filter(
-    (t: any) => t.status === "completed"
+    (t: any) => t.status === "closed"
   ).length;
 
   const stats = [
@@ -52,7 +52,7 @@ export default function Summary() {
       iconBg: "bg-cyan-200",
     },
     {
-      label: "Completed Ticket",
+      label: "Closed Tickets",
       count: completedCount,
       bg: "bg-blue-100",
       text: "text-blue-600",
