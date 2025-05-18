@@ -7,5 +7,5 @@ export function formatDate(dateString: string): string {
   const hours = `${date.getHours()}`.padStart(2, "0");
   const minutes = `${date.getMinutes()}`.padStart(2, "0");
 
-  return `${day}-${month}-${year} (${hours}:${minutes})`;
+  return `${month}/${day}/${year} (${hours}:${minutes})`;
 }

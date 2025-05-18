@@ -15,6 +15,16 @@ export async function GET() {
     const userTickets =
       userRole === "ADMIN"
         ? await prisma.tickets.findMany({
+            include: {
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  discipline: true,
+                },
+              },
+            },
             orderBy: {
               createAt: "desc",
             },
