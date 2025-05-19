@@ -31,33 +31,33 @@ export default function TicketModal({
       <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl relative">
         <button
           onClick={onClose}
-          className="absolute -top-2 bg-orange rounded-full p-2 -right-2 text-white hover:text-forestGreen"
+          className="absolute -top-2 bg-forestGreen rounded-full p-2 -right-2 text-white cursor-pointer"
         >
-          <IoClose size={25}/>
+          <IoClose size={25} />
         </button>
 
         <h2 className="text-xl font-bold mb-2 text-forestGreen">
           {ticket.title}
         </h2>
-        <p className="text-sm text-gray-600 mb-1">
-          <strong>Name:</strong> {ticket.author.name}
+        <p className="text-md text-gray-600 mb-1">
+          <strong>Name:</strong> {ticket.author?.name}
         </p>
-        <p className="text-sm text-gray-600 mb-1">
-          <strong>Discipline:</strong> {ticket.author.discipline}
+        <p className="text-lg text-gray-600 mb-1">
+          <strong>Discipline:</strong> {ticket.author?.discipline}
         </p>
-        <p className="text-sm text-gray-600 mb-1">
+        <p className="text-lg text-gray-600 mb-1">
           <strong>Category:</strong> {ticket.category}
         </p>
-        <p className="text-sm text-gray-600 mb-1">
+        <p className="text-lg text-gray-600 mb-1">
           <strong>Description:</strong> {ticket.description}
         </p>
-        <p className="text-sm text-gray-600 mb-1">
+        <p className="text-lg text-gray-600 mb-1">
           <strong>Status:</strong> {ticket.status}
         </p>
-        <p className="text-sm text-gray-600 mb-1">
+        <p className="text-lg text-gray-600 mb-1">
           <strong>Priority:</strong> {ticket.priority}
         </p>
-        <p className="text-sm text-gray-600">
+        <p className="text-lg text-gray-600">
           <strong>Date created:</strong>{" "}
           {new Date(ticket.createAt).toLocaleString()}
         </p>

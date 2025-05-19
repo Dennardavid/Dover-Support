@@ -139,13 +139,13 @@ export default function TicketForm() {
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
             >
-              <option value="" disabled selected>
+              <option defaultValue="Select a category" disabled>
                 Select a category
               </option>
               <option value="Hardware">Hardware</option>
               <option value="Software">Software</option>
               <option value="Network">Network</option>
-              <option value="Network">Others</option>
+              <option value="Others">Others</option>
             </select>
           </div>
 
@@ -164,7 +164,7 @@ export default function TicketForm() {
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
             >
-              <option value="" disabled selected>
+              <option defaultValue="Select a category" disabled>
                 Select a category
               </option>
               <option value="Low">Low</option>

@@ -13,7 +13,7 @@ export default async function Tickets() {
   return (
     <>
       <PageHeader description="Ticket History" message="" username=""/>
-      <TicketsHistory description=" " />
+      <TicketsHistory description="" />
     </>
   );
 }

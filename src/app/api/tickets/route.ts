@@ -35,6 +35,16 @@ export async function GET() {
                 email: userEmail,
               },
             },
+            include: {
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  discipline: true,
+                },
+              },
+            },
             orderBy: {
               createAt: "desc",
             },
