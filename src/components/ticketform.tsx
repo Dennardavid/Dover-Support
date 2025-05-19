@@ -72,7 +72,7 @@ export default function TicketForm() {
       method="POST"
       className="bg-white mt-8 p-6 rounded-lg shadow-md w-full"
     >
-      <h2 className="text-3xl font-bold mb-6 text-[#1b1b1b]">Ticket Form</h2>
+      <h2 className="text-3xl font-bold mb-6 text-forestGreen">Ticket Form</h2>
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left column - inputs */}

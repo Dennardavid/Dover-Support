@@ -14,10 +14,10 @@ function LoginButton() {
   return (
     <button
       onClick={() => handleLogin()}
-      className="bg-forestGreen text-gray w-full rounded-md p-2 hover:cursor-pointer shadow-md flex items-center justify-center gap-2"
+      className="bg-forestGreen text-gray w-full rounded-md p-2 hover:cursor-not-allowed shadow-md flex items-center justify-center gap-2"
       disabled={isLoading}
     >
-      <TiVendorMicrosoft size={30}/>
+      <TiVendorMicrosoft size={30} />
       {isLoading ? "Signing in..." : "Login With Microsoft"}
     </button>
   );

@@ -2,6 +2,7 @@ import PageHeader from "@/components/ui/pageheader";
 import TicketsHistory from "@/components/ui/tickethistory";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import DownloadTickets from "@/components/downloadTickets";
 
 export default async function Tickets() {
   const session = await auth();
@@ -17,7 +18,11 @@ export default async function Tickets() {
   }
   return (
     <>
-      <PageHeader description="Admin Ticket History" message="" username=""/>
+      <div className="flex items-center justify-between">
+        <PageHeader description="All Received Tickets" message="" username="" />
+        <DownloadTickets />
+      </div>
+
       <TicketsHistory description=" " />
     </>
   );
