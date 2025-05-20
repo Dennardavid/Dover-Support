@@ -13,7 +13,7 @@ function LoginButton() {
   };
   return (
     <button
-      onClick={() => handleLogin()}
+      // onClick={() => handleLogin()}
       className="bg-forestGreen text-gray w-full rounded-md p-2 hover:cursor-not-allowed shadow-md flex items-center justify-center gap-2"
       disabled={isLoading}
     >
