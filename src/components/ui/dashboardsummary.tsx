@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaCaretRight } from "react-icons/fa";
+import { TfiTicket } from "react-icons/tfi";
 
 export default function Summary() {
   const [tickets, setTickets] = useState([]);
@@ -80,7 +80,7 @@ export default function Summary() {
             <div
               className={`w-8 h-8 flex items-center justify-center rounded-full ${stat.iconBg}`}
             >
-              <FaCaretRight className={`${stat.text} w-4 h-4`} />
+              <TfiTicket className={`${stat.text} w-4 h-4`} />
             </div>
           </div>
         ))

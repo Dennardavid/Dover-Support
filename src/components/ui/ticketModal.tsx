@@ -74,6 +74,28 @@ export default function TicketDetailsModal({
     }
   };
 
+  const handleOpenTicket = async () => {
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/reopenTicket", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: ticket.id,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to Reopen ticket");
+
+      toast.success("Ticket Reopened successfully.");
+      setTimeout(() => onClose(), 1000);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const statusBadge =
     ticket.status === "open"
       ? "bg-green-100 text-green-800"
@@ -178,7 +200,9 @@ export default function TicketDetailsModal({
           }
           header={ticket.status === "open" ? "Confirm Close" : "Confirm Reopen"}
           onCancel={() => setShowConfirmModal(false)}
-          onConfirm={handleCloseTicket}
+          onConfirm={
+            ticket.status === "closed" ? handleOpenTicket : handleCloseTicket
+          }
           isLoading={isSubmitting}
         />
       )}

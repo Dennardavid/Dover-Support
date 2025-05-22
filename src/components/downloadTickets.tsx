@@ -13,6 +13,7 @@ type Ticket = {
   status: string;
   createAt: string;
   updatedAt: string;
+  workNote: string;
   author: {
     name: string;
     email: string;
@@ -45,6 +46,7 @@ export default function DownloadTickets() {
       "Author Name": ticket.author?.name || "",
       "Author Email": ticket.author?.email || "",
       Discipline: ticket.author?.discipline || "",
+      workNote: ticket?.workNote || "",
     }));
 
     jsonToCsvExport({
