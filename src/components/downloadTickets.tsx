@@ -25,7 +25,7 @@ export default function DownloadTickets() {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      const res = await fetch("/api/tickets");
+      const res = await fetch("/api/ticketsDetail");
       const data = await res.json();
       setTickets(data);
     };
@@ -57,7 +57,7 @@ export default function DownloadTickets() {
   return (
     <button
       onClick={handleDownload}
-      className="px-4 py-2 bg-forestGreen text-white rounded flex justify-center items-center gap-2"
+      className="px-4 py-2 bg-forestGreen hover:bg-[#025E50] transition-all delay-100 text-white rounded flex justify-center items-center gap-2"
     >
       <MdOutlineFileDownload size={25} />
       Download CSV

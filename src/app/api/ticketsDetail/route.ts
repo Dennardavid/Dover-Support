@@ -26,7 +26,7 @@ export async function GET() {
               },
             },
             orderBy: {
-              createAt: "desc",
+              createdAt: "desc",
             },
           })
         : await prisma.tickets.findMany({
@@ -46,7 +46,7 @@ export async function GET() {
               },
             },
             orderBy: {
-              createAt: "desc",
+              createdAt: "desc",
             },
           });
 

@@ -24,7 +24,7 @@ model User {
   name       String
   discipline String
   password   String
-  role       Roles      @default(USER)
+  role       Roles     @default(USER)
   Tickets    Tickets[]
 }
 
@@ -35,8 +35,9 @@ model Tickets {
   category    String
   priority    String
   status      String   @default("open")
-  createAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  workNote    String?
   author      User     @relation(fields: [userId], references: [id])
   userId      String
 }

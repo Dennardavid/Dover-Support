@@ -16,7 +16,7 @@ type Ticket = {
   category: string;
   priority: string;
   status: string;
-  createAt: string;
+  createdAt: string;
   updatedAt: string;
   author: {
     id: string;
@@ -37,7 +37,7 @@ export default function TicketsHistory({
   useEffect(() => {
     async function fetchTickets() {
       try {
-        const res = await fetch("/api/tickets");
+        const res = await fetch("/api/ticketsDetail");
         if (!res.ok) throw new Error("Failed to fetch");
 
         const data = await res.json();
@@ -87,7 +87,7 @@ export default function TicketsHistory({
                   <span className="md:hidden font-medium text-slate-500">
                     Date
                   </span>
-                  <span>{formatDate(ticket.createAt)}</span>
+                  <span>{formatDate(ticket.createdAt)}</span>
                 </div>
 
                 <div className="flex justify-between w-full md:contents">

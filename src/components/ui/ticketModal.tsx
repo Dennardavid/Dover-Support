@@ -1,6 +1,10 @@
 "use client";
 
-import { IoClose } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import ModalWrapper from "@/components/ui/modalWrapper";
+import ConfirmModal from "@/components/ui/confirmModal";
 
 type Ticket = {
   id: string;
@@ -9,7 +13,7 @@ type Ticket = {
   category: string;
   priority: string;
   status: string;
-  createAt: string;
+  createdAt: string;
   updatedAt: string;
   author: {
     id: string;
@@ -19,49 +23,165 @@ type Ticket = {
   };
 };
 
-export default function TicketModal({
+export default function TicketDetailsModal({
   ticket,
   onClose,
 }: {
   ticket: Ticket;
   onClose: () => void;
 }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl relative">
-        <button
-          onClick={onClose}
-          className="absolute -top-2 bg-forestGreen rounded-full p-2 -right-2 text-white cursor-pointer"
-        >
-          <IoClose size={25} />
-        </button>
+  const [workNote, setWorkNote] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { data: session } = useSession();
+  const isAdmin = session?.user.role === "ADMIN";
 
-        <h2 className="text-xl font-bold mb-2 text-forestGreen">
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        if (showConfirmModal) {
+          setShowConfirmModal(false);
+        } else {
+          onClose();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showConfirmModal, onClose]);
+
+  const handleCloseTicket = async () => {
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/updateTicket", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: ticket.id,
+          message: workNote.trim() || null,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to close ticket");
+
+      toast.success("Ticket closed successfully.");
+      setTimeout(() => onClose(), 1000);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const statusBadge =
+    ticket.status === "open"
+      ? "bg-green-100 text-green-800"
+      : "bg-red-100 text-red-800";
+
+  const priorityBadge = {
+    high: "bg-red-100 text-red-700",
+    medium: "bg-yellow-100 text-yellow-700",
+    low: "bg-blue-100 text-blue-700",
+  };
+
+  return (
+    <>
+      <ModalWrapper onClose={onClose}>
+        <h2 className="text-2xl font-semibold mb-4 text-forestGreen">
           {ticket.title}
         </h2>
-        <p className="text-md text-gray-600 mb-1">
-          <strong>Name:</strong> {ticket.author?.name}
-        </p>
-        <p className="text-lg text-gray-600 mb-1">
-          <strong>Discipline:</strong> {ticket.author?.discipline}
-        </p>
-        <p className="text-lg text-gray-600 mb-1">
-          <strong>Category:</strong> {ticket.category}
-        </p>
-        <p className="text-lg text-gray-600 mb-1">
-          <strong>Description:</strong> {ticket.description}
-        </p>
-        <p className="text-lg text-gray-600 mb-1">
-          <strong>Status:</strong> {ticket.status}
-        </p>
-        <p className="text-lg text-gray-600 mb-1">
-          <strong>Priority:</strong> {ticket.priority}
-        </p>
-        <p className="text-lg text-gray-600">
-          <strong>Date created:</strong>{" "}
-          {new Date(ticket.createAt).toLocaleString()}
-        </p>
-      </div>
-    </div>
+
+        <div className="grid grid-cols-1 gap-y-4 text-gray-700 text-base">
+          <div>
+            <strong>Name:</strong> {ticket.author?.name}
+          </div>
+          <div>
+            <strong>Discipline:</strong> {ticket.author?.discipline}
+          </div>
+          <div>
+            <strong>Category:</strong> {ticket.category}
+          </div>
+          <div>
+            <strong>Description:</strong> {ticket.description}
+          </div>
+          <div>
+            <strong>Status:</strong>{" "}
+            <span
+              className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${statusBadge}`}
+            >
+              {ticket.status.toUpperCase()}
+            </span>
+          </div>
+          <div>
+            <strong>Priority:</strong>{" "}
+            <span
+              className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${
+                priorityBadge[
+                  ticket.priority.toLowerCase() as "low" | "medium" | "high"
+                ]
+              }`}
+            >
+              {ticket.priority.toUpperCase()}
+            </span>
+          </div>
+          <div>
+            <strong>Date created:</strong>{" "}
+            {new Date(ticket.createdAt).toLocaleString()}
+          </div>
+          {ticket.status === "closed" && (
+            <div>
+              <strong>Date closed</strong>{" "}
+              {new Date(ticket.updatedAt).toLocaleString()}
+            </div>
+          )}
+        </div>
+
+        {/* Display Close Ticket button for ADMIN */}
+        {ticket.status === "open" && isAdmin && (
+          <div className="mt-6 space-y-4">
+            <textarea
+              rows={3}
+              placeholder="Optional: Notes about the work done..."
+              className="w-full resize-none border-gray-300 focus:ring-1 focus:ring-forestGreen p-3 border rounded-md focus:outline-none"
+              value={workNote}
+              onChange={(e) => setWorkNote(e.target.value)}
+            />
+            <button
+              onClick={() => setShowConfirmModal(true)}
+              className="bg-forestGreen hover:bg-[#025E50] delay-100 text-white px-4 py-2 rounded-lg w-full transition"
+            >
+              Close Ticket
+            </button>
+          </div>
+        )}
+
+        {/* Display Reopen Ticket button */}
+        {ticket.status === "closed" && (
+          <div className="mt-6 space-y-4">
+            <button
+              onClick={() => setShowConfirmModal(true)}
+              className="bg-forestGreen hover:bg-[#025E50] delay-100 text-white px-4 py-2 rounded-lg w-full transition"
+            >
+              Re Open Ticket
+            </button>
+          </div>
+        )}
+      </ModalWrapper>
+
+      {showConfirmModal && (
+        <ConfirmModal
+          message={
+            ticket.status === "open"
+              ? "Are you sure you want to close this ticket?"
+              : "Are you sure you want to reopen this ticket?"
+          }
+          header={ticket.status === "open" ? "Confirm Close" : "Confirm Reopen"}
+          onCancel={() => setShowConfirmModal(false)}
+          onConfirm={handleCloseTicket}
+          isLoading={isSubmitting}
+        />
+      )}
+    </>
   );
 }

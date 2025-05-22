@@ -49,7 +49,11 @@ export const loginValidation = z.object({
 
 export const ticketValidation = z.object({
   title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Title is required" }),
-  category: z.string(),
-  priority: z.string(),
+  description: z.string().min(1, { message: "Description is required" }),
+  category: z.enum(["Hardware", "Software", "Network", "Others"], {
+    errorMap: () => ({ message: "Please select a valid category" }),
+  }),
+  priority: z.enum(["Low", "Medium", "High"], {
+    errorMap: () => ({ message: "Please select a valid priority" }),
+  }),
 });

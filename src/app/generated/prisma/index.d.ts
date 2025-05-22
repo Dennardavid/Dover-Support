@@ -2107,8 +2107,9 @@ export namespace Prisma {
     category: string | null
     priority: string | null
     status: string | null
-    createAt: Date | null
+    createdAt: Date | null
     updatedAt: Date | null
+    workNote: string | null
     userId: string | null
   }
 
@@ -2119,8 +2120,9 @@ export namespace Prisma {
     category: string | null
     priority: string | null
     status: string | null
-    createAt: Date | null
+    createdAt: Date | null
     updatedAt: Date | null
+    workNote: string | null
     userId: string | null
   }
 
@@ -2131,8 +2133,9 @@ export namespace Prisma {
     category: number
     priority: number
     status: number
-    createAt: number
+    createdAt: number
     updatedAt: number
+    workNote: number
     userId: number
     _all: number
   }
@@ -2145,8 +2148,9 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
-    createAt?: true
+    createdAt?: true
     updatedAt?: true
+    workNote?: true
     userId?: true
   }
 
@@ -2157,8 +2161,9 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
-    createAt?: true
+    createdAt?: true
     updatedAt?: true
+    workNote?: true
     userId?: true
   }
 
@@ -2169,8 +2174,9 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
-    createAt?: true
+    createdAt?: true
     updatedAt?: true
+    workNote?: true
     userId?: true
     _all?: true
   }
@@ -2254,8 +2260,9 @@ export namespace Prisma {
     category: string
     priority: string
     status: string
-    createAt: Date
+    createdAt: Date
     updatedAt: Date
+    workNote: string | null
     userId: string
     _count: TicketsCountAggregateOutputType | null
     _min: TicketsMinAggregateOutputType | null
@@ -2283,8 +2290,9 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
-    createAt?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
+    workNote?: boolean
     userId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tickets"]>
@@ -2296,8 +2304,9 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
-    createAt?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
+    workNote?: boolean
     userId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tickets"]>
@@ -2309,8 +2318,9 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
-    createAt?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
+    workNote?: boolean
     userId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tickets"]>
@@ -2322,12 +2332,13 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
-    createAt?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
+    workNote?: boolean
     userId?: boolean
   }
 
-  export type TicketsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "priority" | "status" | "createAt" | "updatedAt" | "userId", ExtArgs["result"]["tickets"]>
+  export type TicketsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "priority" | "status" | "createdAt" | "updatedAt" | "workNote" | "userId", ExtArgs["result"]["tickets"]>
   export type TicketsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2350,8 +2361,9 @@ export namespace Prisma {
       category: string
       priority: string
       status: string
-      createAt: Date
+      createdAt: Date
       updatedAt: Date
+      workNote: string | null
       userId: string
     }, ExtArgs["result"]["tickets"]>
     composites: {}
@@ -2783,8 +2795,9 @@ export namespace Prisma {
     readonly category: FieldRef<"Tickets", 'String'>
     readonly priority: FieldRef<"Tickets", 'String'>
     readonly status: FieldRef<"Tickets", 'String'>
-    readonly createAt: FieldRef<"Tickets", 'DateTime'>
+    readonly createdAt: FieldRef<"Tickets", 'DateTime'>
     readonly updatedAt: FieldRef<"Tickets", 'DateTime'>
+    readonly workNote: FieldRef<"Tickets", 'String'>
     readonly userId: FieldRef<"Tickets", 'String'>
   }
     
@@ -3233,8 +3246,9 @@ export namespace Prisma {
     category: 'category',
     priority: 'priority',
     status: 'status',
-    createAt: 'createAt',
+    createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    workNote: 'workNote',
     userId: 'userId'
   };
 
@@ -3255,6 +3269,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -3391,8 +3413,9 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
-    createAt?: DateTimeFilter<"Tickets"> | Date | string
+    createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
+    workNote?: StringNullableFilter<"Tickets"> | string | null
     userId?: StringFilter<"Tickets"> | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -3404,8 +3427,9 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
-    createAt?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    workNote?: SortOrderInput | SortOrder
     userId?: SortOrder
     author?: UserOrderByWithRelationInput
   }
@@ -3420,8 +3444,9 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
-    createAt?: DateTimeFilter<"Tickets"> | Date | string
+    createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
+    workNote?: StringNullableFilter<"Tickets"> | string | null
     userId?: StringFilter<"Tickets"> | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -3433,8 +3458,9 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
-    createAt?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    workNote?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: TicketsCountOrderByAggregateInput
     _max?: TicketsMaxOrderByAggregateInput
@@ -3451,8 +3477,9 @@ export namespace Prisma {
     category?: StringWithAggregatesFilter<"Tickets"> | string
     priority?: StringWithAggregatesFilter<"Tickets"> | string
     status?: StringWithAggregatesFilter<"Tickets"> | string
-    createAt?: DateTimeWithAggregatesFilter<"Tickets"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tickets"> | Date | string
+    workNote?: StringNullableWithAggregatesFilter<"Tickets"> | string | null
     userId?: StringWithAggregatesFilter<"Tickets"> | string
   }
 
@@ -3530,8 +3557,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
     author: UserCreateNestedOneWithoutTicketsInput
   }
 
@@ -3542,8 +3570,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
     userId: string
   }
 
@@ -3554,8 +3583,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
     author?: UserUpdateOneRequiredWithoutTicketsNestedInput
   }
 
@@ -3566,8 +3596,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -3578,8 +3609,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
     userId: string
   }
 
@@ -3590,8 +3622,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TicketsUncheckedUpdateManyInput = {
@@ -3601,8 +3634,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -3704,9 +3738,29 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type TicketsCountOrderByAggregateInput = {
@@ -3716,8 +3770,9 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
-    createAt?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    workNote?: SortOrder
     userId?: SortOrder
   }
 
@@ -3728,8 +3783,9 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
-    createAt?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    workNote?: SortOrder
     userId?: SortOrder
   }
 
@@ -3740,8 +3796,9 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
-    createAt?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    workNote?: SortOrder
     userId?: SortOrder
   }
 
@@ -3757,6 +3814,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type TicketsCreateNestedManyWithoutAuthorInput = {
@@ -3817,6 +3892,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type UserUpdateOneRequiredWithoutTicketsNestedInput = {
@@ -3897,6 +3976,20 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3911,6 +4004,34 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type TicketsCreateWithoutAuthorInput = {
     id?: string
     title: string
@@ -3918,8 +4039,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
   }
 
   export type TicketsUncheckedCreateWithoutAuthorInput = {
@@ -3929,8 +4051,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
   }
 
   export type TicketsCreateOrConnectWithoutAuthorInput = {
@@ -3969,8 +4092,9 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
-    createAt?: DateTimeFilter<"Tickets"> | Date | string
+    createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
+    workNote?: StringNullableFilter<"Tickets"> | string | null
     userId?: StringFilter<"Tickets"> | string
   }
 
@@ -4033,8 +4157,9 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
-    createAt?: Date | string
+    createdAt?: Date | string
     updatedAt?: Date | string
+    workNote?: string | null
   }
 
   export type TicketsUpdateWithoutAuthorInput = {
@@ -4044,8 +4169,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TicketsUncheckedUpdateWithoutAuthorInput = {
@@ -4055,8 +4181,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TicketsUncheckedUpdateManyWithoutAuthorInput = {
@@ -4066,8 +4193,9 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

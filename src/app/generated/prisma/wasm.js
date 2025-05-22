@@ -136,8 +136,9 @@ exports.Prisma.TicketsScalarFieldEnum = {
   category: 'category',
   priority: 'priority',
   status: 'status',
-  createAt: 'createAt',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  workNote: 'workNote',
   userId: 'userId'
 };
 
@@ -149,6 +150,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.Roles = exports.$Enums.Roles = {
   USER: 'USER',

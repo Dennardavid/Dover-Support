@@ -17,7 +17,7 @@ export default async function Home() {
     <>
       <PageHeader
         description="Dashboard"
-        message="Welcome"
+        message="Welcome,"
         username={userName}
       />
       <Summary />

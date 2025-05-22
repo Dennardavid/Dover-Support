@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ticketValidation } from "@/lib/zodrules";
+import ConfirmModal from "./ui/confirmModal";
 import { toast } from "sonner";
 
 export default function TicketForm() {
@@ -11,7 +12,8 @@ export default function TicketForm() {
     category: "",
     priority: "",
   });
-
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
@@ -22,10 +24,7 @@ export default function TicketForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setErrors({});
-
+  const validateForm = () => {
     const parsed = ticketValidation.safeParse(form);
 
     if (!parsed.success) {
@@ -36,8 +35,15 @@ export default function TicketForm() {
         }
       });
       setErrors(fieldErrors);
-      return;
+      return false;
     }
+
+    setErrors({});
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
 
     const response = await fetch("/api/createTicket", {
       method: "POST",
@@ -53,7 +59,7 @@ export default function TicketForm() {
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         window.location.href = "/users";
-      }, 2000);
+      }, 1000);
 
       setForm({
         title: "",
@@ -61,6 +67,7 @@ export default function TicketForm() {
         category: "",
         priority: "",
       });
+      setIsSubmitting(false);
     } else {
       toast.error(result.message);
     }
@@ -68,7 +75,6 @@ export default function TicketForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
       method="POST"
       className="bg-white mt-8 p-6 rounded-lg shadow-md w-full"
     >
@@ -139,14 +145,15 @@ export default function TicketForm() {
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
             >
-              <option defaultValue="Select a category">
-                Select a category
-              </option>
+              <option defaultValue="">Select a category</option>
               <option value="Hardware">Hardware</option>
               <option value="Software">Software</option>
               <option value="Network">Network</option>
               <option value="Others">Others</option>
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm">{errors.category}</p>
+            )}
           </div>
 
           <div>
@@ -164,13 +171,14 @@ export default function TicketForm() {
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
             >
-              <option defaultValue="Select a category">
-                Select a category
-              </option>
+              <option defaultValue="">Select a category</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+            {errors.priority && (
+              <p className="text-red-500 text-sm">{errors.priority}</p>
+            )}
           </div>
         </div>
       </div>
@@ -178,12 +186,28 @@ export default function TicketForm() {
       {/* Button aligned to the end (right) */}
       <div className="mt-6 flex justify-end">
         <button
-          type="submit"
-          className="bg-forestGreen text-white px-6 py-2 rounded-full hover:bg-orange transition"
+          type="button"
+          onClick={() => {
+            const isValid = validateForm();
+            if (isValid) {
+              setShowConfirmModal(true);
+            }
+          }}
+          className="bg-forestGreen text-white px-6 py-2 rounded-full hover:bg-[#025E50] transition"
         >
           Submit
         </button>
       </div>
+
+      {showConfirmModal && (
+        <ConfirmModal
+          header="Confirm Create"
+          message="Are you sure you want to create a ticket?"
+          onCancel={() => setShowConfirmModal(false)}
+          onConfirm={handleSubmit}
+          isLoading={isSubmitting}
+        />
+      )}
     </form>
   );
 }

@@ -10,7 +10,7 @@ export default function Summary() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const result = await fetch("/api/tickets");
+        const result = await fetch("/api/ticketsDetail");
         const data = await result.json();
         if (result.ok) {
           setTickets(data);
