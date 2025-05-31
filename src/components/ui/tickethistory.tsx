@@ -32,6 +32,7 @@ export default function TicketsHistory({
   description: string | null;
 }) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   useEffect(() => {
@@ -44,11 +45,15 @@ export default function TicketsHistory({
         setTickets(data);
       } catch (error) {
         console.error("Error fetching tickets:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchTickets();
   }, []);
+
+  const skeletonRows = Array(5).fill(null); 
 
   return (
     <>
@@ -58,14 +63,26 @@ export default function TicketsHistory({
         </h2>
 
         <div className="hidden md:grid grid-cols-4 gap-4 px-4 mb-2 text-sm font-medium text-slate-600">
-          <span>Title</span>
           <span>Date Created</span>
+          <span>Title</span>
           <span>Category</span>
           <span>Status</span>
         </div>
 
         <div className="space-y-4">
-          {tickets.length === 0 ? (
+          {loading ? (
+            skeletonRows.map((_, index) => (
+              <div
+                key={index}
+                className="flex flex-col md:grid md:grid-cols-4 gap-4 bg-gray-100 px-4 py-3 rounded-lg shadow-sm animate-pulse"
+              >
+                <div className="h-4 w-28 bg-gray-300 rounded"></div>
+                <div className="h-4 w-36 bg-gray-300 rounded"></div>
+                <div className="h-4 w-24 bg-gray-300 rounded"></div>
+                <div className="h-6 w-80 bg-gray-300 rounded-full"></div>
+              </div>
+            ))
+          ) : tickets.length === 0 ? (
             <p className="text-center text-slate-500 mt-20">
               No tickets found.
             </p>
@@ -80,14 +97,14 @@ export default function TicketsHistory({
                   <span className="md:hidden font-medium text-slate-500">
                     Name
                   </span>
-                  <span>{ticket.title}</span>
+                  <span>{formatDate(ticket.createdAt)}</span>
                 </div>
 
                 <div className="flex justify-between w-full md:contents">
                   <span className="md:hidden font-medium text-slate-500">
                     Date
                   </span>
-                  <span>{formatDate(ticket.createdAt)}</span>
+                  <span>{ticket.title}</span>
                 </div>
 
                 <div className="flex justify-between w-full md:contents">
@@ -114,6 +131,7 @@ export default function TicketsHistory({
           )}
         </div>
       </div>
+
       {/* Modal */}
       {selectedTicket && (
         <TicketModal

@@ -27,7 +27,6 @@ export default function Summary() {
     fetchTickets();
   }, []);
 
-  // Calculate counts
   const allCount = tickets.length;
   const inProcessCount = tickets.filter((t: any) => t.status === "open").length;
   const completedCount = tickets.filter(
@@ -61,30 +60,43 @@ export default function Summary() {
     },
   ];
 
+  const skeletonCards = Array(3).fill(null);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {loading ? (
-        <p className="col-span-3 text-center text-gray-600">Loading...</p>
-      ) : (
-        stats.map((stat, index) => (
-          <div
-            key={index}
-            className={`rounded-2xl p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm transition hover:scale-[1.02]`}
-          >
-            <div>
-              <p className={`text-sm font-medium ${stat.text}`}>{stat.label}</p>
-              <p className={`text-3xl font-bold mt-1 ${stat.text}`}>
-                {stat.count}
-              </p>
-            </div>
+      {loading
+        ? skeletonCards.map((_, index) => (
             <div
-              className={`w-8 h-8 flex items-center justify-center rounded-full ${stat.iconBg}`}
+              key={index}
+              className="rounded-2xl p-6 bg-gray-100 ring-1 ring-gray-200 flex justify-between items-center shadow-sm animate-pulse"
             >
-              <TfiTicket className={`${stat.text} w-4 h-4`} />
+              <div>
+                <div className="h-4 w-24 bg-gray-300 rounded mb-2"></div>
+                <div className="h-6 w-16 bg-gray-400 rounded"></div>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-gray-300" />
             </div>
-          </div>
-        ))
-      )}
+          ))
+        : stats.map((stat, index) => (
+            <div
+              key={index}
+              className={`rounded-2xl p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm`}
+            >
+              <div>
+                <p className={`text-sm font-medium ${stat.text}`}>
+                  {stat.label}
+                </p>
+                <p className={`text-3xl font-bold mt-1 ${stat.text}`}>
+                  {stat.count}
+                </p>
+              </div>
+              <div
+                className={`w-8 h-8 flex items-center justify-center rounded-full ${stat.iconBg}`}
+              >
+                <TfiTicket className={`${stat.text} w-4 h-4`} />
+              </div>
+            </div>
+          ))}
     </div>
   );
 }
