@@ -6,29 +6,15 @@ import { useSession } from "next-auth/react";
 import ModalWrapper from "@/components/ui/modalWrapper";
 import ConfirmModal from "@/components/ui/confirmModal";
 
-type Ticket = {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  author: {
-    id: string;
-    name: string;
-    email: string;
-    discipline: string;
-  };
-};
 
 export default function TicketDetailsModal({
   ticket,
+  onUpdate,
   onClose,
 }: {
   ticket: Ticket;
   onClose: () => void;
+  onUpdate?: () => void; 
 }) {
   const [workNote, setWorkNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,6 +52,7 @@ export default function TicketDetailsModal({
       if (!res.ok) throw new Error("Failed to close ticket");
 
       toast.success("Ticket closed successfully.");
+      onUpdate?.()
       setTimeout(() => onClose(), 1000);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -85,9 +72,10 @@ export default function TicketDetailsModal({
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to Reopen ticket");
+      if (!res.ok) throw new Error("Failed to Re-open ticket");
 
-      toast.success("Ticket Reopened successfully.");
+      toast.success("Ticket Re-opened successfully.");
+      onUpdate?.();
       setTimeout(() => onClose(), 1000);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -185,7 +173,7 @@ export default function TicketDetailsModal({
               onClick={() => setShowConfirmModal(true)}
               className="bg-forestGreen hover:bg-[#025E50] delay-100 text-white px-4 py-2 rounded-lg w-full transition"
             >
-              Re Open Ticket
+              Re-open Ticket
             </button>
           </div>
         )}
@@ -196,9 +184,11 @@ export default function TicketDetailsModal({
           message={
             ticket.status === "open"
               ? "Are you sure you want to close this ticket?"
-              : "Are you sure you want to reopen this ticket?"
+              : "Are you sure you want to re-open this ticket?"
           }
-          header={ticket.status === "open" ? "Confirm Close" : "Confirm Reopen"}
+          header={
+            ticket.status === "open" ? "Confirm Close" : "Confirm Re-open"
+          }
           onCancel={() => setShowConfirmModal(false)}
           onConfirm={
             ticket.status === "closed" ? handleOpenTicket : handleCloseTicket

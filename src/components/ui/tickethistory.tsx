@@ -1,29 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { formatDate } from "@/lib/dateFormater";
 import TicketModal from "@/components/ui/ticketModal";
+import { useState } from "react";
 
 const statusStyles: Record<string, string> = {
   open: "bg-orange-100 text-orange-700",
   closed: "bg-cyan-100 text-cyan-700",
 };
 
-type Ticket = {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  author: {
-    id: string;
-    name: string;
-    email: string;
-    discipline: string;
-  };
+/* SWR fetcher instead of useEffect */
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch tickets");
+  return res.json();
 };
 
 export default function TicketsHistory({
@@ -31,29 +22,21 @@ export default function TicketsHistory({
 }: {
   description: string | null;
 }) {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: tickets,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<Ticket[]>("/api/ticketsDetail", fetcher);
+
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const skeletonRows = Array(5).fill(null);
 
-  useEffect(() => {
-    async function fetchTickets() {
-      try {
-        const res = await fetch("/api/ticketsDetail");
-        if (!res.ok) throw new Error("Failed to fetch");
-
-        const data = await res.json();
-        setTickets(data);
-      } catch (error) {
-        console.error("Error fetching tickets:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTickets();
-  }, []);
-
-  const skeletonRows = Array(5).fill(null); 
+  if (error) {
+    return (
+      <p className="text-center text-red-500 mt-10">Error loading tickets.</p>
+    );
+  }
 
   return (
     <>
@@ -70,7 +53,7 @@ export default function TicketsHistory({
         </div>
 
         <div className="space-y-4">
-          {loading ? (
+          {isLoading ? (
             skeletonRows.map((_, index) => (
               <div
                 key={index}
@@ -82,27 +65,27 @@ export default function TicketsHistory({
                 <div className="h-6 w-80 bg-gray-300 rounded-full"></div>
               </div>
             ))
-          ) : tickets.length === 0 ? (
+          ) : tickets && tickets.length === 0 ? (
             <p className="text-center text-slate-500 mt-20">
               No tickets found.
             </p>
           ) : (
-            tickets.map((ticket, index) => (
+            tickets?.map((ticket) => (
               <div
-                key={index}
+                key={ticket.id}
                 onClick={() => setSelectedTicket(ticket)}
                 className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 items-center bg-white px-4 py-3 rounded-lg shadow-sm hover:bg-gray-50"
               >
                 <div className="flex justify-between w-full md:contents">
                   <span className="md:hidden font-medium text-slate-500">
-                    Name
+                    Date
                   </span>
                   <span>{formatDate(ticket.createdAt)}</span>
                 </div>
 
                 <div className="flex justify-between w-full md:contents">
                   <span className="md:hidden font-medium text-slate-500">
-                    Date
+                    Title
                   </span>
                   <span>{ticket.title}</span>
                 </div>
@@ -137,6 +120,7 @@ export default function TicketsHistory({
         <TicketModal
           ticket={selectedTicket}
           onClose={() => setSelectedTicket(null)}
+          onUpdate={mutate}
         />
       )}
     </>

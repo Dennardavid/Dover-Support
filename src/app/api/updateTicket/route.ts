@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       data: {
         status: "closed",
         updatedAt: new Date(),
-        workNote: message
+        workNote: message,
       },
     });
 

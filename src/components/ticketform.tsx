@@ -5,7 +5,7 @@ import { ticketValidation } from "@/lib/zodrules";
 import ConfirmModal from "./ui/confirmModal";
 import { toast } from "sonner";
 
-export default function TicketForm() {
+export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -56,6 +56,8 @@ export default function TicketForm() {
     if (response.ok) {
       toast.success(result.message);
 
+      onMutate?.();
+
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         window.location.href = "/users";
@@ -74,10 +76,7 @@ export default function TicketForm() {
   };
 
   return (
-    <form
-      method="POST"
-      className="bg-white mt-8 p-6 rounded-lg shadow-md w-full"
-    >
+    <form className="bg-white mt-8 p-6 rounded-lg shadow-md w-full">
       <h2 className="text-3xl font-bold mb-6 text-forestGreen">Ticket Form</h2>
 
       <div className="flex flex-col md:flex-row gap-6">

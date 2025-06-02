@@ -1,5 +1,5 @@
 import PageHeader from "@/components/ui/pageheader";
-import TicketForm from "@/components/ticketform";
+import TicketFormWrapper from "@/components/ticketFormWrapper";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export default async function Tickets() {
   return (
     <>
       <PageHeader description="Create Ticket" message="" username="" />
-      <TicketForm />
+      <TicketFormWrapper />
     </>
   );
 }

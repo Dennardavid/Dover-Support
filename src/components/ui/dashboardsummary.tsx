@@ -1,37 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { TfiTicket } from "react-icons/tfi";
 
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch tickets");
+  return res.json();
+};
+
 export default function Summary() {
-  const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: tickets,
+    isLoading,
+  } = useSWR<Ticket[]>("/api/ticketsDetail", fetcher);
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const result = await fetch("/api/ticketsDetail");
-        const data = await result.json();
-        if (result.ok) {
-          setTickets(data);
-        } else {
-          console.error("Failed to fetch tickets:", data.error);
-        }
-      } catch (err) {
-        console.error("Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTickets();
-  }, []);
-
-  const allCount = tickets.length;
-  const inProcessCount = tickets.filter((t: any) => t.status === "open").length;
-  const completedCount = tickets.filter(
-    (t: any) => t.status === "closed"
-  ).length;
+  const allCount = tickets?.length ?? 0;
+  const inProcessCount =
+    tickets?.filter((t) => t.status === "open").length ?? 0;
+  const completedCount =
+    tickets?.filter((t) => t.status === "closed").length ?? 0;
 
   const stats = [
     {
@@ -64,7 +52,7 @@ export default function Summary() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {loading
+      {isLoading
         ? skeletonCards.map((_, index) => (
             <div
               key={index}
