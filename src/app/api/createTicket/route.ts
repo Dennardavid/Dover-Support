@@ -19,8 +19,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const body = await request.json();
-    const { title, description, category, priority } = body;
+    const formData = await request.formData();
+    const title = formData.get("title");
+    const description = formData.get("description");
+    const category = formData.get("category");
+    const priority = formData.get("priority");
+    const file = formData.get("upload") as File | null;
+
+    if (
+      typeof title !== "string" ||
+      typeof description !== "string" ||
+      typeof category !== "string" ||
+      typeof priority !== "string"
+    ) {
+      return NextResponse.json(
+        { message: "Invalid form data" },
+        { status: 400 }
+      );
+    }
+
 
     if (!title || !description || !category || !priority) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -40,7 +57,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    try {
+
+    /* Send the eamil using Automate */
+    /* try {
       await fetch(
         "https://prod-240.westeurope.logic.azure.com:443/workflows/fc620f3f75514582908ae47ddce451e3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QUGS699C0FFE8Pm19Bh5OlEtaVdIMcqyiDa67awJIWU",
         {
@@ -60,7 +79,7 @@ export async function POST(request: NextRequest) {
       );
     } catch (automateError) {
       console.error("Power Automate error:", automateError);
-    }
+    } */
 
     return NextResponse.json(
       { message: "New Ticket Created", ticket: newTicket },

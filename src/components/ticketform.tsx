@@ -11,6 +11,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
     description: "",
     category: "",
     priority: "",
+    upload: null as File | null,
   });
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,10 +46,18 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("category", form.category);
+    formData.append("priority", form.priority);
+    if (form.upload) {
+      formData.append("upload", form.upload);
+    }
+
     const response = await fetch("/api/createTicket", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: formData,
     });
 
     const result = await response.json();
@@ -58,7 +67,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
 
       onMutate?.();
 
-      /* Delay the page redirect by 2secs */
+      /* Delay the page redirect by 1secs */
       setTimeout(() => {
         window.location.href = "/users";
       }, 1000);
@@ -68,6 +77,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
         description: "",
         category: "",
         priority: "",
+        upload: null as File | null,
       });
       setIsSubmitting(false);
     } else {
@@ -124,6 +134,31 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
             {errors.description && (
               <p className="text-red-500 text-sm">{errors.description}</p>
             )}
+          </div>
+
+          {/* Upload Screenshot */}
+          <div>
+            <label
+              htmlFor="upload"
+              className="block text-base font-medium text-gray-700"
+            >
+              Upload a screenshot (Optional)
+            </label>
+            <div className="relative mt-1">
+              <input
+                type="file"
+                id="upload"
+                name="upload"
+                onChange={(e) =>
+                  setForm({ ...form, upload: e.target.files?.[0] ?? null })
+                }
+                className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 
+                 file:rounded-md file:border-0
+                 file:text-sm file:font-semibold
+                 file:bg-forestGreen file:text-white
+                 hover:file:bg-[#025E50] transition cursor-pointer"
+              />
+            </div>
           </div>
         </div>
 

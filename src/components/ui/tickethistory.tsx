@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { formatDate } from "@/lib/dateFormater";
 import TicketModal from "@/components/ui/ticketModal";
 import { useState } from "react";
+import { FiExternalLink } from "react-icons/fi";
 
 const statusStyles: Record<string, string> = {
   open: "bg-orange-100 text-orange-700",
@@ -71,44 +72,54 @@ export default function TicketsHistory({
             </p>
           ) : (
             tickets?.map((ticket) => (
-              <div
-                key={ticket.id}
-                onClick={() => setSelectedTicket(ticket)}
-                className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 items-center bg-white px-4 py-3 rounded-lg shadow-sm hover:bg-gray-50"
-              >
-                <div className="flex justify-between w-full md:contents">
-                  <span className="md:hidden font-medium text-slate-500">
-                    Date
-                  </span>
-                  <span>{formatDate(ticket.createdAt)}</span>
+              <div key={ticket.id} className="space-y-2">
+                <div
+                  onClick={() => setSelectedTicket(ticket)}
+                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 items-center bg-white px-4 py-3 rounded-lg shadow-sm hover:bg-gray-50"
+                >
+                  <div className="flex justify-between w-full md:contents">
+                    <span className="md:hidden font-medium text-slate-500">
+                      Date
+                    </span>
+                    <span>{formatDate(ticket.createdAt)}</span>
+                  </div>
+
+                  <div className="flex justify-between w-full md:contents">
+                    <span className="md:hidden font-medium text-slate-500">
+                      Title
+                    </span>
+                    <span>{ticket.title}</span>
+                  </div>
+
+                  <div className="flex justify-between w-full md:contents">
+                    <span className="md:hidden font-medium text-slate-500">
+                      Category
+                    </span>
+                    <span>{ticket.category}</span>
+                  </div>
+
+                  <div className="flex justify-between w-full md:contents">
+                    <span className="md:hidden font-medium text-slate-500">
+                      Status
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs text-center font-semibold ${
+                        statusStyles[ticket.status]
+                      }`}
+                    >
+                      {ticket.status}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex justify-between w-full md:contents">
-                  <span className="md:hidden font-medium text-slate-500">
-                    Title
-                  </span>
-                  <span>{ticket.title}</span>
-                </div>
-
-                <div className="flex justify-between w-full md:contents">
-                  <span className="md:hidden font-medium text-slate-500">
-                    Category
-                  </span>
-                  <span>{ticket.category}</span>
-                </div>
-
-                <div className="flex justify-between w-full md:contents">
-                  <span className="md:hidden font-medium text-slate-500">
-                    Status
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs text-center font-semibold ${
-                      statusStyles[ticket.status]
-                    }`}
-                  >
-                    {ticket.status}
-                  </span>
-                </div>
+                <button
+                  onClick={() =>
+                    alert(`Requesting update for ticket: ${ticket.title}`)
+                  }
+                  className="text-white bg-forestGreen p-2 rounded-xl"
+                >
+                  <FiExternalLink size={20} />
+                </button>
               </div>
             ))
           )}
