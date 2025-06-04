@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@/auth";
+import { writeFile } from "fs/promises";
+import path from "path";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -38,9 +40,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-
     if (!title || !description || !category || !priority) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
+
+    /* Uplaod to folder */
+    if (file) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const filePath = path.join(process.cwd(), "public/uploads", file.name);
+      await writeFile(filePath, buffer);
     }
 
     const newTicket = await prisma.tickets.create({
@@ -57,9 +65,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-
     /* Send the eamil using Automate */
-    /* try {
+    try {
       await fetch(
         "https://prod-240.westeurope.logic.azure.com:443/workflows/fc620f3f75514582908ae47ddce451e3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QUGS699C0FFE8Pm19Bh5OlEtaVdIMcqyiDa67awJIWU",
         {
@@ -79,7 +86,7 @@ export async function POST(request: NextRequest) {
       );
     } catch (automateError) {
       console.error("Power Automate error:", automateError);
-    } */
+    }
 
     return NextResponse.json(
       { message: "New Ticket Created", ticket: newTicket },
