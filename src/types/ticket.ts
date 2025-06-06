@@ -5,6 +5,7 @@ type Ticket = {
   category: string;
   priority: string;
   status: string;
+  screenshot: string | null;
   createdAt: string;
   updatedAt: string;
   author: {

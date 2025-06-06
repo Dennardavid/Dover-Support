@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ticketValidation } from "@/lib/zodrules";
 import ConfirmModal from "./ui/confirmModal";
 import { toast } from "sonner";
@@ -16,6 +17,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -69,7 +71,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
 
       /* Delay the page redirect by 1secs */
       setTimeout(() => {
-        window.location.href = "/users";
+        router.push("/users");
       }, 1000);
 
       setForm({

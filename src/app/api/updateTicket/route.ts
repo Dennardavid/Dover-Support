@@ -42,23 +42,21 @@ export async function POST(req: NextRequest) {
     });
 
     // Notify Power Automate with title instead of ID
-    await fetch(
-      "https://prod-113.westeurope.logic.azure.com:443/workflows/f0657930896640c7a4464975baf15b6b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Ef9vjDxMSuFqPB4gTIl2MFdSBPp8XCd-Cy0St12TI7M",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: ticket.title,
-          status: "closed",
-          closedAt: updatedTicket.updatedAt,
-          workNote: message,
-          recipient: {
-            name: ticket.author.name,
-            email: ticket.author.email,
-          },
-        }),
-      }
-    );
+    const automateAPI = process.env.NEXT_PUBLIC_API_URL_UPDATE;
+    await fetch(`${automateAPI}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: ticket.title,
+        status: "closed",
+        closedAt: updatedTicket.updatedAt,
+        workNote: message,
+        recipient: {
+          name: ticket.author.name,
+          email: ticket.author.email,
+        },
+      }),
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

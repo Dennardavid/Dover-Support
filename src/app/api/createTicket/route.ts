@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
     }
 
     /* Uplaod to folder */
+    const fileName = file?.name ?? null;
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
       const filePath = path.join(process.cwd(), "public/uploads", file.name);
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
         description,
         category,
         priority,
+        screenshot: fileName,
         author: {
           connect: {
             id: user.id,
@@ -66,24 +68,23 @@ export async function POST(request: NextRequest) {
     });
 
     /* Send the eamil using Automate */
+
+    const automateAPI = process.env.NEXT_PUBLIC_API_URL_CREATE;
     try {
-      await fetch(
-        "https://prod-240.westeurope.logic.azure.com:443/workflows/fc620f3f75514582908ae47ddce451e3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QUGS699C0FFE8Pm19Bh5OlEtaVdIMcqyiDa67awJIWU",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title,
-            description,
-            category,
-            priority,
-            user: {
-              name: user.name,
-              email: user.email,
-            },
-          }),
-        }
-      );
+      await fetch(`${automateAPI}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description,
+          category,
+          priority,
+          user: {
+            name: user.name,
+            email: user.email,
+          },
+        }),
+      });
     } catch (automateError) {
       console.error("Power Automate error:", automateError);
     }

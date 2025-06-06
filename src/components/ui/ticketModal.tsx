@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import ModalWrapper from "@/components/ui/modalWrapper";
 import ConfirmModal from "@/components/ui/confirmModal";
 
-
 export default function TicketDetailsModal({
   ticket,
   onUpdate,
@@ -14,7 +13,7 @@ export default function TicketDetailsModal({
 }: {
   ticket: Ticket;
   onClose: () => void;
-  onUpdate?: () => void; 
+  onUpdate?: () => void;
 }) {
   const [workNote, setWorkNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,7 +51,7 @@ export default function TicketDetailsModal({
       if (!res.ok) throw new Error("Failed to close ticket");
 
       toast.success("Ticket closed successfully.");
-      onUpdate?.()
+      onUpdate?.();
       setTimeout(() => onClose(), 1000);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -144,6 +143,13 @@ export default function TicketDetailsModal({
               <strong>Date closed</strong>{" "}
               {new Date(ticket.updatedAt).toLocaleString()}
             </div>
+          )}
+          {ticket.screenshot && (
+            <img
+              src={`/uploads/${ticket.screenshot}`}
+              alt="Ticket Screenshot"
+              className="rounded-md max-w-md"
+            />
           )}
         </div>
 

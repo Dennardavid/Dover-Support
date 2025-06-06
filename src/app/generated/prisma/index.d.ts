@@ -2107,6 +2107,7 @@ export namespace Prisma {
     category: string | null
     priority: string | null
     status: string | null
+    screenshot: string | null
     createdAt: Date | null
     updatedAt: Date | null
     workNote: string | null
@@ -2120,6 +2121,7 @@ export namespace Prisma {
     category: string | null
     priority: string | null
     status: string | null
+    screenshot: string | null
     createdAt: Date | null
     updatedAt: Date | null
     workNote: string | null
@@ -2133,6 +2135,7 @@ export namespace Prisma {
     category: number
     priority: number
     status: number
+    screenshot: number
     createdAt: number
     updatedAt: number
     workNote: number
@@ -2148,6 +2151,7 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
+    screenshot?: true
     createdAt?: true
     updatedAt?: true
     workNote?: true
@@ -2161,6 +2165,7 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
+    screenshot?: true
     createdAt?: true
     updatedAt?: true
     workNote?: true
@@ -2174,6 +2179,7 @@ export namespace Prisma {
     category?: true
     priority?: true
     status?: true
+    screenshot?: true
     createdAt?: true
     updatedAt?: true
     workNote?: true
@@ -2260,6 +2266,7 @@ export namespace Prisma {
     category: string
     priority: string
     status: string
+    screenshot: string | null
     createdAt: Date
     updatedAt: Date
     workNote: string | null
@@ -2290,6 +2297,7 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
+    screenshot?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workNote?: boolean
@@ -2304,6 +2312,7 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
+    screenshot?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workNote?: boolean
@@ -2318,6 +2327,7 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
+    screenshot?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workNote?: boolean
@@ -2332,13 +2342,14 @@ export namespace Prisma {
     category?: boolean
     priority?: boolean
     status?: boolean
+    screenshot?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workNote?: boolean
     userId?: boolean
   }
 
-  export type TicketsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "priority" | "status" | "createdAt" | "updatedAt" | "workNote" | "userId", ExtArgs["result"]["tickets"]>
+  export type TicketsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "priority" | "status" | "screenshot" | "createdAt" | "updatedAt" | "workNote" | "userId", ExtArgs["result"]["tickets"]>
   export type TicketsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2361,6 +2372,7 @@ export namespace Prisma {
       category: string
       priority: string
       status: string
+      screenshot: string | null
       createdAt: Date
       updatedAt: Date
       workNote: string | null
@@ -2795,6 +2807,7 @@ export namespace Prisma {
     readonly category: FieldRef<"Tickets", 'String'>
     readonly priority: FieldRef<"Tickets", 'String'>
     readonly status: FieldRef<"Tickets", 'String'>
+    readonly screenshot: FieldRef<"Tickets", 'String'>
     readonly createdAt: FieldRef<"Tickets", 'DateTime'>
     readonly updatedAt: FieldRef<"Tickets", 'DateTime'>
     readonly workNote: FieldRef<"Tickets", 'String'>
@@ -3246,6 +3259,7 @@ export namespace Prisma {
     category: 'category',
     priority: 'priority',
     status: 'status',
+    screenshot: 'screenshot',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     workNote: 'workNote',
@@ -3413,6 +3427,7 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
+    screenshot?: StringNullableFilter<"Tickets"> | string | null
     createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
     workNote?: StringNullableFilter<"Tickets"> | string | null
@@ -3427,6 +3442,7 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    screenshot?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workNote?: SortOrderInput | SortOrder
@@ -3444,6 +3460,7 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
+    screenshot?: StringNullableFilter<"Tickets"> | string | null
     createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
     workNote?: StringNullableFilter<"Tickets"> | string | null
@@ -3458,6 +3475,7 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    screenshot?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workNote?: SortOrderInput | SortOrder
@@ -3477,6 +3495,7 @@ export namespace Prisma {
     category?: StringWithAggregatesFilter<"Tickets"> | string
     priority?: StringWithAggregatesFilter<"Tickets"> | string
     status?: StringWithAggregatesFilter<"Tickets"> | string
+    screenshot?: StringNullableWithAggregatesFilter<"Tickets"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tickets"> | Date | string
     workNote?: StringNullableWithAggregatesFilter<"Tickets"> | string | null
@@ -3557,6 +3576,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -3570,6 +3590,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -3583,6 +3604,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3596,6 +3618,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3609,6 +3632,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -3622,6 +3646,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3634,6 +3659,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3727,17 +3753,6 @@ export namespace Prisma {
     _max?: NestedEnumRolesFilter<$PrismaModel>
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -3751,6 +3766,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type UserScalarRelationFilter = {
@@ -3770,6 +3796,7 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    screenshot?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workNote?: SortOrder
@@ -3783,6 +3810,7 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    screenshot?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workNote?: SortOrder
@@ -3796,24 +3824,11 @@ export namespace Prisma {
     category?: SortOrder
     priority?: SortOrder
     status?: SortOrder
+    screenshot?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workNote?: SortOrder
     userId?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -3832,6 +3847,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type TicketsCreateNestedManyWithoutAuthorInput = {
@@ -3890,12 +3919,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutTicketsNestedInput = {
@@ -3965,17 +3994,6 @@ export namespace Prisma {
     _max?: NestedEnumRolesFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -3990,7 +4008,7 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3998,10 +4016,7 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4032,6 +4047,20 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type TicketsCreateWithoutAuthorInput = {
     id?: string
     title: string
@@ -4039,6 +4068,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -4051,6 +4081,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -4092,6 +4123,7 @@ export namespace Prisma {
     category?: StringFilter<"Tickets"> | string
     priority?: StringFilter<"Tickets"> | string
     status?: StringFilter<"Tickets"> | string
+    screenshot?: StringNullableFilter<"Tickets"> | string | null
     createdAt?: DateTimeFilter<"Tickets"> | Date | string
     updatedAt?: DateTimeFilter<"Tickets"> | Date | string
     workNote?: StringNullableFilter<"Tickets"> | string | null
@@ -4157,6 +4189,7 @@ export namespace Prisma {
     category: string
     priority: string
     status?: string
+    screenshot?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workNote?: string | null
@@ -4169,6 +4202,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4181,6 +4215,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4193,6 +4228,7 @@ export namespace Prisma {
     category?: StringFieldUpdateOperationsInput | string
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    screenshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workNote?: NullableStringFieldUpdateOperationsInput | string | null
