@@ -14,7 +14,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,14 +56,12 @@ export default function Home() {
 
       const session = await getSession();
 
-      /* Delay the page redirect by 2secs */
-      setTimeout(() => {
-        if (session?.user.role === "ADMIN") {
-          router.push("/admin")
-        } else {
-          router.push("users")
-        }
-      }, 1000);
+      if (session?.user.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("users");
+      }
+    
       setLoading(false);
       setEmail("");
       setPassword("");

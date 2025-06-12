@@ -68,11 +68,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
       toast.success(result.message);
 
       onMutate?.();
-
-      /* Delay the page redirect by 1secs */
-      setTimeout(() => {
-        router.push("/users");
-      }, 1000);
+      router.push("/users");
 
       setForm({
         title: "",

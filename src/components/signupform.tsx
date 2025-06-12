@@ -59,11 +59,8 @@ export default function SignUp() {
     /* Toast Handler */
     if (response.ok) {
       toast.success(result.message);
-
-      /* Delay the page redirect by 2secs */
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
+      
+      router.push("/");
 
       setForm({
         name: "",

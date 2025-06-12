@@ -3,15 +3,21 @@
 import useSWR from "swr";
 import { formatDate } from "@/lib/dateFormater";
 import TicketModal from "@/components/ui/ticketModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const statusStyles: Record<string, string> = {
   open: "bg-orange-100 text-orange-700",
   closed: "bg-cyan-100 text-cyan-700",
 };
 
-/* SWR fetcher instead of useEffect */
+const FILTER_OPTIONS = [
+  { label: "Open", value: "open" },
+  { label: "Closed", value: "closed" },
+  { label: "Clear", value: "all" },
+];
+
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch tickets");
@@ -31,6 +37,31 @@ export default function TicketsHistory({
   } = useSWR<Ticket[]>("/api/ticketsDetail", fetcher);
 
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    const current = searchParams.get("filter") || "all";
+    setFilter(current);
+  }, [searchParams]);
+
+  const handleFilterChange = (newFilter: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (newFilter === "all") {
+      params.delete("filter");
+    } else {
+      params.set("filter", newFilter);
+    }
+    router.replace(`?${params.toString()}`);
+  };
+
+  const filteredTickets = tickets?.filter((ticket) => {
+    if (filter === "all") return true;
+    return ticket.status === filter;
+  });
+
   const skeletonRows = Array(5).fill(null);
 
   if (error) {
@@ -42,6 +73,7 @@ export default function TicketsHistory({
   return (
     <>
       <div className="mt-10">
+        
         <h2 className="text-lg font-semibold text-slate-700 mb-4">
           {description}
         </h2>
@@ -66,12 +98,12 @@ export default function TicketsHistory({
                 <div className="h-6 w-80 bg-gray-300 rounded-full"></div>
               </div>
             ))
-          ) : tickets && tickets.length === 0 ? (
+          ) : filteredTickets && filteredTickets.length === 0 ? (
             <p className="text-center text-slate-500 mt-20">
               No tickets found.
             </p>
           ) : (
-            tickets?.map((ticket) => (
+            filteredTickets?.map((ticket) => (
               <div key={ticket.id} className="space-y-2">
                 <div
                   onClick={() => setSelectedTicket(ticket)}
@@ -126,7 +158,6 @@ export default function TicketsHistory({
         </div>
       </div>
 
-      {/* Modal */}
       {selectedTicket && (
         <TicketModal
           ticket={selectedTicket}
