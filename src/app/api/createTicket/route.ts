@@ -68,7 +68,6 @@ export async function POST(request: NextRequest) {
     });
 
     /* Send the eamil using Automate */
-
     const automateAPI = process.env.NEXT_PUBLIC_API_URL_CREATE;
     try {
       await fetch(`${automateAPI}`, {

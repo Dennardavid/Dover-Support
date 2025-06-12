@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { SignUpValidation } from "@/lib/zodrules";
-import LoginButton from "@/components/ui/loginButton";
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -18,6 +18,7 @@ export default function SignUp() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -61,7 +62,7 @@ export default function SignUp() {
 
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
-        window.location.href = "/";
+        router.push("/");
       }, 1000);
 
       setForm({
@@ -86,15 +87,13 @@ export default function SignUp() {
       </div>
 
       <div className="bg-gray p-6 w-full max-w-[500px] rounded-md">
-        <LoginButton />
-
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <hr className="flex-grow border-t border-gray-300" />
           <span className="mx-4 text-gray-500 text-sm">
             or sign up with email
           </span>
           <hr className="flex-grow border-t border-gray-300" />
-        </div>
+        </div> */}
         <form onSubmit={handleSubmit} method="POST">
           <label
             htmlFor="name"
@@ -109,7 +108,7 @@ export default function SignUp() {
             onChange={handleChange}
             value={form.name}
             required
-            placeholder="David Dennar"
+            placeholder="First and Last Name"
             className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
@@ -127,7 +126,7 @@ export default function SignUp() {
             value={form.email}
             onChange={handleChange}
             required
-            placeholder="daviddennar@doverengineering.com"
+            placeholder="name@doverengineering.com"
             className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
           />
           {errors.email && (

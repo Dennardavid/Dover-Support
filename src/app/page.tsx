@@ -7,13 +7,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
-import LoginButton from "@/components/ui/loginButton";
 import { loginValidation } from "@/lib/zodrules";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,9 +59,9 @@ export default function Home() {
       /* Delay the page redirect by 2secs */
       setTimeout(() => {
         if (session?.user.role === "ADMIN") {
-          window.location.href = "/admin";
+          router.push("/admin")
         } else {
-          window.location.href = "/users";
+          router.push("users")
         }
       }, 1000);
       setLoading(false);
@@ -79,15 +80,13 @@ export default function Home() {
       </div>
 
       <div className="bg-gray px-6 py-7 w-full max-w-[500px] rounded-md">
-        <LoginButton />
-
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <hr className="flex-grow border-t border-gray-300" />
           <span className="mx-4 text-gray-500 text-sm">
             or sign in with email
           </span>
           <hr className="flex-grow border-t border-gray-300" />
-        </div>
+        </div> */}
         <form onSubmit={handleSubmit}>
           <label
             htmlFor="email"
@@ -99,7 +98,7 @@ export default function Home() {
             type="email"
             name="email"
             id="email"
-            placeholder="daviddennar@doverengineering.com"
+            placeholder="name@doverengineering.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
