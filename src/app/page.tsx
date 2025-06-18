@@ -61,7 +61,7 @@ export default function Home() {
       } else {
         router.push("users");
       }
-    
+      
       setLoading(false);
       setEmail("");
       setPassword("");
@@ -81,10 +81,10 @@ export default function Home() {
         {/* <div className="flex items-center my-6">
           <hr className="flex-grow border-t border-gray-300" />
           <span className="mx-4 text-gray-500 text-sm">
-            or sign in with email
+          or sign in with email
           </span>
           <hr className="flex-grow border-t border-gray-300" />
-        </div> */}
+          </div> */}
         <form onSubmit={handleSubmit}>
           <label
             htmlFor="email"

@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import ModalWrapper from "@/components/ui/modalWrapper";
 import ConfirmModal from "@/components/ui/confirmModal";
+import Image from "next/image";
 
 export default function TicketDetailsModal({
   ticket,
@@ -101,55 +102,65 @@ export default function TicketDetailsModal({
           {ticket.title}
         </h2>
 
-        <div className="grid grid-cols-1 gap-y-4 text-gray-700 text-base">
-          <div>
-            <strong>Name:</strong> {ticket.author?.name}
-          </div>
-          <div>
-            <strong>Discipline:</strong> {ticket.author?.discipline}
-          </div>
-          <div>
-            <strong>Category:</strong> {ticket.category}
-          </div>
-          <div>
-            <strong>Description:</strong> {ticket.description}
-          </div>
-          <div>
-            <strong>Status:</strong>{" "}
-            <span
-              className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${statusBadge}`}
-            >
-              {ticket.status.toUpperCase()}
-            </span>
-          </div>
-          <div>
-            <strong>Priority:</strong>{" "}
-            <span
-              className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${
-                priorityBadge[
-                  ticket.priority.toLowerCase() as "low" | "medium" | "high"
-                ]
-              }`}
-            >
-              {ticket.priority.toUpperCase()}
-            </span>
-          </div>
-          <div>
-            <strong>Date created:</strong>{" "}
-            {new Date(ticket.createdAt).toLocaleString()}
-          </div>
-          {ticket.status === "closed" && (
+        <div className="text-gray-700 text-base flex flex-col md:flex-row gap-6">
+          {/* Ticket Details */}
+          <div className="flex-1 space-y-4">
             <div>
-              <strong>Date closed</strong>{" "}
-              {new Date(ticket.updatedAt).toLocaleString()}
+              <strong>Name:</strong> {ticket.author?.name}
             </div>
-          )}
+            <div>
+              <strong>Discipline:</strong> {ticket.author?.discipline}
+            </div>
+            <div>
+              <strong>Category:</strong> {ticket.category}
+            </div>
+            <div>
+              <strong>Description:</strong>
+              <span className="whitespace-pre-wrap"> {ticket.description}</span>
+            </div>
+            <div>
+              <strong>Status:</strong>{" "}
+              <span
+                className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${statusBadge}`}
+              >
+                {ticket.status.toUpperCase()}
+              </span>
+            </div>
+            <div>
+              <strong>Priority:</strong>{" "}
+              <span
+                className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${
+                  priorityBadge[
+                    ticket.priority.toLowerCase() as "low" | "medium" | "high"
+                  ]
+                }`}
+              >
+                {ticket.priority.toUpperCase()}
+              </span>
+            </div>
+            <div>
+              <strong>Date Created:</strong>{" "}
+              {new Date(ticket.createdAt).toLocaleString()}
+            </div>
+            {ticket.status === "closed" && (
+              <div>
+                <strong>Date Closed:</strong>{" "}
+                {new Date(ticket.updatedAt).toLocaleString()}
+              </div>
+            )}
+          </div>
+
+          {/* Ticket Screenshot - Only if exists */}
           {ticket.screenshot && (
-            <img
-              src={`/uploads/${ticket.screenshot}`}
-              alt="Ticket Screenshot"
-              className="rounded-md max-w-md"
-            />
+            <div className="flex-shrink-0 self-center md:self-start">
+              <Image
+                src={`/uploads/${ticket.screenshot}`}
+                alt="Ticket Screenshot"
+                className="rounded-md max-w-xs h-auto"
+                height={250}
+                width={250}
+              />
+            </div>
           )}
         </div>
 

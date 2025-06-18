@@ -219,11 +219,12 @@ export default function SignUp() {
           </button>
         </form>
       </div>
+      
       <div>
         <p className="text-gray text-sm sm:text-base">
           Already have an account?{" "}
           <Link href={"/"} className="text-orange underline">
-            Login
+            Sign In
           </Link>
         </p>
       </div>

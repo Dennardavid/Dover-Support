@@ -12,12 +12,6 @@ const statusStyles: Record<string, string> = {
   closed: "bg-cyan-100 text-cyan-700",
 };
 
-const FILTER_OPTIONS = [
-  { label: "Open", value: "open" },
-  { label: "Closed", value: "closed" },
-  { label: "Clear", value: "all" },
-];
-
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch tickets");
@@ -37,10 +31,10 @@ export default function TicketsHistory({
   } = useSWR<Ticket[]>("/api/ticketsDetail", fetcher);
 
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [filter, setFilter] = useState("all");
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const current = searchParams.get("filter") || "all";
@@ -49,18 +43,15 @@ export default function TicketsHistory({
 
   const handleFilterChange = (newFilter: string) => {
     const params = new URLSearchParams(searchParams);
-    if (newFilter === "all") {
-      params.delete("filter");
-    } else {
-      params.set("filter", newFilter);
-    }
+    newFilter === "all"
+      ? params.delete("filter")
+      : params.set("filter", newFilter);
     router.replace(`?${params.toString()}`);
   };
 
-  const filteredTickets = tickets?.filter((ticket) => {
-    if (filter === "all") return true;
-    return ticket.status === filter;
-  });
+  const filteredTickets = tickets?.filter((ticket) =>
+    filter === "all" ? true : ticket.status === filter
+  );
 
   const skeletonRows = Array(5).fill(null);
 
@@ -72,20 +63,20 @@ export default function TicketsHistory({
 
   return (
     <>
-      <div className="mt-10">
-        
-        <h2 className="text-lg font-semibold text-slate-700 mb-4">
+      <div className="mt-5 md:mt-10">
+        <h2 className="text-lg sm:text-xl font-semibold text-slate-700 mb-4">
           {description}
         </h2>
 
-        <div className="hidden md:grid grid-cols-4 gap-4 px-4 mb-2 text-sm font-medium text-slate-600">
+        {/* Header for Desktop */}
+        <div className="hidden md:grid grid-cols-4 gap-4 mb-2 text-sm font-medium text-slate-600">
           <span>Date Created</span>
           <span>Title</span>
           <span>Category</span>
           <span>Status</span>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 md: sapce-y-4">
           {isLoading ? (
             skeletonRows.map((_, index) => (
               <div
@@ -104,38 +95,48 @@ export default function TicketsHistory({
             </p>
           ) : (
             filteredTickets?.map((ticket) => (
-              <div key={ticket.id} className="space-y-2">
+              <div
+                key={ticket.id}
+                className="bg-white rounded-lg shadow-sm px-4 py-3 hover:bg-gray-50 transition"
+              >
                 <div
                   onClick={() => setSelectedTicket(ticket)}
-                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 items-center bg-white px-4 py-3 rounded-lg shadow-sm hover:bg-gray-50"
+                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4"
                 >
+                  {/* Mobile Labels */}
                   <div className="flex justify-between w-full md:contents">
-                    <span className="md:hidden font-medium text-slate-500">
+                    <span className="md:hidden text-sm text-slate-500">
                       Date
                     </span>
-                    <span>{formatDate(ticket.createdAt)}</span>
+                    <span className="text-sm text-slate-700">
+                      {formatDate(ticket.createdAt)}
+                    </span>
                   </div>
 
                   <div className="flex justify-between w-full md:contents">
-                    <span className="md:hidden font-medium text-slate-500">
+                    <span className="md:hidden text-sm text-slate-500">
                       Title
                     </span>
-                    <span>{ticket.title}</span>
+                    <span className="text-sm text-slate-700">
+                      {ticket.title}
+                    </span>
                   </div>
 
                   <div className="flex justify-between w-full md:contents">
-                    <span className="md:hidden font-medium text-slate-500">
+                    <span className="md:hidden text-sm text-slate-500">
                       Category
                     </span>
-                    <span>{ticket.category}</span>
+                    <span className="text-sm text-slate-700">
+                      {ticket.category}
+                    </span>
                   </div>
 
                   <div className="flex justify-between w-full md:contents">
-                    <span className="md:hidden font-medium text-slate-500">
+                    <span className="md:hidden text-sm text-slate-500">
                       Status
                     </span>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs text-center font-semibold ${
+                      className={`px-3 py-1 rounded-full text-xs font-semibold text-center ${
                         statusStyles[ticket.status]
                       }`}
                     >
@@ -144,14 +145,18 @@ export default function TicketsHistory({
                   </div>
                 </div>
 
-                <button
-                  onClick={() =>
-                    alert(`Requesting update for ticket: ${ticket.title}`)
-                  }
-                  className="text-white bg-forestGreen p-2 rounded-xl"
-                >
-                  <FiExternalLink size={20} />
-                </button>
+                {/* Action Button */}
+                <div className="mt-3 flex justify-end md:hidden">
+                  <button
+                    onClick={() =>
+                      alert(`Requesting update for ticket: ${ticket.title}`)
+                    }
+                    className="flex items-center gap-2 text-sm font-medium text-white bg-forestGreen hover:bg-green-700 transition px-3 py-2 rounded-lg"
+                  >
+                    <FiExternalLink size={16} />
+                    Follow up
+                  </button>
+                </div>
               </div>
             ))
           )}

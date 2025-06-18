@@ -10,10 +10,10 @@ const fetcher = async (url: string) => {
 };
 
 export default function Summary() {
-  const {
-    data: tickets,
-    isLoading,
-  } = useSWR<Ticket[]>("/api/ticketsDetail", fetcher);
+  const { data: tickets, isLoading } = useSWR<Ticket[]>(
+    "/api/ticketsDetail",
+    fetcher
+  );
 
   const allCount = tickets?.length ?? 0;
   const inProcessCount =
@@ -23,7 +23,7 @@ export default function Summary() {
 
   const stats = [
     {
-      label: "All Ticket",
+      label: "All Tickets",
       count: allCount,
       bg: "bg-orange-100",
       text: "text-orange-600",
@@ -51,7 +51,7 @@ export default function Summary() {
   const skeletonCards = Array(3).fill(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+    <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3 md:mt-8">
       {isLoading
         ? skeletonCards.map((_, index) => (
             <div
@@ -68,20 +68,22 @@ export default function Summary() {
         : stats.map((stat, index) => (
             <div
               key={index}
-              className={`rounded-2xl p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm`}
+              className={`rounded-2xl p-4 sm:p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm`}
             >
               <div>
-                <p className={`text-sm font-medium ${stat.text}`}>
+                <p className={`text-sm sm:text-base font-medium ${stat.text}`}>
                   {stat.label}
                 </p>
-                <p className={`text-3xl font-bold mt-1 ${stat.text}`}>
+                <p
+                  className={`text-2xl sm:text-3xl font-bold mt-1 ${stat.text}`}
+                >
                   {stat.count}
                 </p>
               </div>
               <div
-                className={`w-8 h-8 flex items-center justify-center rounded-full ${stat.iconBg}`}
+                className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full ${stat.iconBg}`}
               >
-                <TfiTicket className={`${stat.text} w-4 h-4`} />
+                <TfiTicket className={`${stat.text} w-4 h-4 sm:w-5 sm:h-5`} />
               </div>
             </div>
           ))}
