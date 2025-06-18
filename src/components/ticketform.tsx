@@ -84,8 +84,8 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
   };
 
   return (
-    <form className="bg-white mt-8 p-6 rounded-lg shadow-md w-full">
-      <h2 className="text-3xl font-bold mb-6 text-forestGreen">Ticket Form</h2>
+    <form className="bg-white mt-4 md:mt-8 py-4 px-4 md:p-6 rounded-lg shadow-md w-full">
+      <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-6 text-forestGreen">Ticket Form</h2>
 
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left column - inputs */}
@@ -225,7 +225,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
               setShowConfirmModal(true);
             }
           }}
-          className="bg-forestGreen text-white px-6 py-2 rounded-full hover:bg-[#025E50] transition"
+          className="bg-forestGreen text-white text-sm md:text-base px-6 py-2 rounded-full hover:bg-[#025E50] transition"
         >
           Submit
         </button>

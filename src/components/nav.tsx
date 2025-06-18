@@ -47,7 +47,7 @@ export default function Navigation() {
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-50 text-white bg-forestGreen p-2 rounded-lg"
+          className="md:hidden fixed top-4 left-4 z-30 text-white bg-forestGreen p-2 rounded-lg"
         >
           <IoMenu size={24} />
         </button>
