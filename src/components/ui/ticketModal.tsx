@@ -98,13 +98,13 @@ export default function TicketDetailsModal({
   return (
     <>
       <ModalWrapper onClose={onClose}>
-        <h2 className="text-2xl font-semibold mb-4 text-forestGreen">
+        <h2 className="text-2xl font-semibold mb-2 md:mb-4 text-forestGreen">
           {ticket.title}
         </h2>
 
-        <div className="text-gray-700 text-base flex flex-col md:flex-row gap-6">
+        <div className="text-gray-700 text-sm md:text-base flex flex-col md:flex-row gap-4 md:gap-6">
           {/* Ticket Details */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-3 md:space-y-4">
             <div>
               <strong>Name:</strong> {ticket.author?.name}
             </div>
@@ -121,7 +121,7 @@ export default function TicketDetailsModal({
             <div>
               <strong>Status:</strong>{" "}
               <span
-                className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${statusBadge}`}
+                className={`inline-block px-2 py-1 rounded-md font-medium ${statusBadge}`}
               >
                 {ticket.status.toUpperCase()}
               </span>
@@ -129,7 +129,7 @@ export default function TicketDetailsModal({
             <div>
               <strong>Priority:</strong>{" "}
               <span
-                className={`inline-block px-2 py-1 rounded-md text-sm font-medium ${
+                className={`inline-block px-2 py-1 rounded-md font-medium ${
                   priorityBadge[
                     ticket.priority.toLowerCase() as "low" | "medium" | "high"
                   ]
@@ -166,9 +166,9 @@ export default function TicketDetailsModal({
 
         {/* Display Close Ticket button for ADMIN */}
         {ticket.status === "open" && isAdmin && (
-          <div className="mt-6 space-y-4">
+          <div className="mt-4 md:mt-6 space-y-2 md:space-y-4 text-sm md:text-base">
             <textarea
-              rows={3}
+              rows={2}
               placeholder="Optional: Notes about the work done..."
               className="w-full resize-none border-gray-300 focus:ring-1 focus:ring-forestGreen p-3 border rounded-md focus:outline-none"
               value={workNote}

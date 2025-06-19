@@ -11,7 +11,7 @@ export default function ModalWrapper({
 }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="bg-white rounded-lg p-6 w-full max-w-xl shadow-xl relative">
+      <div className="bg-white rounded-lg p-2.5 md:p-6 w-full max-w-xl shadow-xl relative">
         <button
           onClick={onClose}
           className="absolute -top-2 -right-2 bg-forestGreen rounded-full p-2 hover:bg-[#025E50] transition-all delay-100 text-white"

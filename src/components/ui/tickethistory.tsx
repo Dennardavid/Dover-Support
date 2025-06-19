@@ -69,7 +69,7 @@ export default function TicketsHistory({
         </h2>
 
         {/* Header for Desktop */}
-        <div className="hidden md:grid grid-cols-4 gap-4 mb-2 text-sm font-medium text-slate-600">
+        <div className="hidden md:grid grid-cols-4 gap-4 mb-2 text-base font-medium text-slate-600">
           <span>Date Created</span>
           <span>Title</span>
           <span>Category</span>
@@ -101,14 +101,14 @@ export default function TicketsHistory({
               >
                 <div
                   onClick={() => setSelectedTicket(ticket)}
-                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4"
+                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 text-sm md:text-base"
                 >
                   {/* Mobile Labels */}
                   <div className="flex justify-between w-full md:contents">
                     <span className="md:hidden text-sm text-slate-500">
                       Date
                     </span>
-                    <span className="text-sm text-slate-700">
+                    <span className="text-slate-700">
                       {formatDate(ticket.createdAt)}
                     </span>
                   </div>
@@ -117,7 +117,7 @@ export default function TicketsHistory({
                     <span className="md:hidden text-sm text-slate-500">
                       Title
                     </span>
-                    <span className="text-sm text-slate-700">
+                    <span className="text-slate-700">
                       {ticket.title}
                     </span>
                   </div>
@@ -126,7 +126,7 @@ export default function TicketsHistory({
                     <span className="md:hidden text-sm text-slate-500">
                       Category
                     </span>
-                    <span className="text-sm text-slate-700">
+                    <span className="text-slate-700">
                       {ticket.category}
                     </span>
                   </div>

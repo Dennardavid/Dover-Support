@@ -27,8 +27,10 @@ export default function DownloadTickets() {
   useEffect(() => {
     const fetchTickets = async () => {
       const res = await fetch("/api/ticketsDetail");
-      const data = await res.json();
-      setTickets(data);
+      if (res.ok) {
+        const data = await res.json();
+        setTickets(data);
+      }
     };
     fetchTickets();
   }, []);
@@ -59,10 +61,11 @@ export default function DownloadTickets() {
   return (
     <button
       onClick={handleDownload}
-      className="px-4 py-2 bg-forestGreen hover:bg-[#025E50] transition-all delay-100 text-white rounded flex justify-center items-center gap-2"
+      aria-label="Download ticket data as CSV"
+      className="sm:w-fit py-2 px-2 md:px-2 bg-forestGreen hover:bg-[#025E50] transition-colors duration-200 text-white rounded flex items-center justify-center gap-2 text-sm sm:text-base"
     >
-      <MdOutlineFileDownload size={25} />
-      Download CSV
+      <MdOutlineFileDownload size={20} />
+      <span className="truncate">Download</span>
     </button>
   );
 }

@@ -19,7 +19,7 @@ export default async function Tickets() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <PageHeader description="All Received Tickets" message="" username="" />
+        <PageHeader description="All Tickets" message="" username="" />
         <DownloadTickets />
       </div>
 
