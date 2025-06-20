@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     });
 
     /* Send the eamil using Automate */
-    /* const automateAPI = process.env.NEXT_PUBLIC_API_URL_CREATE;
+    const automateAPI = process.env.NEXT_PUBLIC_API_URL_CREATE;
     try {
       await fetch(`${automateAPI}`, {
         method: "POST",
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       });
     } catch (automateError) {
       console.error("Power Automate error:", automateError);
-    } */
+    }
 
     return NextResponse.json(
       { message: "New Ticket Created", ticket: newTicket },

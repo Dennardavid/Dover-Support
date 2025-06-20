@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+
+
+/* Need to work on this logic */
 export async function POST(req: NextRequest) {
   const { id, message } = await req.json();
   const session = await auth();
