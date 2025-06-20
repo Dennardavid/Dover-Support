@@ -71,16 +71,6 @@ export default function AdminNavigation() {
           }
         )}
       >
-        {/* Close button (mobile only) */}
-        <div className="md:hidden flex justify-end">
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="text-white p-2"
-          >
-            <IoClose size={24} />
-          </button>
-        </div>
-
         {/* Logo and Title */}
         <div className="mt-8 flex flex-col items-center gap-5">
           <Image src={img.Logo} alt="prado" quality={100} priority />

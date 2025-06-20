@@ -23,7 +23,7 @@ export default async function Tickets() {
         <DownloadTickets />
       </div>
 
-      <TicketsHistory description=" " />
+      <TicketsHistory description="" />
     </>
   );
 }

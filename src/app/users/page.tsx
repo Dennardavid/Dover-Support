@@ -9,8 +9,14 @@ export default async function Home() {
 
   const userName = session?.user?.name;
 
+  const role = session?.user?.role;
+
   if (!session?.user) {
     return redirect("/");
+  }
+
+  if (role !== "USER") {
+    redirect("/admin");
   }
 
   return (

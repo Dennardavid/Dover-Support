@@ -6,6 +6,7 @@ import TicketModal from "@/components/ui/ticketModal";
 import { useState, useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { useSearchParams, useRouter } from "next/navigation";
+import TicketFilter from "@/components/ui/TicketFilter";
 
 const statusStyles: Record<string, string> = {
   open: "bg-orange-100 text-orange-700",
@@ -32,6 +33,8 @@ export default function TicketsHistory({
 
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [filter, setFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(30);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,19 +44,32 @@ export default function TicketsHistory({
     setFilter(current);
   }, [searchParams]);
 
-  const handleFilterChange = (newFilter: string) => {
-    const params = new URLSearchParams(searchParams);
-    newFilter === "all"
-      ? params.delete("filter")
-      : params.set("filter", newFilter);
-    router.replace(`?${params.toString()}`);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(7);
+      } else {
+        setItemsPerPage(30);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const filteredTickets = tickets?.filter((ticket) =>
-    filter === "all" ? true : ticket.status === filter
+    filter === "all"
+      ? true
+      : ticket.status === filter || ticket.priority === filter
   );
 
-  const skeletonRows = Array(5).fill(null);
+  const totalPages = Math.ceil((filteredTickets?.length ?? 0) / itemsPerPage);
+  const currentTickets = filteredTickets?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const skeletonRows = Array(itemsPerPage).fill(null);
 
   if (error) {
     return (
@@ -68,6 +84,7 @@ export default function TicketsHistory({
           {description}
         </h2>
 
+        <TicketFilter />
         {/* Header for Desktop */}
         <div className="hidden md:grid grid-cols-4 gap-4 mb-2 text-base font-medium text-slate-600">
           <span>Date Created</span>
@@ -76,7 +93,7 @@ export default function TicketsHistory({
           <span>Status</span>
         </div>
 
-        <div className="space-y-3 md: sapce-y-4">
+        <div className="space-y-3 md:space-y-4">
           {isLoading ? (
             skeletonRows.map((_, index) => (
               <div
@@ -89,12 +106,12 @@ export default function TicketsHistory({
                 <div className="h-6 w-80 bg-gray-300 rounded-full"></div>
               </div>
             ))
-          ) : filteredTickets && filteredTickets.length === 0 ? (
+          ) : currentTickets && currentTickets.length === 0 ? (
             <p className="text-center text-slate-500 mt-20">
               No tickets found.
             </p>
           ) : (
-            filteredTickets?.map((ticket) => (
+            currentTickets?.map((ticket) => (
               <div
                 key={ticket.id}
                 className="bg-white rounded-lg shadow-sm px-4 py-3 hover:bg-gray-50 transition"
@@ -117,18 +134,14 @@ export default function TicketsHistory({
                     <span className="md:hidden text-sm text-slate-500">
                       Title
                     </span>
-                    <span className="text-slate-700">
-                      {ticket.title}
-                    </span>
+                    <span className="text-slate-700">{ticket.title}</span>
                   </div>
 
                   <div className="flex justify-between w-full md:contents">
                     <span className="md:hidden text-sm text-slate-500">
                       Category
                     </span>
-                    <span className="text-slate-700">
-                      {ticket.category}
-                    </span>
+                    <span className="text-slate-700">{ticket.category}</span>
                   </div>
 
                   <div className="flex justify-between w-full md:contents">
@@ -161,6 +174,25 @@ export default function TicketsHistory({
             ))
           )}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-6 gap-2 flex-wrap">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentPage(num)}
+                className={`px-3 py-1 rounded border text-sm font-medium transition ${
+                  currentPage === num
+                    ? "bg-forestGreen text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {selectedTicket && (

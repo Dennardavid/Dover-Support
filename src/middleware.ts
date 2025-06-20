@@ -23,7 +23,13 @@ export default auth(async (req) => {
   }
 
   if (isLoggedIn && isAuthPageRoute) {
-    return NextResponse.redirect(new URL("/users", req.nextUrl));
+    const role = req.auth?.user?.role;
+
+    if (role === "ADMIN") {
+      return NextResponse.redirect(new URL("/admin", req.nextUrl));
+    } else {
+      return NextResponse.redirect(new URL("/users", req.nextUrl));
+    }
   }
 
   return NextResponse.next();
