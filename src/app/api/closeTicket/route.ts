@@ -42,13 +42,13 @@ export async function POST(req: NextRequest) {
     });
 
     // Notify Power Automate with title instead of ID
-    const automateAPI = process.env.NEXT_PUBLIC_API_URL_UPDATE;
+    const automateAPI = process.env.NEXT_PUBLIC_API_URL_CLOSE;
     await fetch(`${automateAPI}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: ticket.title,
-        status: "closed",
+        status: "Closed",
         closedAt: updatedTicket.updatedAt,
         workNote: message,
         recipient: {

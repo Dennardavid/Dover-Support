@@ -40,7 +40,7 @@ export default function TicketDetailsModal({
   const handleCloseTicket = async () => {
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/updateTicket", {
+      const res = await fetch("/api/closeTicket", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

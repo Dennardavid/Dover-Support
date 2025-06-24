@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/dateFormater";
 import TicketModal from "@/components/ui/ticketModal";
 import { useState, useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import TicketFilter from "@/components/ui/TicketFilter";
 
 const statusStyles: Record<string, string> = {
@@ -36,7 +36,6 @@ export default function TicketsHistory({
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(30);
 
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
