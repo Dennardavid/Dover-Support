@@ -19,6 +19,7 @@ export default function TicketDetailsModal({
   const [workNote, setWorkNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const { data: session } = useSession();
   const isAdmin = session?.user.role === "ADMIN";
 
@@ -152,14 +153,20 @@ export default function TicketDetailsModal({
 
           {/* Ticket Screenshot - Only if exists */}
           {ticket.screenshot && (
-            <div className="flex-shrink-0 self-center md:self-start">
+            <div
+              className="flex-shrink-0 self-center md:self-start cursor-pointer"
+              onClick={() => setShowImageModal(true)}
+            >
               <Image
                 src={`/uploads/${ticket.screenshot}`}
                 alt="Ticket Screenshot"
-                className="rounded-md max-w-xs h-auto"
+                className="rounded-md max-w-xs h-auto hover:opacity-80 transition"
                 height={250}
                 width={250}
               />
+              <p className="text-sm text-center text-gray-500 mt-1">
+                Click to enlarge
+              </p>
             </div>
           )}
         </div>
@@ -212,6 +219,31 @@ export default function TicketDetailsModal({
           }
           isLoading={isSubmitting}
         />
+      )}
+      {showImageModal && (
+        <div
+          onClick={() => setShowImageModal(false)}
+          className="fixed inset-0 bg-black/25 backdrop-blur-sm flex items-center justify-center z-50"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white p-4 rounded-lg max-w-[90vw] max-h-[90vh] overflow-auto shadow-lg"
+          >
+            <Image
+              src={`/uploads/${ticket.screenshot}`}
+              alt="Full Ticket Screenshot"
+              width={800}
+              height={800}
+              className="w-full h-auto rounded"
+            />
+            <button
+              onClick={() => setShowImageModal(false)}
+              className="mt-4 bg-forestGreen text-white px-4 py-2 rounded hover:bg-[#025E50] transition w-full"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
