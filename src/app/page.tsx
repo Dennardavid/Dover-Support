@@ -61,7 +61,7 @@ export default function Home() {
       } else {
         router.push("users");
       }
-      
+
       setLoading(false);
       setEmail("");
       setPassword("");
@@ -138,7 +138,7 @@ export default function Home() {
 
       <div>
         <p className="text-gray text-sm sm:text-base">
-          Don't have an Account?{" "}
+          Don&apos;t have an Account?{" "}
           <Link href={"/signup"} className="text-orange underline">
             Sign Up
           </Link>

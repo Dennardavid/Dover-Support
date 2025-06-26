@@ -4,7 +4,7 @@ import { img } from "@/assets";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { IoHomeOutline, IoMenu, IoClose } from "react-icons/io5";
+import { IoHomeOutline, IoMenu } from "react-icons/io5";
 import { BsClockHistory } from "react-icons/bs";
 import { GrScorecard } from "react-icons/gr";
 import LogoutButton from "./ui/logoutButton";
@@ -72,7 +72,6 @@ export default function Navigation() {
           }
         )}
       >
-
         {/* Logo and Title */}
         <div className="mt-8 flex flex-col items-center gap-5">
           <Image src={img.Logo} alt="prado" quality={100} priority />

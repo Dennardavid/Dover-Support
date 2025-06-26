@@ -57,6 +57,7 @@ export default function TicketDetailsModal({
       setTimeout(() => onClose(), 1000);
     } catch (error) {
       toast.error("Something went wrong.");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -80,6 +81,7 @@ export default function TicketDetailsModal({
       setTimeout(() => onClose(), 1000);
     } catch (error) {
       toast.error("Something went wrong.");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }

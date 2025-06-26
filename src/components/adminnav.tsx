@@ -4,7 +4,7 @@ import { img } from "@/assets";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IoHomeOutline, IoMenu, IoClose } from "react-icons/io5";
+import { IoHomeOutline, IoMenu } from "react-icons/io5";
 import { GrAnalytics, GrScorecard } from "react-icons/gr";
 import LogoutButton from "./ui/logoutButton";
 import { usePathname } from "next/navigation";

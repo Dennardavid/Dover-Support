@@ -45,7 +45,7 @@ export default function SignUp() {
     }
 
     /* Split the confirm password not to store on the DB */
-    const { confirmPassword, ...formToSubmit } = form;
+    const { ...formToSubmit } = form;
 
     /* API POST call to DB */
     const response = await fetch("/api/signup", {
@@ -59,7 +59,7 @@ export default function SignUp() {
     /* Toast Handler */
     if (response.ok) {
       toast.success(result.message);
-      
+
       router.push("/");
 
       setForm({
@@ -219,7 +219,7 @@ export default function SignUp() {
           </button>
         </form>
       </div>
-      
+
       <div>
         <p className="text-gray text-sm sm:text-base">
           Already have an account?{" "}
