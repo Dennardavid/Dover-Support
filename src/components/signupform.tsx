@@ -147,7 +147,7 @@ export default function SignUp() {
             <option value="">Select Discipline</option>
             <option value="Reception">Reception</option>
             <option value="IT/IS">IT/IS</option>
-            <option value="Project Controls & Management">
+            <option value="Project Management & Controls">
               Project Controls & Management
             </option>
             <option value="Mechanical">Mechanical</option>
