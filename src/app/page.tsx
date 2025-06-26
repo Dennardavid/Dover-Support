@@ -49,7 +49,7 @@ export default function Home() {
         console.log(parsedError);
         setErrors({ form: parsedError.message || "Login failed from try" });
       } catch {
-        setErrors({ form: "Login failed from catch" });
+        setErrors({ form: "Invalid credentials" });
       }
     } else {
       toast.success("Successful");
