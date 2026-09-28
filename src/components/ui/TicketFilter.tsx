@@ -31,15 +31,15 @@ export default function TicketFilter() {
   };
 
   return (
-    <div className="flex flex-wrap gap-2 mb-5">
+    <div className="flex flex-wrap gap-2 mb-4">
       {filterOptions.map((opt) => (
         <button
           key={opt.value}
           onClick={() => handleClick(opt.value)}
-          className={`px-3 py-1 text-sm rounded-full border transition font-medium ${
+          className={`px-3.5 py-1.5 text-sm rounded-full border transition-colors font-medium ${
             active === opt.value
-              ? "bg-forestGreen text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              ? "bg-forestGreen text-white border-forestGreen"
+              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
           }`}
         >
           {opt.label}

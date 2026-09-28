@@ -17,9 +17,9 @@ export default function LogoutButton() {
       type="submit"
       disabled={isLoading}
       onClick={() => handleLogout()}
-      className="w-full text-white bg-red-500 hover:bg-red-700 rounded-xl py-2 transition flex justify-center items-center gap-2"
+      className="w-full text-white/90 bg-white/10 hover:bg-red-500/90 hover:text-white rounded-lg py-2.5 transition-colors flex justify-center items-center gap-2 text-sm font-medium disabled:opacity-60"
     >
-      <IoIosPower color="white" fontSize={25} />
+      <IoIosPower fontSize={18} />
       {isLoading ? "Signing Out..." : "Logout"}
     </button>
   );

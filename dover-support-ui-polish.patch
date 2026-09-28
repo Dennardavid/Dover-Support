@@ -1,0 +1,1900 @@
+diff --git a/src/app/admin/layout.tsx b/src/app/admin/layout.tsx
+index f612dc0..1c7270f 100644
+--- a/src/app/admin/layout.tsx
++++ b/src/app/admin/layout.tsx
+@@ -5,7 +5,9 @@ export default function Layout({ children }: { children: ReactNode }) {
+   return (
+     <div className="flex flex-row min-h-[100dvh] h-[100dvh] overflow-hidden bg-gray">
+       <AdminNavigation />
+-      <div className="flex-1 p-6 overflow-y-auto">{children}</div>
++      <div className="flex-1 px-4 md:px-8 py-6 overflow-y-auto">
++        {children}
++      </div>
+     </div>
+   );
+ }
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 7a5c896..30fc8d8 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -69,77 +69,75 @@ export default function Home() {
+   };
+ 
+   return (
+-    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
+-      <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
++    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4 py-10">
++      <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[420px] text-center">
+         <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true} />
+-        <h1 className="font-semibold text-gray text-xl bg-orange w-full p-2 rounded-md">
++        <h1 className="font-semibold text-white text-lg tracking-wide">
+           Sign In
+         </h1>
+       </div>
+ 
+-      <div className="bg-gray px-6 py-7 w-full max-w-[500px] rounded-md">
+-        {/* <div className="flex items-center my-6">
+-          <hr className="flex-grow border-t border-gray-300" />
+-          <span className="mx-4 text-gray-500 text-sm">
+-          or sign in with email
+-          </span>
+-          <hr className="flex-grow border-t border-gray-300" />
+-          </div> */}
+-        <form onSubmit={handleSubmit}>
+-          <label
+-            htmlFor="email"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Email
+-          </label>
+-          <input
+-            type="email"
+-            name="email"
+-            id="email"
+-            placeholder="name@doverengineering.com"
+-            value={email}
+-            onChange={(e) => setEmail(e.target.value)}
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
+-          />
+-          {errors.email && (
+-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+-          )}
+-
+-          <label
+-            htmlFor="password"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Password
+-          </label>
+-          <input
+-            type="password"
+-            name="password"
+-            id="password"
+-            placeholder="Password"
+-            value={password}
+-            onChange={(e) => setPassword(e.target.value)}
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+-          />
+-          {errors.password && (
+-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+-          )}
++      <div className="bg-white px-6 py-8 w-full max-w-[420px] rounded-xl shadow-xl">
++        <form onSubmit={handleSubmit} className="space-y-4">
++          <div>
++            <label
++              htmlFor="email"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Email
++            </label>
++            <input
++              type="email"
++              name="email"
++              id="email"
++              placeholder="name@doverengineering.com"
++              value={email}
++              onChange={(e) => setEmail(e.target.value)}
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.email && (
++              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
++            )}
++          </div>
++
++          <div>
++            <label
++              htmlFor="password"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Password
++            </label>
++            <input
++              type="password"
++              name="password"
++              id="password"
++              placeholder="Password"
++              value={password}
++              onChange={(e) => setPassword(e.target.value)}
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.password && (
++              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
++            )}
++          </div>
+ 
+           <button
+             type="submit"
+-            className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
++            disabled={loading}
++            className="bg-forestGreen text-white w-full rounded-md p-2.5 mt-2 font-medium hover:bg-[#025E50] transition-colors shadow-sm disabled:opacity-70"
+           >
+             {loading ? "Signing In..." : "Login"}
+           </button>
+           {errors.form && (
+-            <p className="text-red-500 text-sm mt-2">{errors.form}</p>
++            <p className="text-red-500 text-sm text-center">{errors.form}</p>
+           )}
+         </form>
+       </div>
+ 
+       <div>
+-        <p className="text-gray text-sm sm:text-base">
++        <p className="text-white/80 text-sm sm:text-base">
+           Don&apos;t have an Account?{" "}
+-          <Link href={"/signup"} className="text-orange underline">
++          <Link href={"/signup"} className="text-orange font-medium hover:underline">
+             Sign Up
+           </Link>
+         </p>
+diff --git a/src/app/users/layout.tsx b/src/app/users/layout.tsx
+index b50d2fa..7f02569 100644
+--- a/src/app/users/layout.tsx
++++ b/src/app/users/layout.tsx
+@@ -10,7 +10,9 @@ export default function Layout({
+       className={`flex flex-row min-h-[100dvh] h-[100dvh] overflow-hidden bg-gray`}
+     >
+       <Navigation />
+-      <div className="flex-1 px-4 py-6 overflow-y-auto">{children}</div>
++      <div className="flex-1 px-4 md:px-8 py-6 overflow-y-auto">
++        {children}
++      </div>
+     </section>
+   );
+ }
+diff --git a/src/components/adminnav.tsx b/src/components/adminnav.tsx
+index 8d75d01..ff4e8f0 100644
+--- a/src/components/adminnav.tsx
++++ b/src/components/adminnav.tsx
+@@ -1,113 +1,29 @@
+ "use client";
+ 
+-import { img } from "@/assets";
+-import Image from "next/image";
+-import Link from "next/link";
+-import { useEffect, useState } from "react";
+-import { IoHomeOutline, IoMenu } from "react-icons/io5";
++import Sidebar from "./sidebar";
++import { IoHomeOutline } from "react-icons/io5";
+ import { GrAnalytics, GrScorecard } from "react-icons/gr";
+-import LogoutButton from "./ui/logoutButton";
+-import { usePathname } from "next/navigation";
+-import clsx from "clsx";
+ 
++// Was ~115 lines of near-duplicate sidebar logic — see sidebar.tsx,
++// which now holds the actual implementation shared with nav.tsx.
+ export default function AdminNavigation() {
+-  const pathname = usePathname();
+-  const [sidebarOpen, setSidebarOpen] = useState(false);
+-
+   const navLinks = [
+     {
+       href: "/admin",
+       label: "Overview",
+-      Icon: <IoHomeOutline color="white" fontSize={25} />,
++      Icon: <IoHomeOutline fontSize={20} />,
+     },
+     {
+       href: "/admin/tickets",
+       label: "Tickets",
+-      Icon: <GrScorecard color="white" fontSize={25} />,
++      Icon: <GrScorecard fontSize={20} />,
+     },
+     {
+       href: "/admin/analytics",
+       label: "Analytics",
+-      Icon: <GrAnalytics color="white" fontSize={25} />,
++      Icon: <GrAnalytics fontSize={20} />,
+     },
+   ];
+ 
+-  // Lock body scroll when sidebar is open
+-  useEffect(() => {
+-    document.body.style.overflow = sidebarOpen ? "hidden" : "auto";
+-    return () => {
+-      document.body.style.overflow = "auto";
+-    };
+-  }, [sidebarOpen]);
+-
+-  return (
+-    <>
+-      {/* Hamburger menu (mobile only) */}
+-      {!sidebarOpen && (
+-        <button
+-          onClick={() => setSidebarOpen(true)}
+-          className="md:hidden fixed top-4 left-4 z-30 text-white bg-forestGreen p-2 rounded-lg"
+-        >
+-          <IoMenu size={24} />
+-        </button>
+-      )}
+-
+-      {/* Backdrop */}
+-      {sidebarOpen && (
+-        <div
+-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+-          onClick={() => setSidebarOpen(false)}
+-        />
+-      )}
+-
+-      {/* Sidebar */}
+-      <nav
+-        className={clsx(
+-          "bg-forestGreen fixed top-0 left-0 h-dvh w-64 md:w-[20%] z-40 flex flex-col py-5 px-4 transition-transform duration-300 ease-in-out",
+-          {
+-            "-translate-x-full": !sidebarOpen,
+-            "translate-x-0": sidebarOpen,
+-            "md:translate-x-0 md:static": true,
+-          }
+-        )}
+-      >
+-        {/* Logo and Title */}
+-        <div className="mt-8 flex flex-col items-center gap-5">
+-          <Image src={img.Logo} alt="prado" quality={100} priority />
+-          <h1 className="text-white text-3xl md:text-5xl font-extrabold">
+-            ADMIN
+-          </h1>
+-        </div>
+-
+-        {/* Nav Links */}
+-        <ul className="space-y-6 mt-10 flex-1">
+-          {navLinks.map((link) => {
+-            const isActive = pathname === link.href;
+-            return (
+-              <li key={link.href} className="flex items-center justify-center">
+-                <Link
+-                  href={link.href}
+-                  onClick={() => setSidebarOpen(false)}
+-                  className={clsx(
+-                    "text-white bg-[#016a81]/50 flex justify-center gap-4 w-full rounded-xl py-2",
+-                    {
+-                      "bg-amber-400": isActive,
+-                    }
+-                  )}
+-                >
+-                  {link.Icon}
+-                  {link.label}
+-                </Link>
+-              </li>
+-            );
+-          })}
+-        </ul>
+-
+-        {/* Logout button */}
+-        <div className="mt-8 md:mt-0">
+-          <LogoutButton />
+-        </div>
+-      </nav>
+-    </>
+-  );
++  return <Sidebar title="ADMIN" navLinks={navLinks} />;
+ }
+diff --git a/src/components/downloadTickets.tsx b/src/components/downloadTickets.tsx
+index 61e2ee4..fa39d74 100644
+--- a/src/components/downloadTickets.tsx
++++ b/src/components/downloadTickets.tsx
+@@ -62,9 +62,9 @@ export default function DownloadTickets() {
+     <button
+       onClick={handleDownload}
+       aria-label="Download ticket data as CSV"
+-      className="sm:w-fit py-2 px-2 md:px-2 bg-forestGreen hover:bg-[#025E50] transition-colors duration-200 text-white rounded flex items-center justify-center gap-2 text-sm sm:text-base"
++      className="sm:w-fit py-2.5 px-4 bg-forestGreen hover:bg-[#025E50] transition-colors duration-200 text-white rounded-lg flex items-center justify-center gap-2 text-sm sm:text-base font-medium shadow-sm"
+     >
+-      <MdOutlineFileDownload size={20} />
++      <MdOutlineFileDownload size={18} />
+       <span className="truncate">Download</span>
+     </button>
+   );
+diff --git a/src/components/nav.tsx b/src/components/nav.tsx
+index 88994b1..0ae4378 100644
+--- a/src/components/nav.tsx
++++ b/src/components/nav.tsx
+@@ -1,111 +1,30 @@
+ "use client";
+ 
+-import { img } from "@/assets";
+-import Image from "next/image";
+-import Link from "next/link";
+-import { useState, useEffect } from "react";
+-import { IoHomeOutline, IoMenu } from "react-icons/io5";
++import Sidebar from "./sidebar";
++import { IoHomeOutline } from "react-icons/io5";
+ import { BsClockHistory } from "react-icons/bs";
+ import { GrScorecard } from "react-icons/gr";
+-import LogoutButton from "./ui/logoutButton";
+-import { usePathname } from "next/navigation";
+-import clsx from "clsx";
+ 
++// Was ~110 lines of near-duplicate sidebar logic — see sidebar.tsx,
++// which now holds the actual implementation shared with adminnav.tsx.
+ export default function Navigation() {
+-  const pathname = usePathname();
+-  const [sidebarOpen, setSidebarOpen] = useState(false);
+-
+   const navLinks = [
+     {
+       href: "/users",
+       label: "Dashboard",
+-      Icon: <IoHomeOutline color="white" fontSize={25} />,
++      Icon: <IoHomeOutline fontSize={20} />,
+     },
+     {
+       href: "/users/new-ticket",
+       label: "Create Ticket",
+-      Icon: <GrScorecard color="white" fontSize={25} />,
++      Icon: <GrScorecard fontSize={20} />,
+     },
+     {
+       href: "/users/history",
+       label: "Ticket History",
+-      Icon: <BsClockHistory color="white" fontSize={25} />,
++      Icon: <BsClockHistory fontSize={20} />,
+     },
+   ];
+ 
+-  // Prevent body scroll when sidebar is open
+-  useEffect(() => {
+-    document.body.style.overflow = sidebarOpen ? "hidden" : "auto";
+-    return () => {
+-      document.body.style.overflow = "auto";
+-    };
+-  }, [sidebarOpen]);
+-
+-  return (
+-    <>
+-      {/* Hamburger Icon (mobile only) */}
+-      {!sidebarOpen && (
+-        <button
+-          onClick={() => setSidebarOpen(true)}
+-          className="md:hidden fixed top-4 left-4 z-30 text-white bg-forestGreen p-2 rounded-lg"
+-        >
+-          <IoMenu size={24} />
+-        </button>
+-      )}
+-
+-      {/* Backdrop when sidebar is open (mobile) */}
+-      {sidebarOpen && (
+-        <div
+-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+-          onClick={() => setSidebarOpen(false)}
+-        />
+-      )}
+-
+-      {/* Sidebar */}
+-      <nav
+-        className={clsx(
+-          "bg-forestGreen fixed top-0 left-0 h-dvh w-64 md:w-[20%] z-40 flex flex-col py-5 px-4 transition-transform duration-300 ease-in-out",
+-          {
+-            "-translate-x-full": !sidebarOpen,
+-            "translate-x-0": sidebarOpen,
+-            "md:translate-x-0 md:static": true,
+-          }
+-        )}
+-      >
+-        {/* Logo and Title */}
+-        <div className="mt-8 flex flex-col items-center gap-5">
+-          <Image src={img.Logo} alt="prado" quality={100} priority />
+-          <h1 className="text-white text-3xl md:text-5xl font-extrabold">
+-            HELP DESK
+-          </h1>
+-        </div>
+-
+-        {/* Nav Links */}
+-        <ul className="space-y-6 mt-10 flex-1">
+-          {navLinks.map((link) => (
+-            <li key={link.href} className="flex items-center justify-center">
+-              <Link
+-                href={link.href}
+-                onClick={() => setSidebarOpen(false)}
+-                className={clsx(
+-                  "text-white bg-[#016a81]/50 flex justify-center gap-4 w-full rounded-xl py-2",
+-                  {
+-                    "bg-amber-400": pathname === link.href,
+-                  }
+-                )}
+-              >
+-                {link.Icon}
+-                {link.label}
+-              </Link>
+-            </li>
+-          ))}
+-        </ul>
+-
+-        {/* Logout */}
+-        <div className="mt-8 md:mt-0">
+-          <LogoutButton />
+-        </div>
+-      </nav>
+-    </>
+-  );
++  return <Sidebar title="HELP DESK" navLinks={navLinks} />;
+ }
+diff --git a/src/components/sidebar.tsx b/src/components/sidebar.tsx
+new file mode 100644
+index 0000000..fd9dc6d
+--- /dev/null
++++ b/src/components/sidebar.tsx
+@@ -0,0 +1,124 @@
++"use client";
++
++import { img } from "@/assets";
++import Image from "next/image";
++import Link from "next/link";
++import { useState, useEffect } from "react";
++import { IoMenu } from "react-icons/io5";
++import LogoutButton from "./ui/logoutButton";
++import { usePathname } from "next/navigation";
++import clsx from "clsx";
++
++export type NavLink = {
++  href: string;
++  label: string;
++  Icon: React.ReactNode;
++};
++
++// STRUCTURE CHANGE: this replaces two separate nav.tsx / adminnav.tsx
++// implementations, which were near-identical copies of each other (same
++// hamburger/backdrop/scroll-lock/active-link logic, different title and
++// link list). Both now just call this component with their own links —
++// see the bottom of nav.tsx / adminnav.tsx for how thin they've become.
++export default function Sidebar({
++  title,
++  navLinks,
++}: {
++  title: string;
++  navLinks: NavLink[];
++}) {
++  const pathname = usePathname();
++  const [sidebarOpen, setSidebarOpen] = useState(false);
++
++  // Prevent body scroll when the mobile sidebar is open
++  useEffect(() => {
++    document.body.style.overflow = sidebarOpen ? "hidden" : "auto";
++    return () => {
++      document.body.style.overflow = "auto";
++    };
++  }, [sidebarOpen]);
++
++  return (
++    <>
++      {/* Hamburger Icon (mobile only) */}
++      {!sidebarOpen && (
++        <button
++          onClick={() => setSidebarOpen(true)}
++          aria-label="Open navigation menu"
++          className="md:hidden fixed top-4 left-4 z-30 text-white bg-forestGreen p-2.5 rounded-lg shadow-md active:scale-95 transition"
++        >
++          <IoMenu size={22} />
++        </button>
++      )}
++
++      {/* Backdrop when sidebar is open (mobile) */}
++      {sidebarOpen && (
++        <div
++          className="fixed inset-0 bg-black/50 z-30 md:hidden"
++          onClick={() => setSidebarOpen(false)}
++        />
++      )}
++
++      {/* Sidebar */}
++      <nav
++        className={clsx(
++          "bg-forestGreen fixed top-0 left-0 h-dvh w-64 md:w-[20%] z-40 flex flex-col py-6 px-4 transition-transform duration-300 ease-in-out",
++          {
++            "-translate-x-full": !sidebarOpen,
++            "translate-x-0": sidebarOpen,
++            "md:translate-x-0 md:static": true,
++          }
++        )}
++      >
++        {/* Logo and Title */}
++        <div className="flex flex-col items-center gap-4">
++          <Image src={img.Logo} alt="Dover logo" quality={100} priority />
++          <h1 className="text-white text-2xl md:text-3xl font-extrabold tracking-wide">
++            {title}
++          </h1>
++        </div>
++
++        {/* Divider — subtle separation between branding and nav, instead
++            of relying on spacing alone */}
++        <div className="h-px bg-white/10 mt-6" />
++
++        {/* Nav Links */}
++        <ul className="space-y-1.5 mt-6 flex-1">
++          {navLinks.map((link) => {
++            const isActive = pathname === link.href;
++            return (
++              <li key={link.href}>
++                <Link
++                  href={link.href}
++                  onClick={() => setSidebarOpen(false)}
++                  className={clsx(
++                    "flex items-center gap-3 w-full rounded-lg py-2.5 px-4 text-[15px] font-medium transition-colors",
++                    // Was `bg-amber-400` for the active link — amber
++                    // doesn't appear anywhere else in the palette
++                    // (forestGreen / orange / gray). The orange brand
++                    // accent now marks "active" consistently with how
++                    // it's used everywhere else (buttons, links,
++                    // highlights). Inactive links are transparent by
++                    // default rather than always showing a semi-opaque
++                    // fill, so "active" actually means something.
++                    isActive
++                      ? "bg-orange text-white shadow-sm"
++                      : "text-white/80 hover:bg-white/10 hover:text-white"
++                  )}
++                >
++                  {link.Icon}
++                  {link.label}
++                </Link>
++              </li>
++            );
++          })}
++        </ul>
++
++        {/* Logout */}
++        <div className="mt-4">
++          <LogoutButton />
++        </div>
++      </nav>
++    </>
++  );
++}
+diff --git a/src/components/signupform.tsx b/src/components/signupform.tsx
+index d49575d..6d4b504 100644
+--- a/src/components/signupform.tsx
++++ b/src/components/signupform.tsx
+@@ -27,7 +27,7 @@ export default function SignUp() {
+   };
+ 
+   // validate with Zod
+-  const handleSubmit = async (e: any) => {
++  const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setErrors({});
+ 
+@@ -75,145 +75,156 @@ export default function SignUp() {
+   };
+ 
+   return (
+-    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
+-      <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
++    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4 py-10">
++      <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[440px] text-center">
+         <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true} />
+-        <h1 className="font-semibold text-gray text-xl bg-orange w-full p-2 rounded-md">
++        <h1 className="font-semibold text-white text-lg tracking-wide">
+           Sign Up
+         </h1>
+       </div>
+ 
+-      <div className="bg-gray p-6 w-full max-w-[500px] rounded-md">
+-        {/* <div className="flex items-center my-6">
+-          <hr className="flex-grow border-t border-gray-300" />
+-          <span className="mx-4 text-gray-500 text-sm">
+-            or sign up with email
+-          </span>
+-          <hr className="flex-grow border-t border-gray-300" />
+-        </div> */}
+-        <form onSubmit={handleSubmit} method="POST">
+-          <label
+-            htmlFor="name"
+-            className="block text-base font-medium text-gray-700 mb-2"
+-          >
+-            Name
+-          </label>
+-          <input
+-            type="text"
+-            name="name"
+-            id="name"
+-            onChange={handleChange}
+-            value={form.name}
+-            required
+-            placeholder="First and Last Name"
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
+-          />
+-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+-
+-          <label
+-            htmlFor="email"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Email
+-          </label>
+-          <input
+-            type="email"
+-            name="email"
+-            id="email"
+-            value={form.email}
+-            onChange={handleChange}
+-            required
+-            placeholder="name@doverengineering.com"
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
+-          />
+-          {errors.email && (
+-            <p className="text-red-500 text-sm">{errors.email}</p>
+-          )}
+-
+-          <label
+-            htmlFor="discipline"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Discipline
+-          </label>
+-          <select
+-            name="discipline"
+-            id="discipline"
+-            onChange={handleChange}
+-            value={form.discipline}
+-            required
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+-          >
+-            <option value="">Select Discipline</option>
+-            <option value="Reception">Reception</option>
+-            <option value="IT/IS">IT/IS</option>
+-            <option value="Project Management & Controls">
+-              Project Controls & Management
+-            </option>
+-            <option value="Mechanical">Mechanical</option>
+-            <option value="Telecoms">Telecoms</option>
+-            <option value="Instrumentation">Instrumentation</option>
+-            <option value="QA/QC">QA/QC</option>
+-            <option value="Document Control">Document Control</option>
+-            <option value="Technical Safety">Technical Safety</option>
+-            <option value="Process">Process</option>
+-            <option value="Electrical">Electrical</option>
+-            <option value="Piping">Piping</option>
+-            <option value="Pipeline">Pipeline</option>
+-            <option value="Civil/Structural">Civil/Structural</option>
+-            <option value="HR">HR</option>
+-            <option value="Accounts">Accounts</option>
+-            <option value="Business Development">Business Development</option>
+-            <option value="Logistics/Procurement">Logistics/Procurement</option>
+-            <option value="HSE">HSE</option>
+-          </select>
+-          {errors.discipline && (
+-            <p className="text-red-500 text-sm">{errors.discipline}</p>
+-          )}
+-
+-          <label
+-            htmlFor="password"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Password
+-          </label>
+-          <input
+-            type="password"
+-            name="password"
+-            id="password"
+-            onChange={handleChange}
+-            value={form.password}
+-            required
+-            placeholder="Password"
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+-          />
+-          {errors.password && (
+-            <p className="text-red-500 text-sm">{errors.password}</p>
+-          )}
+-
+-          <label
+-            htmlFor="confirmPassword"
+-            className="block text-base font-medium text-gray-700 my-2"
+-          >
+-            Confirm Password
+-          </label>
+-          <input
+-            type="password"
+-            name="confirmPassword"
+-            id="confirmPassword"
+-            onChange={handleChange}
+-            value={form.confirmPassword}
+-            required
+-            placeholder="Re-type Password"
+-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+-          />
+-
+-          {errors.confirmPassword && (
+-            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+-          )}
++      <div className="bg-white px-6 py-8 w-full max-w-[440px] rounded-xl shadow-xl">
++        <form onSubmit={handleSubmit} method="POST" className="space-y-4">
++          <div>
++            <label
++              htmlFor="name"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Name
++            </label>
++            <input
++              type="text"
++              name="name"
++              id="name"
++              onChange={handleChange}
++              value={form.name}
++              required
++              placeholder="First and Last Name"
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.name && (
++              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
++            )}
++          </div>
++
++          <div>
++            <label
++              htmlFor="email"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Email
++            </label>
++            <input
++              type="email"
++              name="email"
++              id="email"
++              value={form.email}
++              onChange={handleChange}
++              required
++              placeholder="name@doverengineering.com"
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.email && (
++              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
++            )}
++          </div>
++
++          <div>
++            <label
++              htmlFor="discipline"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Discipline
++            </label>
++            <select
++              name="discipline"
++              id="discipline"
++              onChange={handleChange}
++              value={form.discipline}
++              required
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            >
++              <option value="">Select Discipline</option>
++              <option value="Reception">Reception</option>
++              <option value="IT/IS">IT/IS</option>
++              <option value="Project Management & Controls">
++                Project Controls & Management
++              </option>
++              <option value="Mechanical">Mechanical</option>
++              <option value="Telecoms">Telecoms</option>
++              <option value="Instrumentation">Instrumentation</option>
++              <option value="QA/QC">QA/QC</option>
++              <option value="Document Control">Document Control</option>
++              <option value="Technical Safety">Technical Safety</option>
++              <option value="Process">Process</option>
++              <option value="Electrical">Electrical</option>
++              <option value="Piping">Piping</option>
++              <option value="Pipeline">Pipeline</option>
++              <option value="Civil/Structural">Civil/Structural</option>
++              <option value="HR">HR</option>
++              <option value="Accounts">Accounts</option>
++              <option value="Business Development">
++                Business Development
++              </option>
++              <option value="Logistics/Procurement">
++                Logistics/Procurement
++              </option>
++              <option value="HSE">HSE</option>
++            </select>
++            {errors.discipline && (
++              <p className="text-red-500 text-sm mt-1">{errors.discipline}</p>
++            )}
++          </div>
++
++          <div>
++            <label
++              htmlFor="password"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Password
++            </label>
++            <input
++              type="password"
++              name="password"
++              id="password"
++              onChange={handleChange}
++              value={form.password}
++              required
++              placeholder="Password"
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.password && (
++              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
++            )}
++          </div>
++
++          <div>
++            <label
++              htmlFor="confirmPassword"
++              className="block text-sm font-semibold text-slate-700 mb-1"
++            >
++              Confirm Password
++            </label>
++            <input
++              type="password"
++              name="confirmPassword"
++              id="confirmPassword"
++              onChange={handleChange}
++              value={form.confirmPassword}
++              required
++              placeholder="Re-type Password"
++              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
++            />
++            {errors.confirmPassword && (
++              <p className="text-red-500 text-sm mt-1">
++                {errors.confirmPassword}
++              </p>
++            )}
++          </div>
++
+           <button
+             type="submit"
+-            className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
++            className="bg-forestGreen text-white w-full rounded-md p-2.5 mt-2 font-medium hover:bg-[#025E50] transition-colors shadow-sm"
+           >
+             Sign Up
+           </button>
+@@ -221,9 +232,9 @@ export default function SignUp() {
+       </div>
+ 
+       <div>
+-        <p className="text-gray text-sm sm:text-base">
++        <p className="text-white/80 text-sm sm:text-base">
+           Already have an account?{" "}
+-          <Link href={"/"} className="text-orange underline">
++          <Link href={"/"} className="text-orange font-medium hover:underline">
+             Sign In
+           </Link>
+         </p>
+diff --git a/src/components/ticketform.tsx b/src/components/ticketform.tsx
+index 83f8a6d..3dda810 100644
+--- a/src/components/ticketform.tsx
++++ b/src/components/ticketform.tsx
+@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
+ import { ticketValidation } from "@/lib/zodrules";
+ import ConfirmModal from "./ui/confirmModal";
+ import { toast } from "sonner";
++import { FiUploadCloud, FiFile, FiX } from "react-icons/fi";
+ 
+ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+   const [form, setForm] = useState({
+@@ -83,17 +84,36 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+     }
+   };
+ 
++  // Consistent input styling used throughout — pulled into one constant
++  // so a field's border actually goes red on its own when it fails
++  // validation, not just the text underneath it. Previously an invalid
++  // field looked completely normal until you spotted a small red line
++  // of text below it.
++  const fieldClass = (hasError: boolean) =>
++    `mt-1 block w-full border rounded-md shadow-sm p-2.5 transition-colors focus:outline-none focus:ring-2 ${
++      hasError
++        ? "border-red-300 focus:ring-red-200"
++        : "border-slate-300 focus:ring-forestGreen/30 focus:border-forestGreen"
++    }`;
++
+   return (
+-    <form className="bg-white mt-4 md:mt-8 py-4 px-4 md:p-6 rounded-lg shadow-md w-full">
+-      <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-6 text-forestGreen">Ticket Form</h2>
++    <form className="bg-white mt-4 md:mt-8 py-5 px-5 md:p-8 rounded-xl shadow-sm ring-1 ring-slate-100 w-full">
++      <div className="mb-5 md:mb-8">
++        <h2 className="text-xl md:text-2xl font-bold text-forestGreen">
++          Ticket Details
++        </h2>
++        <p className="text-sm text-slate-500 mt-1">
++          Tell us what&apos;s going on and we&apos;ll get it sorted.
++        </p>
++      </div>
+ 
+-      <div className="flex flex-col md:flex-row gap-6">
++      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+         {/* Left column - inputs */}
+-        <div className="flex-1 space-y-4">
++        <div className="flex-1 space-y-5">
+           <div>
+             <label
+               htmlFor="title"
+-              className="block text-base font-medium text-gray-700"
++              className="block text-sm font-semibold text-slate-700"
+             >
+               Subject
+             </label>
+@@ -104,18 +124,19 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+               value={form.title}
+               required
+               autoComplete="off"
++              placeholder="Brief summary of the issue"
+               onChange={handleChange}
+-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
++              className={fieldClass(!!errors.title)}
+             />
+             {errors.title && (
+-              <p className="text-red-500 text-sm">{errors.title}</p>
++              <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+             )}
+           </div>
+ 
+           <div>
+             <label
+               htmlFor="description"
+-              className="block text-base font-medium text-gray-700"
++              className="block text-sm font-semibold text-slate-700"
+             >
+               Description
+             </label>
+@@ -126,46 +147,73 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+               value={form.description}
+               required
+               autoComplete="off"
++              placeholder="What happened? Steps to reproduce, error messages, anything that helps."
+               onChange={handleChange}
+-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen resize-none"
++              className={`${fieldClass(!!errors.description)} resize-none`}
+             />
+             {errors.description && (
+-              <p className="text-red-500 text-sm">{errors.description}</p>
++              <p className="text-red-500 text-sm mt-1">
++                {errors.description}
++              </p>
+             )}
+           </div>
+ 
+-          {/* Upload Screenshot */}
++          {/*
++            A bare <input type="file"> reads as an afterthought. This
++            is still exactly the same single-click file picker
++            underneath (no drag-and-drop behavior added, since that
++            would be new functionality, not just styling) — it just
++            looks like a deliberate part of the form now, and shows
++            the picked filename with a way to clear it.
++          */}
+           <div>
++            <label className="block text-sm font-semibold text-slate-700">
++              Screenshot (optional)
++            </label>
+             <label
+               htmlFor="upload"
+-              className="block text-base font-medium text-gray-700"
++              className="mt-1 flex items-center gap-3 border border-dashed border-slate-300 rounded-lg p-4 cursor-pointer hover:border-forestGreen hover:bg-forestGreen/5 transition-colors"
+             >
+-              Upload a screenshot (Optional)
++              <FiUploadCloud className="text-slate-400 flex-shrink-0" size={22} />
++              <span className="text-sm text-slate-500">
++                Click to upload a screenshot, if you have one
++              </span>
+             </label>
+-            <div className="relative mt-1">
+-              <input
+-                type="file"
+-                id="upload"
+-                name="upload"
+-                onChange={(e) =>
+-                  setForm({ ...form, upload: e.target.files?.[0] ?? null })
+-                }
+-                className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 
+-                 file:rounded-md file:border-0
+-                 file:text-sm file:font-semibold
+-                 file:bg-forestGreen file:text-white
+-                 hover:file:bg-[#025E50] transition cursor-pointer"
+-              />
+-            </div>
++            <input
++              type="file"
++              id="upload"
++              name="upload"
++              accept="image/*"
++              onChange={(e) =>
++                setForm({ ...form, upload: e.target.files?.[0] ?? null })
++              }
++              className="hidden"
++            />
++            {form.upload && (
++              <div className="mt-2 flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
++                <span className="flex items-center gap-2 text-sm text-slate-600 truncate">
++                  <FiFile className="flex-shrink-0" />
++                  {form.upload.name}
++                </span>
++                <button
++                  type="button"
++                  onClick={() => setForm({ ...form, upload: null })}
++                  aria-label="Remove attached screenshot"
++                  className="text-slate-400 hover:text-slate-600 flex-shrink-0"
++                >
++                  <FiX size={16} />
++                </button>
++              </div>
++            )}
+           </div>
+         </div>
+ 
+         {/* Right column - selects */}
+-        <div className="flex-1 space-y-4">
++        <div className="flex-1 space-y-5">
+           <div>
+             <label
+               htmlFor="category"
+-              className="block text-base font-medium text-gray-700"
++              className="block text-sm font-semibold text-slate-700"
+             >
+               Category
+             </label>
+@@ -175,48 +223,63 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+               value={form.category}
+               required
+               onChange={handleChange}
+-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
++              className={`${fieldClass(!!errors.category)} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%2364748b%22><path fill-rule=%22evenodd%22 d=%22M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z%22 clip-rule=%22evenodd%22/></svg>')] bg-no-repeat bg-[right_0.75rem_center] bg-[length:1.1rem] pr-9`}
+             >
+-              <option defaultValue="">Select a category</option>
++              <option value="">Select a category</option>
+               <option value="Hardware">Hardware</option>
+               <option value="Software">Software</option>
+               <option value="Network">Network</option>
+               <option value="Others">Others</option>
+             </select>
+             {errors.category && (
+-              <p className="text-red-500 text-sm">{errors.category}</p>
++              <p className="text-red-500 text-sm mt-1">{errors.category}</p>
+             )}
+           </div>
+ 
+           <div>
+-            <label
+-              htmlFor="priority"
+-              className="block text-base font-medium text-gray-700"
+-            >
++            <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+               Priority
+             </label>
+-            <select
+-              name="priority"
+-              id="priority"
+-              value={form.priority}
+-              required
+-              onChange={handleChange}
+-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
+-            >
+-              <option defaultValue="">Select a category</option>
+-              <option value="Low">Low</option>
+-              <option value="Medium">Medium</option>
+-              <option value="High">High</option>
+-            </select>
++            {/*
++              Priority as three tappable cards instead of a plain
++              <select>. Same underlying value/field — it still sets
++              `form.priority` to "Low" | "Medium" | "High" — but since
++              priority already gets a color treatment everywhere else
++              in the app (list, modal), showing that same color here
++              makes the choice itself clearer at a glance.
++            */}
++            <div className="grid grid-cols-3 gap-2">
++              {["Low", "Medium", "High"].map((level) => {
++                const isSelected = form.priority === level;
++                return (
++                  <button
++                    key={level}
++                    type="button"
++                    onClick={() => setForm({ ...form, priority: level })}
++                    className={`text-sm font-medium py-2.5 rounded-md border transition-colors ${
++                      isSelected
++                        ? level === "High"
++                          ? "bg-red-50 border-red-300 text-red-700"
++                          : level === "Medium"
++                          ? "bg-orange/10 border-orange/40 text-orange"
++                          : "bg-slate-100 border-slate-300 text-slate-600"
++                        : "border-slate-200 text-slate-500 hover:bg-slate-50"
++                    }`}
++                  >
++                    {level}
++                  </button>
++                );
++              })}
++            </div>
+             {errors.priority && (
+-              <p className="text-red-500 text-sm">{errors.priority}</p>
++              <p className="text-red-500 text-sm mt-1">{errors.priority}</p>
+             )}
+           </div>
+         </div>
+       </div>
+ 
+       {/* Button aligned to the end (right) */}
+-      <div className="mt-6 flex justify-end">
++      <div className="mt-7 flex justify-end">
+         <button
+           type="button"
+           onClick={() => {
+@@ -225,7 +288,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
+               setShowConfirmModal(true);
+             }
+           }}
+-          className="bg-forestGreen text-white text-sm md:text-base px-6 py-2 rounded-full hover:bg-[#025E50] transition"
++          className="bg-forestGreen text-white text-sm md:text-base px-7 py-2.5 rounded-full hover:bg-[#025E50] transition shadow-sm"
+         >
+           Submit
+         </button>
+diff --git a/src/components/ui/TicketFilter.tsx b/src/components/ui/TicketFilter.tsx
+index cadbb1f..3e22caa 100644
+--- a/src/components/ui/TicketFilter.tsx
++++ b/src/components/ui/TicketFilter.tsx
+@@ -31,15 +31,15 @@ export default function TicketFilter() {
+   };
+ 
+   return (
+-    <div className="flex flex-wrap gap-2 mb-5">
++    <div className="flex flex-wrap gap-2 mb-4">
+       {filterOptions.map((opt) => (
+         <button
+           key={opt.value}
+           onClick={() => handleClick(opt.value)}
+-          className={`px-3 py-1 text-sm rounded-full border transition font-medium ${
++          className={`px-3.5 py-1.5 text-sm rounded-full border transition-colors font-medium ${
+             active === opt.value
+-              ? "bg-forestGreen text-white"
+-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
++              ? "bg-forestGreen text-white border-forestGreen"
++              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+           }`}
+         >
+           {opt.label}
+diff --git a/src/components/ui/badge.tsx b/src/components/ui/badge.tsx
+new file mode 100644
+index 0000000..dadfe1a
+--- /dev/null
++++ b/src/components/ui/badge.tsx
+@@ -0,0 +1,15 @@
++export default function Badge({
++  children,
++  className = "",
++}: {
++  children: React.ReactNode;
++  className?: string;
++}) {
++  return (
++    <span
++      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${className}`}
++    >
++      {children}
++    </span>
++  );
++}
+diff --git a/src/components/ui/confirmModal.tsx b/src/components/ui/confirmModal.tsx
+index 155a592..4bad7a1 100644
+--- a/src/components/ui/confirmModal.tsx
++++ b/src/components/ui/confirmModal.tsx
+@@ -14,26 +14,26 @@ export default function ConfirmModal({
+   isLoading: boolean;
+ }) {
+   return (
+-    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+-      <div className="bg-white w-[90%] sm:w-full max-w-md p-6 rounded-lg shadow-lg text-center">
+-        <h3 className="text-base md:text-lg font-semibold mb-4 text-forestGreen">
++    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
++      <div className="bg-white w-[90%] sm:w-full max-w-md p-6 rounded-xl shadow-xl text-center">
++        <h3 className="text-base md:text-lg font-semibold mb-2 text-forestGreen">
+           {header}
+         </h3>
+-        <p className="text-sm md:text-base text-gray-600 mb-6">{message}</p>
+-        <div className="flex flex-col sm:flex-row justify-center gap-4">
+-          <button
+-            onClick={onCancel}
+-            className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded transition text-sm md:text-base"
+-          >
+-            Cancel
+-          </button>
++        <p className="text-sm md:text-base text-slate-500 mb-6">{message}</p>
++        <div className="flex flex-col sm:flex-row-reverse justify-center gap-3">
+           <button
+             onClick={onConfirm}
+             disabled={isLoading}
+-            className="bg-forestGreen hover:bg-[#025E50] text-white px-4 py-2 rounded transition text-sm md:text-base"
++            className="bg-forestGreen hover:bg-[#025E50] text-white px-4 py-2.5 rounded-lg transition text-sm md:text-base font-medium disabled:opacity-60"
+           >
+             {isLoading ? "Processing..." : "Yes, Confirm"}
+           </button>
++          <button
++            onClick={onCancel}
++            className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg transition text-sm md:text-base font-medium"
++          >
++            Cancel
++          </button>
+         </div>
+       </div>
+     </div>
+diff --git a/src/components/ui/dashboardsummary.tsx b/src/components/ui/dashboardsummary.tsx
+index 835b1ad..1ceb0d9 100644
+--- a/src/components/ui/dashboardsummary.tsx
++++ b/src/components/ui/dashboardsummary.tsx
+@@ -2,6 +2,8 @@
+ 
+ import useSWR from "swr";
+ import { TfiTicket } from "react-icons/tfi";
++import { BsClockHistory } from "react-icons/bs";
++import { FiCheckCircle } from "react-icons/fi";
+ 
+ const fetcher = async (url: string) => {
+   const res = await fetch(url);
+@@ -21,30 +23,39 @@ export default function Summary() {
+   const completedCount =
+     tickets?.filter((t) => t.status === "closed").length ?? 0;
+ 
++  // Was orange/cyan/blue — three colors that don't appear anywhere
++  // else in the app's palette (forestGreen / orange / gray). Now
++  // built entirely from the actual brand colors, so the dashboard
++  // reads as part of the same product rather than a generic
++  // admin-template look. Each stat also gets its own icon now instead
++  // of repeating the same ticket icon three times.
+   const stats = [
+     {
+       label: "All Tickets",
+       count: allCount,
+-      bg: "bg-orange-100",
+-      text: "text-orange-600",
+-      ring: "ring-orange-300",
+-      iconBg: "bg-orange-200",
++      icon: <TfiTicket />,
++      bg: "bg-forestGreen/5",
++      text: "text-forestGreen",
++      ring: "ring-forestGreen/10",
++      iconBg: "bg-forestGreen/10",
+     },
+     {
+       label: "In Process",
+       count: inProcessCount,
+-      bg: "bg-cyan-100",
+-      text: "text-cyan-600",
+-      ring: "ring-cyan-300",
+-      iconBg: "bg-cyan-200",
++      icon: <BsClockHistory />,
++      bg: "bg-orange/5",
++      text: "text-orange",
++      ring: "ring-orange/15",
++      iconBg: "bg-orange/10",
+     },
+     {
+       label: "Closed Tickets",
+       count: completedCount,
+-      bg: "bg-blue-100",
+-      text: "text-blue-600",
+-      ring: "ring-blue-300",
+-      iconBg: "bg-blue-200",
++      icon: <FiCheckCircle />,
++      bg: "bg-slate-50",
++      text: "text-slate-600",
++      ring: "ring-slate-200",
++      iconBg: "bg-slate-200/70",
+     },
+   ];
+ 
+@@ -56,19 +67,19 @@ export default function Summary() {
+         ? skeletonCards.map((_, index) => (
+             <div
+               key={index}
+-              className="rounded-2xl p-6 bg-gray-100 ring-1 ring-gray-200 flex justify-between items-center shadow-sm animate-pulse"
++              className="rounded-2xl p-6 bg-white ring-1 ring-slate-100 flex justify-between items-center shadow-sm animate-pulse"
+             >
+               <div>
+-                <div className="h-4 w-24 bg-gray-300 rounded mb-2"></div>
+-                <div className="h-6 w-16 bg-gray-400 rounded"></div>
++                <div className="h-4 w-24 bg-slate-200 rounded mb-2"></div>
++                <div className="h-6 w-16 bg-slate-300 rounded"></div>
+               </div>
+-              <div className="w-8 h-8 rounded-full bg-gray-300" />
++              <div className="w-10 h-10 rounded-full bg-slate-200" />
+             </div>
+           ))
+         : stats.map((stat, index) => (
+             <div
+               key={index}
+-              className={`rounded-2xl p-4 sm:p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm`}
++              className={`rounded-2xl p-4 sm:p-6 ${stat.bg} ${stat.ring} ring-1 flex justify-between items-center shadow-sm transition-shadow hover:shadow-md`}
+             >
+               <div>
+                 <p className={`text-sm sm:text-base font-medium ${stat.text}`}>
+@@ -81,9 +92,11 @@ export default function Summary() {
+                 </p>
+               </div>
+               <div
+-                className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full ${stat.iconBg}`}
++                className={`w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full ${stat.iconBg}`}
+               >
+-                <TfiTicket className={`${stat.text} w-4 h-4 sm:w-5 sm:h-5`} />
++                <span className={`${stat.text} text-base sm:text-lg`}>
++                  {stat.icon}
++                </span>
+               </div>
+             </div>
+           ))}
+diff --git a/src/components/ui/logoutButton.tsx b/src/components/ui/logoutButton.tsx
+index 404b776..c7d30db 100644
+--- a/src/components/ui/logoutButton.tsx
++++ b/src/components/ui/logoutButton.tsx
+@@ -17,9 +17,9 @@ export default function LogoutButton() {
+       type="submit"
+       disabled={isLoading}
+       onClick={() => handleLogout()}
+-      className="w-full text-white bg-red-500 hover:bg-red-700 rounded-xl py-2 transition flex justify-center items-center gap-2"
++      className="w-full text-white/90 bg-white/10 hover:bg-red-500/90 hover:text-white rounded-lg py-2.5 transition-colors flex justify-center items-center gap-2 text-sm font-medium disabled:opacity-60"
+     >
+-      <IoIosPower color="white" fontSize={25} />
++      <IoIosPower fontSize={18} />
+       {isLoading ? "Signing Out..." : "Logout"}
+     </button>
+   );
+diff --git a/src/components/ui/modalWrapper.tsx b/src/components/ui/modalWrapper.tsx
+index b31f600..d7df478 100644
+--- a/src/components/ui/modalWrapper.tsx
++++ b/src/components/ui/modalWrapper.tsx
+@@ -11,12 +11,13 @@ export default function ModalWrapper({
+ }) {
+   return (
+     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+-      <div className="bg-white rounded-lg p-2.5 md:p-6 w-full max-w-xl shadow-xl relative">
++      <div className="bg-white rounded-xl p-5 md:p-6 w-full max-w-xl shadow-xl relative max-h-[90vh] overflow-y-auto">
+         <button
+           onClick={onClose}
+-          className="absolute -top-2 -right-2 bg-forestGreen rounded-full p-2 hover:bg-[#025E50] transition-all delay-100 text-white"
++          aria-label="Close"
++          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full p-1.5 transition-colors"
+         >
+-          <IoClose size={24} />
++          <IoClose size={20} />
+         </button>
+         {children}
+       </div>
+diff --git a/src/components/ui/pageheader.tsx b/src/components/ui/pageheader.tsx
+index 0351419..f818896 100644
+--- a/src/components/ui/pageheader.tsx
++++ b/src/components/ui/pageheader.tsx
+@@ -8,14 +8,16 @@ export default function PageHeader({
+   username: string | null | undefined;
+ }) {
+   return (
+-    <section className="mt-10 md:mt-7 flex flex-col gap-1 md:gap-3">
++    <section className="mt-10 md:mt-2 flex flex-col gap-1 md:gap-2 pb-4 md:pb-5 border-b border-slate-200">
+       <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-forestGreen">
+         {description}
+       </h1>
+-      <p className="text-base sm:text-lg md:text-xl text-forestGreen font-medium">
+-        {message}
+-        <span className="text-orange"> {username}</span>
+-      </p>
++      {message && (
++        <p className="text-base sm:text-lg md:text-xl text-slate-500 font-medium">
++          {message}
++          <span className="text-orange"> {username}</span>
++        </p>
++      )}
+     </section>
+   );
+ }
+diff --git a/src/components/ui/ticketModal.tsx b/src/components/ui/ticketModal.tsx
+index 44c5799..a673832 100644
+--- a/src/components/ui/ticketModal.tsx
++++ b/src/components/ui/ticketModal.tsx
+@@ -5,6 +5,12 @@ import { toast } from "sonner";
+ import { useSession } from "next-auth/react";
+ import ModalWrapper from "@/components/ui/modalWrapper";
+ import ConfirmModal from "@/components/ui/confirmModal";
++import Badge from "@/components/ui/badge";
++import {
++  statusBadgeClasses,
++  priorityBadgeClasses,
++  categoryBadgeClasses,
++} from "@/lib/ticketBadges";
+ import Image from "next/image";
+ 
+ export default function TicketDetailsModal({
+@@ -87,86 +93,86 @@ export default function TicketDetailsModal({
+     }
+   };
+ 
+-  const statusBadge =
+-    ticket.status === "open"
+-      ? "bg-green-100 text-green-800"
+-      : "bg-red-100 text-red-800";
+-
+-  const priorityBadge = {
+-    high: "bg-red-100 text-red-700",
+-    medium: "bg-yellow-100 text-yellow-700",
+-    low: "bg-blue-100 text-blue-700",
+-  };
++  // Small label/value pair — used throughout the details column below so
++  // every field lines up the same way instead of each one having its own
++  // one-off "**Label:** value" markup.
++  function Field({
++    label,
++    children,
++  }: {
++    label: string;
++    children: React.ReactNode;
++  }) {
++    return (
++      <div>
++        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
++          {label}
++        </p>
++        <div className="text-slate-700 mt-0.5">{children}</div>
++      </div>
++    );
++  }
+ 
+   return (
+     <>
+       <ModalWrapper onClose={onClose}>
+-        <h2 className="text-2xl font-semibold mb-2 md:mb-4 text-forestGreen">
++        {/*
++          Badges now live right under the title, before any other
++          detail — status/priority/category are the three things
++          you'd want to register in the first second of opening a
++          ticket, so they're no longer buried a few lines down mixed
++          in with plain text fields.
++        */}
++        <h2 className="text-xl md:text-2xl font-semibold text-forestGreen pr-8">
+           {ticket.title}
+         </h2>
++        <div className="flex flex-wrap gap-2 mt-2 mb-4">
++          <Badge className={statusBadgeClasses(ticket.status)}>
++            {ticket.status.toUpperCase()}
++          </Badge>
++          <Badge className={priorityBadgeClasses(ticket.priority)}>
++            {ticket.priority.toUpperCase()} PRIORITY
++          </Badge>
++          <Badge className={categoryBadgeClasses()}>{ticket.category}</Badge>
++        </div>
+ 
+-        <div className="text-gray-700 text-sm md:text-base flex flex-col md:flex-row gap-4 md:gap-6">
++        <div className="text-sm md:text-base flex flex-col md:flex-row gap-5 md:gap-6">
+           {/* Ticket Details */}
+-          <div className="flex-1 space-y-3 md:space-y-4">
+-            <div>
+-              <strong>Name:</strong> {ticket.author?.name}
+-            </div>
+-            <div>
+-              <strong>Discipline:</strong> {ticket.author?.discipline}
+-            </div>
+-            <div>
+-              <strong>Category:</strong> {ticket.category}
+-            </div>
+-            <div>
+-              <strong>Description:</strong>
+-              <span className="whitespace-pre-wrap"> {ticket.description}</span>
++          <div className="flex-1 space-y-4">
++            <div className="grid grid-cols-2 gap-4">
++              <Field label="Submitted by">{ticket.author?.name}</Field>
++              <Field label="Discipline">{ticket.author?.discipline}</Field>
++              <Field label="Date created">
++                {new Date(ticket.createdAt).toLocaleString()}
++              </Field>
++              {ticket.status === "closed" && (
++                <Field label="Date closed">
++                  {new Date(ticket.updatedAt).toLocaleString()}
++                </Field>
++              )}
+             </div>
+-            <div>
+-              <strong>Status:</strong>{" "}
+-              <span
+-                className={`inline-block px-2 py-1 rounded-md font-medium ${statusBadge}`}
+-              >
+-                {ticket.status.toUpperCase()}
+-              </span>
+-            </div>
+-            <div>
+-              <strong>Priority:</strong>{" "}
+-              <span
+-                className={`inline-block px-2 py-1 rounded-md font-medium ${
+-                  priorityBadge[
+-                    ticket.priority.toLowerCase() as "low" | "medium" | "high"
+-                  ]
+-                }`}
+-              >
+-                {ticket.priority.toUpperCase()}
+-              </span>
+-            </div>
+-            <div>
+-              <strong>Date Created:</strong>{" "}
+-              {new Date(ticket.createdAt).toLocaleString()}
+-            </div>
+-            {ticket.status === "closed" && (
+-              <div>
+-                <strong>Date Closed:</strong>{" "}
+-                {new Date(ticket.updatedAt).toLocaleString()}
+-              </div>
+-            )}
++
++            <Field label="Description">
++              <span className="whitespace-pre-wrap">{ticket.description}</span>
++            </Field>
+           </div>
+ 
+           {/* Ticket Screenshot - Only if exists */}
+           {ticket.screenshot && (
+             <div
+-              className="flex-shrink-0 self-center md:self-start cursor-pointer"
++              className="flex-shrink-0 self-center md:self-start cursor-pointer group"
+               onClick={() => setShowImageModal(true)}
+             >
+-              <Image
+-                src={`/uploads/${ticket.screenshot}`}
+-                alt="Ticket Screenshot"
+-                className="rounded-md max-w-xs h-auto hover:opacity-80 transition"
+-                height={250}
+-                width={250}
+-              />
+-              <p className="text-sm text-center text-gray-500 mt-1">
++              <div className="rounded-lg overflow-hidden ring-1 ring-slate-200">
++                <Image
++                  src={`/uploads/${ticket.screenshot}`}
++                  alt="Ticket Screenshot"
++                  className="max-w-[180px] h-auto group-hover:opacity-80 transition"
++                  height={180}
++                  width={180}
++                />
++              </div>
++              <p className="text-xs text-center text-slate-400 mt-1.5">
+                 Click to enlarge
+               </p>
+             </div>
+@@ -175,17 +181,17 @@ export default function TicketDetailsModal({
+ 
+         {/* Display Close Ticket button for ADMIN */}
+         {ticket.status === "open" && isAdmin && (
+-          <div className="mt-4 md:mt-6 space-y-2 md:space-y-4 text-sm md:text-base">
++          <div className="mt-5 md:mt-6 space-y-3 text-sm md:text-base border-t border-slate-100 pt-5">
+             <textarea
+               rows={2}
+               placeholder="Optional: Notes about the work done..."
+-              className="w-full resize-none border-gray-300 focus:ring-1 focus:ring-forestGreen p-3 border rounded-md focus:outline-none"
++              className="w-full resize-none border-slate-300 focus:ring-1 focus:ring-forestGreen p-3 border rounded-md focus:outline-none"
+               value={workNote}
+               onChange={(e) => setWorkNote(e.target.value)}
+             />
+             <button
+               onClick={() => setShowConfirmModal(true)}
+-              className="bg-forestGreen hover:bg-[#025E50] delay-100 text-white px-4 py-2 rounded-lg w-full transition"
++              className="bg-forestGreen hover:bg-[#025E50] text-white px-4 py-2 rounded-lg w-full transition"
+             >
+               Close Ticket
+             </button>
+@@ -194,10 +200,10 @@ export default function TicketDetailsModal({
+ 
+         {/* Display Reopen Ticket button */}
+         {ticket.status === "closed" && (
+-          <div className="mt-6 space-y-4">
++          <div className="mt-5 md:mt-6 border-t border-slate-100 pt-5">
+             <button
+               onClick={() => setShowConfirmModal(true)}
+-              className="bg-forestGreen hover:bg-[#025E50] delay-100 text-white px-4 py-2 rounded-lg w-full transition"
++              className="bg-forestGreen hover:bg-[#025E50] text-white px-4 py-2 rounded-lg w-full transition"
+             >
+               Re-open Ticket
+             </button>
+@@ -225,11 +231,11 @@ export default function TicketDetailsModal({
+       {showImageModal && (
+         <div
+           onClick={() => setShowImageModal(false)}
+-          className="fixed inset-0 bg-black/25 backdrop-blur-sm flex items-center justify-center z-50"
++          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+         >
+           <div
+             onClick={(e) => e.stopPropagation()}
+-            className="bg-white p-4 rounded-lg max-w-[90vw] max-h-[90vh] overflow-auto shadow-lg"
++            className="bg-white p-4 rounded-lg max-w-[90vw] max-h-[90vh] overflow-auto shadow-xl"
+           >
+             <Image
+               src={`/uploads/${ticket.screenshot}`}
+diff --git a/src/components/ui/tickethistory.tsx b/src/components/ui/tickethistory.tsx
+index 4d8cea0..9c9b1d5 100644
+--- a/src/components/ui/tickethistory.tsx
++++ b/src/components/ui/tickethistory.tsx
+@@ -3,16 +3,13 @@
+ import useSWR from "swr";
+ import { formatDate } from "@/lib/dateFormater";
+ import TicketModal from "@/components/ui/ticketModal";
++import Badge from "@/components/ui/badge";
++import { statusBadgeClasses, priorityBadgeClasses } from "@/lib/ticketBadges";
+ import { useState, useEffect } from "react";
+-import { FiExternalLink } from "react-icons/fi";
++import { FiExternalLink, FiInbox } from "react-icons/fi";
+ import { useSearchParams } from "next/navigation";
+ import TicketFilter from "@/components/ui/TicketFilter";
+ 
+-const statusStyles: Record<string, string> = {
+-  open: "bg-orange-100 text-orange-700",
+-  closed: "bg-cyan-100 text-cyan-700",
+-};
+-
+ const fetcher = async (url: string) => {
+   const res = await fetch(url);
+   if (!res.ok) throw new Error("Failed to fetch tickets");
+@@ -84,107 +81,140 @@ export default function TicketsHistory({
+         </h2>
+ 
+         <TicketFilter />
+-        {/* Header for Desktop */}
+-        <div className="hidden md:grid grid-cols-4 gap-4 mb-2 text-base font-medium text-slate-600">
+-          <span>Date Created</span>
+-          <span>Title</span>
+-          <span>Category</span>
+-          <span>Status</span>
+-        </div>
+ 
+-        <div className="space-y-3 md:space-y-4">
+-          {isLoading ? (
+-            skeletonRows.map((_, index) => (
+-              <div
+-                key={index}
+-                className="flex flex-col md:grid md:grid-cols-4 gap-4 bg-gray-100 px-4 py-3 rounded-lg shadow-sm animate-pulse"
+-              >
+-                <div className="h-4 w-28 bg-gray-300 rounded"></div>
+-                <div className="h-4 w-36 bg-gray-300 rounded"></div>
+-                <div className="h-4 w-24 bg-gray-300 rounded"></div>
+-                <div className="h-6 w-80 bg-gray-300 rounded-full"></div>
++        {/*
++          Previously the column header sat outside/above the list of
++          individual white cards, so the "table" wasn't actually one
++          visual object — it was a label followed by a stack of
++          unrelated-looking cards. Wrapping everything in one
++          rounded/bordered panel (with dividers between rows instead of
++          gaps + individual shadows) makes it read as a single table
++          again, closer to what the column header implies.
++        */}
++        <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-100 overflow-hidden">
++          {/* Header for Desktop */}
++          <div className="hidden md:grid grid-cols-[1fr_2fr_1fr_1fr_1fr] gap-4 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 bg-slate-50 border-b border-slate-100">
++            <span>Date Created</span>
++            <span>Title</span>
++            <span>Category</span>
++            <span>Priority</span>
++            <span>Status</span>
++          </div>
++
++          <div className="divide-y divide-slate-100">
++            {isLoading ? (
++              skeletonRows.map((_, index) => (
++                <div
++                  key={index}
++                  className="flex flex-col md:grid md:grid-cols-[1fr_2fr_1fr_1fr_1fr] gap-4 px-5 py-4 animate-pulse"
++                >
++                  <div className="h-4 w-28 bg-slate-200 rounded"></div>
++                  <div className="h-4 w-36 bg-slate-200 rounded"></div>
++                  <div className="h-4 w-20 bg-slate-200 rounded"></div>
++                  <div className="h-5 w-16 bg-slate-200 rounded-full"></div>
++                  <div className="h-5 w-16 bg-slate-200 rounded-full"></div>
++                </div>
++              ))
++            ) : currentTickets && currentTickets.length === 0 ? (
++              // Was a single line of gray text floating in empty
++              // space. A short icon + message reads as an intentional
++              // state rather than looking like something failed to
++              // load.
++              <div className="flex flex-col items-center justify-center gap-2 py-16 text-slate-400">
++                <FiInbox size={32} />
++                <p className="text-sm">No tickets found.</p>
+               </div>
+-            ))
+-          ) : currentTickets && currentTickets.length === 0 ? (
+-            <p className="text-center text-slate-500 mt-20">
+-              No tickets found.
+-            </p>
+-          ) : (
+-            currentTickets?.map((ticket) => (
+-              <div
+-                key={ticket.id}
+-                className="bg-white rounded-lg shadow-sm px-4 py-3 hover:bg-gray-50 transition"
+-              >
++            ) : (
++              currentTickets?.map((ticket) => (
+                 <div
+-                  onClick={() => setSelectedTicket(ticket)}
+-                  className="cursor-pointer flex flex-col md:grid md:grid-cols-4 gap-4 text-sm md:text-base"
++                  key={ticket.id}
++                  className="px-5 py-4 hover:bg-slate-50/80 transition-colors"
+                 >
+-                  {/* Mobile Labels */}
+-                  <div className="flex justify-between w-full md:contents">
+-                    <span className="md:hidden text-sm text-slate-500">
+-                      Date
+-                    </span>
+-                    <span className="text-slate-700">
+-                      {formatDate(ticket.createdAt)}
+-                    </span>
+-                  </div>
+-
+-                  <div className="flex justify-between w-full md:contents">
+-                    <span className="md:hidden text-sm text-slate-500">
+-                      Title
+-                    </span>
+-                    <span className="text-slate-700">{ticket.title}</span>
+-                  </div>
+-
+-                  <div className="flex justify-between w-full md:contents">
+-                    <span className="md:hidden text-sm text-slate-500">
+-                      Category
+-                    </span>
+-                    <span className="text-slate-700">{ticket.category}</span>
++                  <div
++                    onClick={() => setSelectedTicket(ticket)}
++                    className="cursor-pointer flex flex-col md:grid md:grid-cols-[1fr_2fr_1fr_1fr_1fr] gap-2 md:gap-4 text-sm md:text-base md:items-center"
++                  >
++                    {/* Mobile Labels */}
++                    <div className="flex justify-between w-full md:contents">
++                      <span className="md:hidden text-sm text-slate-500">
++                        Date
++                      </span>
++                      <span className="text-slate-700">
++                        {formatDate(ticket.createdAt)}
++                      </span>
++                    </div>
++
++                    <div className="flex justify-between w-full md:contents">
++                      <span className="md:hidden text-sm text-slate-500">
++                        Title
++                      </span>
++                      <span className="text-slate-800 font-medium">
++                        {ticket.title}
++                      </span>
++                    </div>
++
++                    <div className="flex justify-between w-full md:contents">
++                      <span className="md:hidden text-sm text-slate-500">
++                        Category
++                      </span>
++                      <span className="text-slate-600">{ticket.category}</span>
++                    </div>
++
++                    {/*
++                      Priority wasn't shown in the list at all before —
++                      you had to open each ticket individually to see
++                      how urgent it was. Scanning a list of 30 tickets
++                      for anything "High" priority meant clicking into
++                      every single one.
++                    */}
++                    <div className="flex justify-between w-full md:contents">
++                      <span className="md:hidden text-sm text-slate-500">
++                        Priority
++                      </span>
++                      <Badge className={priorityBadgeClasses(ticket.priority)}>
++                        {ticket.priority}
++                      </Badge>
++                    </div>
++
++                    <div className="flex justify-between w-full md:contents">
++                      <span className="md:hidden text-sm text-slate-500">
++                        Status
++                      </span>
++                      <Badge className={statusBadgeClasses(ticket.status)}>
++                        {ticket.status}
++                      </Badge>
++                    </div>
+                   </div>
+ 
+-                  <div className="flex justify-between w-full md:contents">
+-                    <span className="md:hidden text-sm text-slate-500">
+-                      Status
+-                    </span>
+-                    <span
+-                      className={`px-3 py-1 rounded-full text-xs font-semibold text-center ${
+-                        statusStyles[ticket.status]
+-                      }`}
++                  {/* Action Button */}
++                  <div className="mt-3 flex justify-end md:hidden">
++                    <button
++                      onClick={() =>
++                        alert(`Requesting update for ticket: ${ticket.title}`)
++                      }
++                      className="flex items-center gap-2 text-sm font-medium text-white bg-forestGreen hover:bg-[#025E50] transition px-3 py-2 rounded-lg"
+                     >
+-                      {ticket.status}
+-                    </span>
++                      <FiExternalLink size={16} />
++                      Follow up
++                    </button>
+                   </div>
+                 </div>
+-
+-                {/* Action Button */}
+-                <div className="mt-3 flex justify-end md:hidden">
+-                  <button
+-                    onClick={() =>
+-                      alert(`Requesting update for ticket: ${ticket.title}`)
+-                    }
+-                    className="flex items-center gap-2 text-sm font-medium text-white bg-forestGreen hover:bg-green-700 transition px-3 py-2 rounded-lg"
+-                  >
+-                    <FiExternalLink size={16} />
+-                    Follow up
+-                  </button>
+-                </div>
+-              </div>
+-            ))
+-          )}
++              ))
++            )}
++          </div>
+         </div>
+ 
+         {/* Pagination */}
+         {totalPages > 1 && (
+-          <div className="flex justify-center mt-6 gap-2 flex-wrap">
++          <div className="flex justify-center mt-6 gap-1.5 flex-wrap">
+             {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+               <button
+                 key={num}
+                 onClick={() => setCurrentPage(num)}
+-                className={`px-3 py-1 rounded border text-sm font-medium transition ${
++                className={`w-8 h-8 rounded-full text-sm font-medium transition ${
+                   currentPage === num
+-                    ? "bg-forestGreen text-white"
+-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
++                    ? "bg-forestGreen text-white shadow-sm"
++                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+                 }`}
+               >
+                 {num}
+diff --git a/src/lib/ticketBadges.ts b/src/lib/ticketBadges.ts
+new file mode 100644
+index 0000000..6a0aeb1
+--- /dev/null
++++ b/src/lib/ticketBadges.ts
+@@ -0,0 +1,34 @@
++// Shared badge color mappings — previously duplicated (and slightly
++// inconsistent) between tickethistory.tsx and ticketModal.tsx. Keeping
++// them here means the ticket list and the ticket detail modal always
++// agree on what "open" or "high priority" looks like.
++
++export function statusBadgeClasses(status: string) {
++  switch (status) {
++    case "open":
++      return "bg-orange/10 text-orange";
++    case "closed":
++      return "bg-forestGreen/10 text-forestGreen";
++    default:
++      return "bg-slate-100 text-slate-600";
++  }
++}
++
++export function priorityBadgeClasses(priority: string) {
++  switch (priority.toLowerCase()) {
++    case "high":
++      return "bg-red-50 text-red-700";
++    case "medium":
++      return "bg-orange/10 text-orange";
++    case "low":
++      return "bg-slate-100 text-slate-600";
++    default:
++      return "bg-slate-100 text-slate-600";
++  }
++}
++
++export function categoryBadgeClasses() {
++  // Category is informational rather than status-like, so it gets a
++  // single neutral treatment rather than per-value colors.
++  return "bg-forestGreen/5 text-forestGreen";
++}

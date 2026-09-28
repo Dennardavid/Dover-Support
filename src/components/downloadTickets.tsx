@@ -62,9 +62,9 @@ export default function DownloadTickets() {
     <button
       onClick={handleDownload}
       aria-label="Download ticket data as CSV"
-      className="sm:w-fit py-2 px-2 md:px-2 bg-forestGreen hover:bg-[#025E50] transition-colors duration-200 text-white rounded flex items-center justify-center gap-2 text-sm sm:text-base"
+      className="sm:w-fit py-2.5 px-4 bg-forestGreen hover:bg-[#025E50] transition-colors duration-200 text-white rounded-lg flex items-center justify-center gap-2 text-sm sm:text-base font-medium shadow-sm"
     >
-      <MdOutlineFileDownload size={20} />
+      <MdOutlineFileDownload size={18} />
       <span className="truncate">Download</span>
     </button>
   );

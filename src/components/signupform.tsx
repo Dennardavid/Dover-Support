@@ -27,7 +27,7 @@ export default function SignUp() {
   };
 
   // validate with Zod
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
@@ -75,145 +75,156 @@ export default function SignUp() {
   };
 
   return (
-    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4">
-      <div className="flex flex-col items-center justify-center gap-3 w-full max-w-[500px] text-center">
+    <section className="min-h-screen bg-forestGreen flex flex-col gap-6 items-center justify-center px-4 py-10">
+      <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[440px] text-center">
         <Image src={img.Logo} alt="Dover Logo" quality={100} priority={true} />
-        <h1 className="font-semibold text-gray text-xl bg-orange w-full p-2 rounded-md">
+        <h1 className="font-semibold text-white text-lg tracking-wide">
           Sign Up
         </h1>
       </div>
 
-      <div className="bg-gray p-6 w-full max-w-[500px] rounded-md">
-        {/* <div className="flex items-center my-6">
-          <hr className="flex-grow border-t border-gray-300" />
-          <span className="mx-4 text-gray-500 text-sm">
-            or sign up with email
-          </span>
-          <hr className="flex-grow border-t border-gray-300" />
-        </div> */}
-        <form onSubmit={handleSubmit} method="POST">
-          <label
-            htmlFor="name"
-            className="block text-base font-medium text-gray-700 mb-2"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            onChange={handleChange}
-            value={form.name}
-            required
-            placeholder="First and Last Name"
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+      <div className="bg-white px-6 py-8 w-full max-w-[440px] rounded-xl shadow-xl">
+        <form onSubmit={handleSubmit} method="POST" className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold text-slate-700 mb-1"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              onChange={handleChange}
+              value={form.name}
+              required
+              placeholder="First and Last Name"
+              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
+          </div>
 
-          <label
-            htmlFor="email"
-            className="block text-base font-medium text-gray-700 my-2"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            placeholder="name@doverengineering.com"
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen placeholder-opacity-50"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-slate-700 mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder="name@doverengineering.com"
+              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
+          </div>
 
-          <label
-            htmlFor="discipline"
-            className="block text-base font-medium text-gray-700 my-2"
-          >
-            Discipline
-          </label>
-          <select
-            name="discipline"
-            id="discipline"
-            onChange={handleChange}
-            value={form.discipline}
-            required
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
-          >
-            <option value="">Select Discipline</option>
-            <option value="Reception">Reception</option>
-            <option value="IT/IS">IT/IS</option>
-            <option value="Project Management & Controls">
-              Project Controls & Management
-            </option>
-            <option value="Mechanical">Mechanical</option>
-            <option value="Telecoms">Telecoms</option>
-            <option value="Instrumentation">Instrumentation</option>
-            <option value="QA/QC">QA/QC</option>
-            <option value="Document Control">Document Control</option>
-            <option value="Technical Safety">Technical Safety</option>
-            <option value="Process">Process</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Piping">Piping</option>
-            <option value="Pipeline">Pipeline</option>
-            <option value="Civil/Structural">Civil/Structural</option>
-            <option value="HR">HR</option>
-            <option value="Accounts">Accounts</option>
-            <option value="Business Development">Business Development</option>
-            <option value="Logistics/Procurement">Logistics/Procurement</option>
-            <option value="HSE">HSE</option>
-          </select>
-          {errors.discipline && (
-            <p className="text-red-500 text-sm">{errors.discipline}</p>
-          )}
+          <div>
+            <label
+              htmlFor="discipline"
+              className="block text-sm font-semibold text-slate-700 mb-1"
+            >
+              Discipline
+            </label>
+            <select
+              name="discipline"
+              id="discipline"
+              onChange={handleChange}
+              value={form.discipline}
+              required
+              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
+            >
+              <option value="">Select Discipline</option>
+              <option value="Reception">Reception</option>
+              <option value="IT/IS">IT/IS</option>
+              <option value="Project Management & Controls">
+                Project Controls & Management
+              </option>
+              <option value="Mechanical">Mechanical</option>
+              <option value="Telecoms">Telecoms</option>
+              <option value="Instrumentation">Instrumentation</option>
+              <option value="QA/QC">QA/QC</option>
+              <option value="Document Control">Document Control</option>
+              <option value="Technical Safety">Technical Safety</option>
+              <option value="Process">Process</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Piping">Piping</option>
+              <option value="Pipeline">Pipeline</option>
+              <option value="Civil/Structural">Civil/Structural</option>
+              <option value="HR">HR</option>
+              <option value="Accounts">Accounts</option>
+              <option value="Business Development">
+                Business Development
+              </option>
+              <option value="Logistics/Procurement">
+                Logistics/Procurement
+              </option>
+              <option value="HSE">HSE</option>
+            </select>
+            {errors.discipline && (
+              <p className="text-red-500 text-sm mt-1">{errors.discipline}</p>
+            )}
+          </div>
 
-          <label
-            htmlFor="password"
-            className="block text-base font-medium text-gray-700 my-2"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={form.password}
-            required
-            placeholder="Password"
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password}</p>
-          )}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-slate-700 mb-1"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              onChange={handleChange}
+              value={form.password}
+              required
+              placeholder="Password"
+              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
+          </div>
 
-          <label
-            htmlFor="confirmPassword"
-            className="block text-base font-medium text-gray-700 my-2"
-          >
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            onChange={handleChange}
-            value={form.confirmPassword}
-            required
-            placeholder="Re-type Password"
-            className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-forestGreen"
-          />
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-semibold text-slate-700 mb-1"
+            >
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              onChange={handleChange}
+              value={form.confirmPassword}
+              required
+              placeholder="Re-type Password"
+              className="w-full border border-slate-300 rounded-md shadow-sm p-2.5 focus:outline-none focus:ring-2 focus:ring-forestGreen/30 focus:border-forestGreen transition-colors"
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword}
+              </p>
+            )}
+          </div>
 
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-          )}
           <button
             type="submit"
-            className="bg-forestGreen text-gray w-full rounded-md p-2 mt-5 hover:cursor-pointer shadow-md"
+            className="bg-forestGreen text-white w-full rounded-md p-2.5 mt-2 font-medium hover:bg-[#025E50] transition-colors shadow-sm"
           >
             Sign Up
           </button>
@@ -221,9 +232,9 @@ export default function SignUp() {
       </div>
 
       <div>
-        <p className="text-gray text-sm sm:text-base">
+        <p className="text-white/80 text-sm sm:text-base">
           Already have an account?{" "}
-          <Link href={"/"} className="text-orange underline">
+          <Link href={"/"} className="text-orange font-medium hover:underline">
             Sign In
           </Link>
         </p>

@@ -11,12 +11,13 @@ export default function ModalWrapper({
 }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="bg-white rounded-lg p-2.5 md:p-6 w-full max-w-xl shadow-xl relative">
+      <div className="bg-white rounded-xl p-5 md:p-6 w-full max-w-xl shadow-xl relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute -top-2 -right-2 bg-forestGreen rounded-full p-2 hover:bg-[#025E50] transition-all delay-100 text-white"
+          aria-label="Close"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full p-1.5 transition-colors"
         >
-          <IoClose size={24} />
+          <IoClose size={20} />
         </button>
         {children}
       </div>
