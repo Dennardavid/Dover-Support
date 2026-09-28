@@ -232,14 +232,7 @@ export default function TicketForm({ onMutate }: { onMutate?: () => void }) {
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">
               Priority
             </label>
-            {/*
-              Priority as three tappable cards instead of a plain
-              <select>. Same underlying value/field — it still sets
-              `form.priority` to "Low" | "Medium" | "High" — but since
-              priority already gets a color treatment everywhere else
-              in the app (list, modal), showing that same color here
-              makes the choice itself clearer at a glance.
-            */}
+
             <div className="grid grid-cols-3 gap-2">
               {["Low", "Medium", "High"].map((level) => {
                 const isSelected = form.priority === level;
